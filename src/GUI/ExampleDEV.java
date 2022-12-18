@@ -2,6 +2,6 @@ package GUI;
 
 public class ExampleDEV {
 
-	//comentarios random probando la nueva branch
+	//comentarios random probando la nueva branch, pero desde la terminal
 	
 }
