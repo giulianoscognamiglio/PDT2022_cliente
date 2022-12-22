@@ -1,4 +1,6 @@
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -10,6 +12,7 @@ import com.entities.Estudiante;
 import com.entities.Funcionalidad;
 import com.entities.Genero;
 import com.entities.ITR;
+import com.entities.Reclamo;
 import com.entities.Rol;
 import com.entities.TipoTutor;
 import com.entities.Tutor;
@@ -19,6 +22,7 @@ import com.servicios.DepartamentosBeanRemote;
 import com.servicios.FuncionalidadBeanRemote;
 import com.servicios.GenerosBeanRemote;
 import com.servicios.ItrsBeanRemote;
+import com.servicios.ReclamosBeanRemote;
 import com.servicios.RolBeanRemote;
 import com.servicios.TiposTutorBeanRemote;
 import com.servicios.UsuariosBeanRemote;
@@ -35,6 +39,11 @@ public class Main {
 		ItrsBeanRemote itrBean = (ItrsBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ItrsBean!com.servicios.ItrsBeanRemote");
 		RolBeanRemote rolBean=(RolBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/RolBean!com.servicios.RolBeanRemote");
 		FuncionalidadBeanRemote funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
+		ReclamosBeanRemote reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
+		//fecha actual (la usamos para hacer reclamos de prueba)
+		LocalDate localDate = LocalDate.now();
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		
 		
 		Departamento d1 = new Departamento();
 		d1.setNombre("Durazno");
@@ -181,6 +190,34 @@ public class Main {
 		e.setItr(itrBean.obtenerPorNombre("ITR Capital"));
 		usuarioBean.crear(e);
 
+		
+		
+		//Registros de prueba en la tabla Reclamos
+		
+		Reclamo reclamo1 = new Reclamo();
+		
+		reclamo1.setDetalle("Los baños siempre están sucios");
+		reclamo1.setEstudiante(3);
+		reclamo1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		reclamo1.setEstado("EN PROCESO");
+		reclamoBean.crear(reclamo1);
+		
+		Reclamo reclamo2 = new Reclamo();
+		
+		reclamo2.setDetalle("El salón A34 no tiene techo");
+		reclamo2.setEstudiante(3);
+		reclamo2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		reclamo2.setEstado("FINALIZADO");
+		reclamoBean.crear(reclamo2);
+		
+		Reclamo reclamo3 = new Reclamo();
+		
+		reclamo3.setDetalle("La cantina no es una cantina de verdad");
+		reclamo3.setEstudiante(3);
+		reclamo3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		reclamo3.setEstado("INGRESADO");
+		reclamoBean.crear(reclamo3);
+		
 	}
 
 }
