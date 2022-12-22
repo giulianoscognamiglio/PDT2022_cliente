@@ -54,13 +54,19 @@ public class PanelFuncionalidades extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				try {
+					
 					if (comboBoxEstado.getSelectedItem().toString() == "Asignado") {
 						cargarTabla(rolSeleccionado.getFuncionalidades());
+						
 					} else if (comboBoxEstado.getSelectedItem().toString() == "No Asignado") {
+						
 						List<Funcionalidad> funNo = new ArrayList<>();
+						
 						for (Funcionalidad f : DAOGeneral.funcionalidadBean.obtenerFuncionalidades()) {
+							
 							Boolean flag = false;
 							for (Funcionalidad j : rolSeleccionado.getFuncionalidades()) {
+								
 								if (f.getId() == j.getId()) {
 									flag = true;
 									break;

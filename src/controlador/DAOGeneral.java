@@ -8,6 +8,7 @@ import com.servicios.DepartamentosBeanRemote;
 import com.servicios.FuncionalidadBeanRemote;
 import com.servicios.GenerosBeanRemote;
 import com.servicios.ItrsBeanRemote;
+import com.servicios.ReclamosBeanRemote;
 import com.servicios.RolBeanRemote;
 import com.servicios.TiposTutorBeanRemote;
 import com.servicios.UsuariosBeanRemote;
@@ -24,7 +25,7 @@ public class DAOGeneral {
 		public static RolBeanRemote rolBean;
 		public static FuncionalidadBeanRemote funcionalidadBean;
 		public static AnalistasBeanRemote analistaBean;
-		
+		public static ReclamosBeanRemote reclamoBean;
 		
 	public DAOGeneral(){
 		initConexion();
@@ -41,7 +42,7 @@ public class DAOGeneral {
 			rolBean=(RolBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/RolBean!com.servicios.RolBeanRemote");
 			funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
 			analistaBean=(AnalistasBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/AnalistasBean!com.servicios.AnalistasBeanRemote");
-			 
+			reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

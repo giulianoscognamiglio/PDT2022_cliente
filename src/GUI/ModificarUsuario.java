@@ -29,7 +29,7 @@ import necesario.Panel;
 import rojeru_san.rsdate.RSDateChooser;
 import javax.swing.SwingConstants;
 
-public class ActualizarUsuario extends JPanel {
+public class ModificarUsuario extends JPanel {
 
 	public static Usuario usuarioIngresadoAct;
 
@@ -60,9 +60,8 @@ public class ActualizarUsuario extends JPanel {
 	 * Create the frame.
 	 */
 
-	public ActualizarUsuario() {
+	public ModificarUsuario() {
 		
-		setUsuarioIngresado(MenuPrincipal.usuarioIngresado);
 		setBounds(0, 0, 684, 581);
 		setLayout(null);
 		

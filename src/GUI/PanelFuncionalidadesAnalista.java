@@ -50,7 +50,9 @@ public class PanelFuncionalidadesAnalista extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					Rol r = DAOGeneral.rolBean.buscarNombre(modeloTablaRol.getValueAt(table.getSelectedRow(), 0).toString());
+					
 					FuncionalidadesAsignadasARol.rolSeleccionado=r;
+					
 					FuncionalidadesAsignadasARol fun=new FuncionalidadesAsignadasARol();
 					fun.setVisible(true);
 				} catch (Exception e1) {
