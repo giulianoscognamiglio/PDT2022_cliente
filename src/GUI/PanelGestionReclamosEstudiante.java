@@ -1,0 +1,177 @@
+package GUI;
+
+import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import com.exceptions.ServiciosException;
+import com.entities.*;
+
+import controlador.DAOGeneral;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class PanelGestionReclamosEstudiante extends JPanel {
+
+	private DefaultTableModel modeloTabla;
+
+	public PanelGestionReclamosEstudiante() {
+
+		setBounds(0, 0, 684, 581);
+		setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(63, 152, 561, 238);
+		add(scrollPane);
+
+		modeloTabla = new DefaultTableModel(new Object[][] { { null, null}, },
+				new String[] { "ID", "Estado"});
+		JTable table = new JTable();
+		table.setModel(modeloTabla);
+		scrollPane.setViewportView(table);
+		
+
+		JLabel lblReclamos = new JLabel("Reclamos");
+		lblReclamos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReclamos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblReclamos.setBounds(235, 37, 198, 36);
+		add(lblReclamos);
+		
+		
+		JButton btnBaja = new JButton("Baja");
+		btnBaja.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				
+				try {
+					
+					Reclamo reclamoDB = seleccionarReclamo(table);
+
+					//con esta condicional nos aseguramos que solo se puedan eliminar los que aún
+					//no hayan sido tocados por un analista
+					if(reclamoDB.getEstado().equals("INGRESADO")) {
+						
+						DAOGeneral.reclamoBean.borrar(reclamoDB.getId_reclamo());
+						JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
+								JOptionPane.PLAIN_MESSAGE);
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "No se permite eliminar reclamos finalizados o en proceso.", null,
+								JOptionPane.ERROR_MESSAGE);
+					}
+					
+		
+					
+				} catch (ServiciosException e1) {
+					e1.printStackTrace();
+				}
+				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+			}
+		});
+		btnBaja.setBounds(206, 500, 85, 21);
+		add(btnBaja);
+		
+		JButton btnDetalle = new JButton("Detalle");
+		btnDetalle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				try {
+					
+					
+					Reclamo reclamoDB = seleccionarReclamo(table);
+
+					DetalleReclamo.reclamo=reclamoDB;
+					
+					DetalleReclamo detRecl = new DetalleReclamo();
+					
+					detRecl.setVisible(true);
+
+				} catch (ServiciosException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnDetalle.setBounds(331, 500, 85, 21);
+		add(btnDetalle);
+		
+		JButton btnActualizar = new JButton("Actualizar reclamos");
+		btnActualizar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+
+			}
+		});
+		btnActualizar.setBounds(484, 421, 140, 21);
+		add(btnActualizar);
+		
+		
+		cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+
+	}
+	
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+	public void cargarTabla(List<Reclamo> reclamos) {
+		modeloTabla.setRowCount(0);
+		for (Reclamo r : reclamos) {
+			
+					
+
+			try {
+				
+				Vector v = new Vector();
+				Usuario usuarioDB;
+				usuarioDB = DAOGeneral.usuarioBean.obtenerPorId(r.getEstudiante());
+				
+				v.addElement(r.getId_reclamo());
+				v.addElement(r.getEstado());
+
+				modeloTabla.addRow(v);
+
+
+			} catch (ServiciosException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+
+	
+	public Reclamo seleccionarReclamo(JTable table) {
+		//metodo para seleccionar un reclamo de la tabla
+		int column = 0;
+		int row = table.getSelectedRow();
+		Long id = Long.parseLong(table.getModel().getValueAt(row, column).toString());
+		
+		Reclamo reclamoDB = DAOGeneral.reclamoBean.obtenerReclamo(id);
+		
+		return reclamoDB;
+	}
+}

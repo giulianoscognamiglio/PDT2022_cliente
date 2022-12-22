@@ -189,6 +189,29 @@ public class Main {
 		e.setRol(rolBean.buscarNombre("Estudiante"));
 		e.setItr(itrBean.obtenerPorNombre("ITR Capital"));
 		usuarioBean.crear(e);
+		
+		Estudiante e2=new Estudiante();
+		
+		e2.setActivo("X");
+		e2.setApellido1("Mosca");
+		e2.setApellido2("Messi");
+		e2.setCedula("56766544");
+		e2.setContrasena("Contra");
+		e2.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
+		e2.setFechaNac(new Date(1999,11,28));
+		e2.setGenero(generoBean.obtenerPorNombre("Hombre"));
+		e2.setLocalidad("Sarandi Grande");
+		e2.setMail("martin@capo.com.uy");
+		e2.setMailInstitucional("martin.mosca@estudiantes.utec.edu.uy");
+		e2.setNombre1("Martin");
+		e2.setNombre2("Nicolas");
+		e2.setTelefono("098575565");
+		e2.setUsuario("martin.mosca");
+		e2.setValidado("SI");
+		e2.setGeneracion("2020");
+		e2.setRol(rolBean.buscarNombre("Estudiante"));
+		e2.setItr(itrBean.obtenerPorNombre("ITR Capital"));
+		usuarioBean.crear(e2);
 
 		
 		

@@ -115,7 +115,7 @@ public class AltaReclamo extends JFrame {
 				try {
 					DAOGeneral.reclamoBean.crear(reclamo);
 					JOptionPane.showMessageDialog(null, "Reclamo registrado con éxito", null, JOptionPane.PLAIN_MESSAGE);
-					
+				
 					setVisible(false);
 
 				} catch (ServiciosException e1) {

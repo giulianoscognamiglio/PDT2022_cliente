@@ -46,7 +46,7 @@ public class PanelMenu extends JPanel {
 		lblTipoUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTipoUsuario.setBounds(54, 80, 121, 13);
 		panelMenu.add(lblTipoUsuario);
-		
+
 		JButton btnAltaReclamos = new JButton("Alta Reclamo");
 		btnAltaReclamos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -76,6 +76,23 @@ public class PanelMenu extends JPanel {
 		btnFuncionalidades.setBounds(48, 364, 127, 21);
 		panelMenu.add(btnFuncionalidades);
 
+		JButton btnReclamos = new JButton("Reclamos");
+		btnReclamos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				PanelGestionReclamosEstudiante gestionReclamos = new PanelGestionReclamosEstudiante();
+				panelDinamico.removeAll();
+				gestionReclamos.setSize(684, 581);
+				gestionReclamos.setLocation(0, 0);
+				panelDinamico.add(gestionReclamos);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnReclamos.setBounds(48, 395, 127, 21);
+		panelMenu.add(btnReclamos);
+
 		JButton btnEditarPerfil = new JButton("Editar Perfil");
 		btnEditarPerfil.addMouseListener(new MouseAdapter() {
 			@Override
@@ -90,7 +107,7 @@ public class PanelMenu extends JPanel {
 				panelDinamico.repaint();
 			}
 		});
-		btnEditarPerfil.setBounds(48, 395, 127, 21);
+		btnEditarPerfil.setBounds(48, 428, 127, 21);
 		panelMenu.add(btnEditarPerfil);
 
 		JButton btnLogOut = new JButton("Log Out");
