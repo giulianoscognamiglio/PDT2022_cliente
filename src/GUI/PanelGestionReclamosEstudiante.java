@@ -61,27 +61,25 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 
 				
-				try {
-					
-					Reclamo reclamoDB = seleccionarReclamo(table);
+				Reclamo reclamoDB = seleccionarReclamo(table);
 
-					//con esta condicional nos aseguramos que solo se puedan eliminar los que aún
-					//no hayan sido tocados por un analista
-					if(reclamoDB.getEstado().equals("INGRESADO")) {
-						
-						DAOGeneral.reclamoBean.borrar(reclamoDB.getId_reclamo());
-						JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
-								JOptionPane.PLAIN_MESSAGE);
-						
-					}else {
-						JOptionPane.showMessageDialog(null, "No se permite eliminar reclamos finalizados o en proceso.", null,
-								JOptionPane.ERROR_MESSAGE);
-					}
+				//con esta condicional nos aseguramos que solo se puedan eliminar los que aún
+				//no hayan sido tocados por un analista
+				if(reclamoDB.getEstado().equals("INGRESADO")) {
 					
-		
+					//Se le adjudica el reclamo obtenido desde la base a la variable static "reclamo" y se lanza el pop up de confirmacion
+					ConfirmacionPopUp.reclamo = reclamoDB;
+					ConfirmacionPopUp confirmacionPopUp = new ConfirmacionPopUp();
 					
-				} catch (ServiciosException e1) {
-					e1.printStackTrace();
+					confirmacionPopUp.setVisible(true);
+					
+					//DAOGeneral.reclamoBean.borrar(reclamoDB.getId_reclamo());
+					//JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
+						//	JOptionPane.PLAIN_MESSAGE);
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "No se permite eliminar reclamos finalizados o en proceso.", null,
+							JOptionPane.ERROR_MESSAGE);
 				}
 				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 			}
@@ -125,7 +123,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 
 			}
 		});
-		btnActualizar.setBounds(484, 421, 140, 21);
+		btnActualizar.setBounds(432, 421, 192, 21);
 		add(btnActualizar);
 		
 		
