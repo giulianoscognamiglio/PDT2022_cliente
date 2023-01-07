@@ -7,8 +7,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/wildfly-26.1.0.Final/wildfly-26.1.0.Final/bin/client/jboss-client.jar"/>
-	<classpathentry kind="lib" path="C:/wildfly-26.1.0.Final/wildfly-26.1.0.Final/modules/system/layers/base/org/hibernate/main/hibernate-core-5.3.24.Final.jar"/>
 	<classpathentry kind="lib" path="src/lib/RojeruSan.full_9.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
