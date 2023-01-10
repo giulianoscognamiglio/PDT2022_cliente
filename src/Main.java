@@ -40,10 +40,10 @@ public class Main {
 		RolBeanRemote rolBean=(RolBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/RolBean!com.servicios.RolBeanRemote");
 		FuncionalidadBeanRemote funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
 		ReclamosBeanRemote reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
+		
 		//fecha actual (la usamos para hacer reclamos de prueba)
 		LocalDate localDate = LocalDate.now();
 		ZoneId defaultZoneId = ZoneId.systemDefault();
-		
 		
 		Departamento d1 = new Departamento();
 		d1.setNombre("Durazno");
@@ -123,7 +123,7 @@ public class Main {
 		a.setCedula("12345678");
 		a.setContrasena("admin");
 		a.setDepartamento(departamentoBean.obtenerPorNombre("Durazno"));
-		a.setFechaNac(new Date(2002,02,04));
+		a.setFechaNac(new Date(2002-1900,02,04));
 		a.setGenero(generoBean.obtenerPorNombre("Hombre"));
 		a.setLocalidad("localida1");
 		a.setMail("coco@adinet.com.uy");
@@ -175,7 +175,7 @@ public class Main {
 		e.setCedula("1234566679");
 		e.setContrasena("Contra");
 		e.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
-		e.setFechaNac(new Date(1999,11,28));
+		e.setFechaNac(new Date(1999-1900,11,28));
 		e.setGenero(generoBean.obtenerPorNombre("Hombre"));
 		e.setLocalidad("Buceo");
 		e.setMail("juan22@capo.com.uy");
@@ -198,7 +198,7 @@ public class Main {
 		e2.setCedula("56766544");
 		e2.setContrasena("Contra");
 		e2.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
-		e2.setFechaNac(new Date(1999,11,28));
+		e2.setFechaNac(new Date(1999-1900,11,28));
 		e2.setGenero(generoBean.obtenerPorNombre("Hombre"));
 		e2.setLocalidad("Sarandi Grande");
 		e2.setMail("martin@capo.com.uy");
@@ -213,8 +213,6 @@ public class Main {
 		e2.setItr(itrBean.obtenerPorNombre("ITR Capital"));
 		usuarioBean.crear(e2);
 
-		
-		
 		//Registros de prueba en la tabla Reclamos
 		
 		Reclamo reclamo1 = new Reclamo();
