@@ -334,6 +334,7 @@ public class RegistroUsuario extends JFrame {
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
 							JOptionPane.showMessageDialog(null, "Usuario Analista creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							setVisible(false);
 						} catch (ServiciosException e1) {
 							e1.printStackTrace();
 						}
@@ -379,6 +380,7 @@ public class RegistroUsuario extends JFrame {
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
 							JOptionPane.showMessageDialog(null, "Usuario Estudiante creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							setVisible(false);
 						} catch (ServiciosException e1) {
 							e1.printStackTrace();
 						}
@@ -425,6 +427,7 @@ public class RegistroUsuario extends JFrame {
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
 							JOptionPane.showMessageDialog(null, "Usuario Tutor creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							setVisible(false);
 						} catch (ServiciosException e1) {
 							e1.printStackTrace();
 						}

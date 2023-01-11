@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -83,41 +85,7 @@ public class Login extends JFrame {
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				try {
-					Usuario usuarioIngresado = DAOGeneral.usuarioBean
-												.verificarUsuario(textFieldUsuario.getText(),textFieldContraseña.getText());
-					
-					PanelMenu.usuarioIngresado = usuarioIngresado;
-					
-					if (usuarioIngresado instanceof Estudiante) {
-						MenuPrincipal menu = MenuPrincipal.getInstancia();
-						MenuPrincipal.usuarioIngresado = usuarioIngresado;
-						menu.panelMenu.estudianteGUI();
-						menu.setVisible(true);
-						setVisible(false);
-					} else if (usuarioIngresado instanceof Analista) {
-						MenuPrincipal menu = MenuPrincipal.getInstancia();
-						MenuPrincipal.usuarioIngresado = usuarioIngresado;
-
-						menu.panelMenu.analistaGUI();
-						menu.setVisible(true);
-						setVisible(false);
-					} else if (usuarioIngresado instanceof Tutor) {
-						MenuPrincipal menu = MenuPrincipal.getInstancia();
-						MenuPrincipal.usuarioIngresado = usuarioIngresado;
-
-						menu.panelMenu.tutorGUI();
-						menu.setVisible(true);
-						setVisible(false);
-					} else {
-						JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (ServiciosException e1) {
-					e1.printStackTrace();
-				}
-
+				ingresar();
 			}
 		});
 		btnIngresar.setBounds(161, 151, 96, 21);
@@ -139,5 +107,57 @@ public class Login extends JFrame {
 		textFieldContraseña = new JPasswordField();
 		textFieldContraseña.setBounds(161, 110, 96, 19);
 		contentPane.add(textFieldContraseña);
+		
+		textFieldContraseña.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                //10 es codigo para el enter
+                if(e.getKeyCode()==10) {
+                    try {
+                        ingresar();
+                    } catch (Exception e1) {
+                        JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",JOptionPane.ERROR_MESSAGE);
+                        textFieldContraseña.setText("");
+                    }
+                }
+            }
+        });
+		
+	}
+	
+	public void ingresar() {
+		try {
+			Usuario usuarioIngresado = DAOGeneral.usuarioBean
+										.verificarUsuario(textFieldUsuario.getText(),textFieldContraseña.getText());
+			
+			PanelMenu.usuarioIngresado = usuarioIngresado;
+			
+			if (usuarioIngresado instanceof Estudiante) {
+				MenuPrincipal menu = MenuPrincipal.getInstancia();
+				MenuPrincipal.usuarioIngresado = usuarioIngresado;
+				menu.panelMenu.estudianteGUI();
+				menu.setVisible(true);
+				setVisible(false);
+			} else if (usuarioIngresado instanceof Analista) {
+				MenuPrincipal menu = MenuPrincipal.getInstancia();
+				MenuPrincipal.usuarioIngresado = usuarioIngresado;
+
+				menu.panelMenu.analistaGUI();
+				menu.setVisible(true);
+				setVisible(false);
+			} else if (usuarioIngresado instanceof Tutor) {
+				MenuPrincipal menu = MenuPrincipal.getInstancia();
+				MenuPrincipal.usuarioIngresado = usuarioIngresado;
+
+				menu.panelMenu.tutorGUI();
+				menu.setVisible(true);
+				setVisible(false);
+			} else {
+				JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (ServiciosException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
