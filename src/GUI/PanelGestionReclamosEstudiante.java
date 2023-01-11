@@ -6,6 +6,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -126,6 +127,56 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 		btnActualizar.setBounds(432, 421, 192, 21);
 		add(btnActualizar);
 		
+		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+		JComboBox comboBoxEstado = new JComboBox();
+		comboBoxEstado.setModel(modeloCombo);
+
+		modeloCombo.addElement("");
+		modeloCombo.addElement("En proceso");
+		modeloCombo.addElement("Finalizado");
+		modeloCombo.addElement("Ingresado");
+
+		comboBoxEstado.setBounds(235, 106, 198, 36);
+		add(comboBoxEstado);
+
+		//Filtrar
+		comboBoxEstado.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				try {
+					//primero nos traemos todos los reclamos y luego creamos una lista auxiliar donde vamos a almacenar los
+					//reclamos filtrados
+					List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerTodos();
+					List<Reclamo> reclamosFiltrados;
+
+					if (comboBoxEstado.getSelectedItem().toString() == "En proceso") {
+						
+						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
+						reclamosFiltrados = reclamos.stream().filter(r -> r.getEstado().equals("EN PROCESO")).collect(Collectors.toList());
+						cargarTabla(reclamosFiltrados);
+
+					} else if (comboBoxEstado.getSelectedItem().toString() == "Finalizado") {
+						
+						
+						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
+							reclamosFiltrados = (List<Reclamo>) reclamos.stream().filter(r -> r.getEstado().equals("FINALIZADO")).collect(Collectors.toList());
+							cargarTabla(reclamosFiltrados);
+							
+					} else if (comboBoxEstado.getSelectedItem().toString() == "Ingresado") {
+						
+						
+						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
+						reclamosFiltrados = (List<Reclamo>) reclamos.stream().filter(r -> r.getEstado().equals("INGRESADO")).collect(Collectors.toList());
+						cargarTabla(reclamosFiltrados);
+						
+				}
+					
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 
