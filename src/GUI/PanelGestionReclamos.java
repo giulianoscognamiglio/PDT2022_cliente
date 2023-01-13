@@ -109,7 +109,7 @@ public class PanelGestionReclamos extends JPanel {
 		add(btnDetalle);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "En proceso", "Finalizado"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar", "En proceso", "Finalizado"}));
 		comboBox.setBounds(496, 428, 128, 26);
 		add(comboBox);
 		
@@ -147,7 +147,7 @@ public class PanelGestionReclamos extends JPanel {
 		JComboBox comboBoxEstado = new JComboBox();
 		comboBoxEstado.setModel(modeloCombo);
 
-		modeloCombo.addElement("");
+		modeloCombo.addElement("Todos");		
 		modeloCombo.addElement("En proceso");
 		modeloCombo.addElement("Finalizado");
 		modeloCombo.addElement("Ingresado");
@@ -184,8 +184,11 @@ public class PanelGestionReclamos extends JPanel {
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
 						reclamosFiltrados = reclamos.stream().filter(r -> r.getEstado().equals("INGRESADO")).collect(Collectors.toList());
 						cargarTabla(reclamosFiltrados);
-						
-				}
+					}  else if (comboBoxEstado.getSelectedItem().toString() == "Todos") {
+												
+						//aca retornamos todos los elementos de la lista
+							cargarTabla(reclamos);
+					} 	
 					
 
 				} catch (Exception e1) {

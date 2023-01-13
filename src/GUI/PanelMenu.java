@@ -257,8 +257,26 @@ public class PanelMenu extends JPanel {
 		btnReclamos.setBounds(23, 444, 170, 21);
 		panelMenu.add(btnReclamos);
 
+//
+//		---------------------EN OBRA!-----------------
+//		
+		
+		
+		JButton btnNewButton = new JButton("Gestionar inasistencias");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(23, 412, 170, 21);
+		panelMenu.add(btnNewButton);
+
 	}
 
+	
+//	
+//	-----------------------------------------------------
+//	
+	
 	public void tutorGUI() {
 		removeAll();
 		setBounds(0, 0, 907, 581);
