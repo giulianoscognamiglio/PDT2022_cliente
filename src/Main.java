@@ -13,6 +13,7 @@ import com.entities.Funcionalidad;
 import com.entities.Genero;
 import com.entities.ITR;
 import com.entities.Reclamo;
+import com.entities.Justificado;
 import com.entities.Rol;
 import com.entities.TipoTutor;
 import com.entities.Tutor;
@@ -23,6 +24,7 @@ import com.servicios.FuncionalidadBeanRemote;
 import com.servicios.GenerosBeanRemote;
 import com.servicios.ItrsBeanRemote;
 import com.servicios.ReclamosBeanRemote;
+import com.servicios.JustificadosBeanRemote;
 import com.servicios.RolBeanRemote;
 import com.servicios.TiposTutorBeanRemote;
 import com.servicios.UsuariosBeanRemote;
@@ -40,6 +42,7 @@ public class Main {
 		RolBeanRemote rolBean=(RolBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/RolBean!com.servicios.RolBeanRemote");
 		FuncionalidadBeanRemote funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
 		ReclamosBeanRemote reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
+		JustificadosBeanRemote justificadoBean=(JustificadosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/JustificadosBean!com.servicios.JustificadosBeanRemote");
 		
 		//fecha actual (la usamos para hacer reclamos de prueba)
 		LocalDate localDate = LocalDate.now();
@@ -238,6 +241,30 @@ public class Main {
 		reclamo3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		reclamo3.setEstado("INGRESADO");
 		reclamoBean.crear(reclamo3);
+		
+
+		//Registros de prueba en la tabla Justificados
+		
+		Justificado justif1 = new Justificado();
+		
+		justif1.setDetalle("No falté, se olvidaron de mí");
+		justif1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		justif1.setEstudiante(3);
+		justificadoBean.crear(justif1);
+		
+		Justificado justif2 = new Justificado();
+		
+		justif2.setDetalle("Estaba enfermo y no pude ir");
+		justif2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		justif2.setEstudiante(3);
+		justificadoBean.crear(justif2);
+		
+		Justificado justif3 = new Justificado();
+		
+		justif3.setDetalle("Se rompió el autobús y llegué mas tarde, tengo constancia de Copsa");
+		justif3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		justif3.setEstudiante(3);
+		justificadoBean.crear(justif3);
 		
 	}
 

@@ -262,13 +262,22 @@ public class PanelMenu extends JPanel {
 //		
 		
 		
-		JButton btnNewButton = new JButton("Gestionar inasistencias");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnJustificados = new JButton("Gestionar justificados de inasistencias");
+		btnJustificados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				PanelGestionJustificados gestionJustificados = new PanelGestionJustificados();
+				panelDinamico.removeAll();
+				gestionJustificados.setSize(684, 581);
+				gestionJustificados.setLocation(0, 0);
+				panelDinamico.add(gestionJustificados);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+
 			}
 		});
-		btnNewButton.setBounds(23, 412, 170, 21);
-		panelMenu.add(btnNewButton);
+		btnJustificados.setBounds(23, 412, 170, 21);
+		panelMenu.add(btnJustificados);
 
 	}
 
