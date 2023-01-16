@@ -38,7 +38,6 @@ public class ModificarUsuario extends JPanel {
 	public JLabel lblApellido1;
 	public JLabel lblApellido2;
 	public JLabel lblDocumento;
-	public JLabel lblContraseña;
 	public JLabel lblCelular;
 	public JTextField textFieldCelular;
 	public JTextField textFieldEmailPersonal;
@@ -49,7 +48,6 @@ public class ModificarUsuario extends JPanel {
 	public JTextField textFieldNombre1;
 	public JTextField textFieldApellido2;
 	public JTextField textFieldDocumento;
-	public JTextField textFieldContraseña;
 
 	public DefaultComboBoxModel modeloITR;
 	public DefaultComboBoxModel modeloDepartamento;
@@ -111,32 +109,22 @@ public class ModificarUsuario extends JPanel {
 		textFieldApellido2.setText(getUsuarioIngresado().getApellido2());
 		
 		lblDocumento = new JLabel("Documento");
-		lblDocumento.setBounds(35, 472, 150, 13);
+		lblDocumento.setBounds(36, 421, 150, 13);
 		add(lblDocumento);
 		
 		textFieldDocumento = new JTextField();
 		textFieldDocumento.setColumns(10);
-		textFieldDocumento.setBounds(35, 495, 150, 19);
+		textFieldDocumento.setBounds(36, 444, 150, 19);
 		add(textFieldDocumento);
 		textFieldDocumento.setText(getUsuarioIngresado().getCedula());
 		
-		lblContraseña = new JLabel("Contrase\u00F1a");
-		lblContraseña.setBounds(35, 264, 150, 13);
-		add(lblContraseña);
-		
-		textFieldContraseña = new JTextField();
-		textFieldContraseña.setColumns(10);
-		textFieldContraseña.setBounds(35, 287, 150, 19);
-		add(textFieldContraseña);
-		textFieldContraseña.setText(getUsuarioIngresado().getContrasena());
-		
 		lblCelular = new JLabel("Celular");
-		lblCelular.setBounds(35, 316, 150, 13);
+		lblCelular.setBounds(36, 265, 150, 13);
 		add(lblCelular);
 		
 		textFieldCelular = new JTextField();
 		textFieldCelular.setColumns(10);
-		textFieldCelular.setBounds(35, 339, 150, 19);
+		textFieldCelular.setBounds(36, 288, 150, 19);
 		add(textFieldCelular);
 		textFieldCelular.setText(getUsuarioIngresado().getTelefono());
 		
@@ -154,22 +142,22 @@ public class ModificarUsuario extends JPanel {
 		add(lblFechaNacimiento);
 		
 		JLabel lblEmailPersonal = new JLabel("Email Personal");
-		lblEmailPersonal.setBounds(35, 420, 150, 13);
+		lblEmailPersonal.setBounds(36, 369, 150, 13);
 		add(lblEmailPersonal);
 		
 		textFieldEmailPersonal = new JTextField();
 		textFieldEmailPersonal.setColumns(10);
-		textFieldEmailPersonal.setBounds(35, 443, 150, 19);
+		textFieldEmailPersonal.setBounds(36, 392, 150, 19);
 		add(textFieldEmailPersonal);
 		textFieldEmailPersonal.setText(getUsuarioIngresado().getMail());
 		
 		JLabel lblEmailUTEC = new JLabel("Email UTEC");
-		lblEmailUTEC.setBounds(35, 368, 150, 13);
+		lblEmailUTEC.setBounds(36, 317, 150, 13);
 		add(lblEmailUTEC);
 		
 		textFieldEmailUTEC = new JTextField();
 		textFieldEmailUTEC.setColumns(10);
-		textFieldEmailUTEC.setBounds(34, 391, 151, 19);
+		textFieldEmailUTEC.setBounds(35, 340, 151, 19);
 		add(textFieldEmailUTEC);
 		textFieldEmailUTEC.setText(getUsuarioIngresado().getMailInstitucional());
 		
@@ -224,7 +212,7 @@ public class ModificarUsuario extends JPanel {
 				getUsuarioIngresado().setFechaNac(dateChooser.getDatoFecha());
 				getUsuarioIngresado().setMail(textFieldEmailPersonal.getText());
 				getUsuarioIngresado().setMailInstitucional(textFieldEmailUTEC.getText());
-				getUsuarioIngresado().setContrasena(textFieldContraseña.getText());
+//				getUsuarioIngresado().setContrasena(textFieldContraseña.getText());
 				String usuario = textFieldEmailUTEC.getText().split("@")[0];
 				getUsuarioIngresado().setUsuario(usuario);
 				
@@ -244,8 +232,32 @@ public class ModificarUsuario extends JPanel {
 				}
 			}
 		});
-		btnActualizar.setBounds(280, 494, 121, 21);
+		btnActualizar.setBounds(391, 496, 121, 21);
 		add(btnActualizar);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				PanelBajaUsuario.getInstance().panelDinamico.removeAll();
+				
+				PanelBajaUsuario.getInstance().cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
+				
+				PanelBajaUsuario.getInstance().btnBaja.setVisible(true);
+
+				PanelBajaUsuario.getInstance().btnModificación.setVisible(true);
+
+				PanelBajaUsuario.getInstance().scrollPane.setVisible(true);
+
+				PanelBajaUsuario.getInstance().revalidate();
+				
+				PanelBajaUsuario.getInstance().repaint();
+				
+			}
+		});
+		btnVolver.setBounds(260, 495, 121, 21);
+		add(btnVolver);
 		
 	}
 	
@@ -272,5 +284,4 @@ public class ModificarUsuario extends JPanel {
 		usuarioIngresadoAct = usuarioIngresado;
 		
 	}
-	
 }

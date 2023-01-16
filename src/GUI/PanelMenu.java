@@ -218,7 +218,7 @@ public class PanelMenu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				PanelBajaUsuario bajaUsuario = new PanelBajaUsuario();
+				PanelBajaUsuario bajaUsuario = PanelBajaUsuario.getInstance();
 				panelDinamico.removeAll();
 				bajaUsuario.setSize(684, 581);
 				bajaUsuario.setLocation(0, 0);

@@ -305,9 +305,15 @@ public class RegistroUsuario extends JFrame {
 					usuarioIngresado.setCedula(textFieldDocumento.getText());
 					usuarioIngresado.setTelefono(textFieldCelular.getText());
 					usuarioIngresado.setFechaNac(dateChooser.getDatoFecha());
-					usuarioIngresado.setMail(textFieldEmailPersonal.getText());
-					usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
-		
+					
+					if(formatoEmail(textFieldEmailPersonal.getText())!="") {
+						usuarioIngresado.setMail(textFieldEmailPersonal.getText());
+					}
+					
+					if(formatoEmailInstitucional(textFieldEmailUTEC.getText())!="") {
+						usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
+					}
+					
 					usuarioIngresado.setContrasena(textFieldContraseña.getText());
 					String usuario = textFieldEmailUTEC.getText().split("@")[0];
 					usuarioIngresado.setUsuario(usuario);
@@ -351,8 +357,15 @@ public class RegistroUsuario extends JFrame {
 					usuarioIngresado.setCedula(textFieldDocumento.getText());
 					usuarioIngresado.setTelefono(textFieldCelular.getText());
 					usuarioIngresado.setFechaNac(dateChooser.getDatoFecha());
-					usuarioIngresado.setMail(textFieldEmailPersonal.getText());
-					usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
+					
+					if(formatoEmail(textFieldEmailPersonal.getText())!="") {
+						usuarioIngresado.setMail(textFieldEmailPersonal.getText());
+					}
+					
+					if(formatoEmailInstitucional(textFieldEmailUTEC.getText())!="") {
+						usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
+					}
+					
 					usuarioIngresado.setContrasena(textFieldContraseña.getText());
 					String usuario = textFieldEmailUTEC.getText().split("@")[0];
 					usuarioIngresado.setUsuario(usuario);
@@ -397,8 +410,15 @@ public class RegistroUsuario extends JFrame {
 					usuarioIngresado.setCedula(textFieldDocumento.getText());
 					usuarioIngresado.setTelefono(textFieldCelular.getText());
 					usuarioIngresado.setFechaNac(dateChooser.getDatoFecha());
-					usuarioIngresado.setMail(textFieldEmailPersonal.getText());
-					usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
+					
+					if(formatoEmail(textFieldEmailPersonal.getText())!="") {
+						usuarioIngresado.setMail(textFieldEmailPersonal.getText());
+					}
+					
+					if(formatoEmailInstitucional(textFieldEmailUTEC.getText())!="") {
+						usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
+					}
+					
 					usuarioIngresado.setContrasena(textFieldContraseña.getText());
 					String usuario = textFieldEmailUTEC.getText().split("@")[0];
 					usuarioIngresado.setUsuario(usuario);
@@ -466,6 +486,28 @@ public class RegistroUsuario extends JFrame {
 		modeloDepartamento.addElement("");
 		for(Departamento departamento: DAOGeneral.departamentoBean.obtenerTodos()) {
 			modeloDepartamento.addElement(departamento.getNombre());
+		}
+	}
+	
+	public String formatoEmailInstitucional(String textFieldEmailUTEC) {
+		String email;
+		if(textFieldEmailUTEC.endsWith("utec.edu.uy")) {
+			email = textFieldEmailUTEC;
+			return email;
+		}else {
+			JOptionPane.showMessageDialog(null, "El mail institucional debe pertenecer al domino utec.edu.uy.", "Error", JOptionPane.ERROR_MESSAGE);
+			return "";
+		}
+	}
+	
+	public String formatoEmail(String textFieldEmailPersonal) {
+		String email;
+		if(textFieldEmailPersonal.contains("@") && textFieldEmailPersonal.endsWith(".com")) {
+			email = textFieldEmailPersonal;
+			return email;
+		}else {
+			JOptionPane.showMessageDialog(null, "El mail personal no tiene un formato correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+			return "";
 		}
 	}
 	
