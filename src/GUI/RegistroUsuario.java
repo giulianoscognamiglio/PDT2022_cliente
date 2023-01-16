@@ -314,7 +314,10 @@ public class RegistroUsuario extends JFrame {
 						usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
 					}
 					
-					usuarioIngresado.setContrasena(textFieldContraseña.getText());
+					if(formatoContraseña(textFieldContraseña.getText()) != "") {
+						usuarioIngresado.setContrasena(textFieldContraseña.getText());
+					}
+					
 					String usuario = textFieldEmailUTEC.getText().split("@")[0];
 					usuarioIngresado.setUsuario(usuario);
 					try {
@@ -366,7 +369,10 @@ public class RegistroUsuario extends JFrame {
 						usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
 					}
 					
-					usuarioIngresado.setContrasena(textFieldContraseña.getText());
+					if(formatoContraseña(textFieldContraseña.getText()) != "") {
+						usuarioIngresado.setContrasena(textFieldContraseña.getText());
+					}
+					
 					String usuario = textFieldEmailUTEC.getText().split("@")[0];
 					usuarioIngresado.setUsuario(usuario);
 					try {
@@ -419,7 +425,10 @@ public class RegistroUsuario extends JFrame {
 						usuarioIngresado.setMailInstitucional(textFieldEmailUTEC.getText());
 					}
 					
-					usuarioIngresado.setContrasena(textFieldContraseña.getText());
+					if(formatoContraseña(textFieldContraseña.getText()) != "") {
+						usuarioIngresado.setContrasena(textFieldContraseña.getText());
+					}
+					
 					String usuario = textFieldEmailUTEC.getText().split("@")[0];
 					usuarioIngresado.setUsuario(usuario);
 					usuarioIngresado.setLocalidad(textFieldLocalidad.getText());
@@ -509,6 +518,19 @@ public class RegistroUsuario extends JFrame {
 			JOptionPane.showMessageDialog(null, "El mail personal no tiene un formato correcto.", "Error", JOptionPane.ERROR_MESSAGE);
 			return "";
 		}
+	}
+	
+	public String formatoContraseña(String textFieldContraseña) {
+		//check if the String contains anything between those values
+		String regex = "^[a-zA-Z0-9]*$";
+		String contraseña;
+			if(textFieldContraseña.matches(regex) && textFieldContraseña.length() >= 8){
+				contraseña = textFieldContraseña;
+				return contraseña;
+			}else {
+				JOptionPane.showMessageDialog(null, "La contraseña debe contener números, letras y al menos 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+				return "";
+			}
 	}
 	
 }
