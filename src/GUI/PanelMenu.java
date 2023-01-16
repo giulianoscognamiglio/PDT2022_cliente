@@ -118,6 +118,7 @@ public class PanelMenu extends JPanel {
 				MenuPrincipal.usuarioIngresado = null;
 				MenuPrincipal.getInstancia().setVisible(false);
 				login.setVisible(true);
+				
 			}
 		});
 		btnLogOut.setBounds(48, 475, 127, 21);
@@ -260,7 +261,6 @@ public class PanelMenu extends JPanel {
 //
 //		---------------------EN OBRA!-----------------
 //		
-		
 		
 		JButton btnJustificados = new JButton("Gestionar justificados de inasistencias");
 		btnJustificados.addActionListener(new ActionListener() {

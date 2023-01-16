@@ -127,12 +127,20 @@ public class Login extends JFrame {
 	
 	public void ingresar() {
 		try {
-			Usuario usuarioIngresado = DAOGeneral.usuarioBean
-										.verificarUsuario(textFieldUsuario.getText(),textFieldContraseña.getText());
+			Usuario usuarioIngresado = DAOGeneral.usuarioBean.verificarUsuario(textFieldUsuario.getText(),textFieldContraseña.getText());
 			
 			PanelMenu.usuarioIngresado = usuarioIngresado;
 			
-			if (usuarioIngresado instanceof Estudiante) {
+			if(usuarioIngresado == null) {
+				JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",JOptionPane.ERROR_MESSAGE);
+			}
+			else if(usuarioIngresado.getValidado().equals("N")) {
+				JOptionPane.showMessageDialog(null, "el usuario aún no ha sido validado", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			else if(usuarioIngresado.getActivo().equals("N")){
+				JOptionPane.showMessageDialog(null, "el usuario no se encuentra activo en el sistema", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			else if (usuarioIngresado instanceof Estudiante) {
 				MenuPrincipal menu = MenuPrincipal.getInstancia();
 				MenuPrincipal.usuarioIngresado = usuarioIngresado;
 				menu.panelMenu.estudianteGUI();
@@ -141,20 +149,15 @@ public class Login extends JFrame {
 			} else if (usuarioIngresado instanceof Analista) {
 				MenuPrincipal menu = MenuPrincipal.getInstancia();
 				MenuPrincipal.usuarioIngresado = usuarioIngresado;
-
 				menu.panelMenu.analistaGUI();
 				menu.setVisible(true);
 				setVisible(false);
 			} else if (usuarioIngresado instanceof Tutor) {
 				MenuPrincipal menu = MenuPrincipal.getInstancia();
 				MenuPrincipal.usuarioIngresado = usuarioIngresado;
-
 				menu.panelMenu.tutorGUI();
 				menu.setVisible(true);
 				setVisible(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",
-						JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (ServiciosException e1) {
 			e1.printStackTrace();

@@ -51,6 +51,7 @@ public class RegistroUsuario extends JFrame {
 	private JTextField textFieldLocalidad;
 	DefaultComboBoxModel modeloITR;
 	DefaultComboBoxModel modeloDepartamento;
+	JComboBox comboBoxTipoDeUsuario;
 
 	/**
 	 * Launch the application.
@@ -296,7 +297,9 @@ public class RegistroUsuario extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e){
 				Usuario usuarioIngresado;
-				if (rdbtnAnalista.isSelected()) {
+//				if (rdbtnAnalista.isSelected()) {
+				String tipoDeUsuario = comboBoxTipoDeUsuario.getSelectedItem().toString();
+				if (tipoDeUsuario.equals("Analista")) {
 					usuarioIngresado = new Analista();
 					usuarioIngresado.setNombre1(textFieldNombre1.getText());
 					usuarioIngresado.setNombre2(textFieldNombre2.getText());
@@ -342,7 +345,11 @@ public class RegistroUsuario extends JFrame {
 					if(checkeo == null){
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
-							JOptionPane.showMessageDialog(null, "Usuario Analista creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							if(analistaLoggedIn()) {
+								JOptionPane.showMessageDialog(null, "Usuario Analista creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							}else {
+								JOptionPane.showMessageDialog(null, "Usuario Analista creado con éxito. Su solicitud será revisada antes de estar activa.", null, JOptionPane.PLAIN_MESSAGE);
+							}
 							setVisible(false);
 						} catch (ServiciosException e1) {
 							e1.printStackTrace();
@@ -351,6 +358,7 @@ public class RegistroUsuario extends JFrame {
 							JOptionPane.showMessageDialog(null, "Ya existe en el sistema un usuario registrado con este documento", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					
+//				}else if (tipoDeUsuario.equals("Estudiante")) {
 				}else if (rdbtnEstudiante.isSelected()) {
 					usuarioIngresado = new Estudiante();
 					usuarioIngresado.setNombre1(textFieldNombre1.getText());
@@ -398,7 +406,11 @@ public class RegistroUsuario extends JFrame {
 					if(checkeo == null){
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
-							JOptionPane.showMessageDialog(null, "Usuario Estudiante creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							if(analistaLoggedIn()) {
+								JOptionPane.showMessageDialog(null, "Usuario Estudiante creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							}else {
+								JOptionPane.showMessageDialog(null, "Usuario Estudiante creado con éxito. Su solicitud será revisada antes de estar activa.", null, JOptionPane.PLAIN_MESSAGE);
+							}
 							setVisible(false);
 						} catch (ServiciosException e1) {
 							e1.printStackTrace();
@@ -407,7 +419,7 @@ public class RegistroUsuario extends JFrame {
 							JOptionPane.showMessageDialog(null, "Ya existe en el sistema un usuario registrado con este documento", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					
-				}else if (rdbtnTutor.isSelected()) {
+				}else if (tipoDeUsuario.equals("Tutor")) {
 					usuarioIngresado = new Tutor();
 					usuarioIngresado.setNombre1(textFieldNombre1.getText());
 					usuarioIngresado.setNombre2(textFieldNombre2.getText());
@@ -455,7 +467,11 @@ public class RegistroUsuario extends JFrame {
 					if(checkeo == null){
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
-							JOptionPane.showMessageDialog(null, "Usuario Tutor creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							if(analistaLoggedIn()) {
+								JOptionPane.showMessageDialog(null, "Usuario Tutor creado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+							}else {
+								JOptionPane.showMessageDialog(null, "Usuario Tutor creado con éxito. Su solicitud será revisada antes de estar activa.", null, JOptionPane.PLAIN_MESSAGE);
+							}
 							setVisible(false);
 						} catch (ServiciosException e1) {
 							e1.printStackTrace();
@@ -479,6 +495,15 @@ public class RegistroUsuario extends JFrame {
 		});
 		btnVolver.setBounds(145, 500, 105, 21);
 		contentPane.add(btnVolver);
+		
+		JLabel lblComboBoxTipoDeUsuario = new JLabel("Tipo de Usuario");
+		lblComboBoxTipoDeUsuario.setBounds(473, 368, 175, 13);
+		contentPane.add(lblComboBoxTipoDeUsuario);
+		
+		comboBoxTipoDeUsuario = new JComboBox();
+		comboBoxTipoDeUsuario.setModel(new DefaultComboBoxModel(new String[] {"", "Estudiante", "Tutor", "Analista"}));
+		comboBoxTipoDeUsuario.setBounds(473, 386, 175, 21);
+		contentPane.add(comboBoxTipoDeUsuario);
 		
 		cargarComboBox();
 
@@ -531,6 +556,11 @@ public class RegistroUsuario extends JFrame {
 				JOptionPane.showMessageDialog(null, "La contraseña debe contener números, letras y al menos 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
 				return "";
 			}
+	}
+	
+	public boolean analistaLoggedIn() {
+		if (MenuPrincipal.usuarioIngresado instanceof Analista) return true;
+		else return false;
 	}
 	
 }
