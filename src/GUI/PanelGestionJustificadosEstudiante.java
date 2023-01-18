@@ -74,6 +74,12 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 					
 					confirmacionPopUpJustificado.setVisible(true);
 					
+<<<<<<< HEAD
+=======
+					//DAOGeneral.justificadoBean.borrar(justificadoDB.getId_justificado());
+					//JOptionPane.showMessageDialog(null, "Justificado dado de baja con éxito", null,
+						//	JOptionPane.PLAIN_MESSAGE);
+>>>>>>> cba656a (Nuevas features de justificados)
 					
 				}else {
 					JOptionPane.showMessageDialog(null, "No se permite eliminar justificados finalizados o en proceso.", null,
@@ -98,9 +104,15 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 
 					DetalleJustificado.justificado=justificadoDB;
 					
+<<<<<<< HEAD
 					DetalleJustificado detJust = new DetalleJustificado();
 					
 					detJust.setVisible(true);
+=======
+					DetalleJustificado detRecl = new DetalleJustificado();
+					
+					detRecl.setVisible(true);
+>>>>>>> cba656a (Nuevas features de justificados)
 
 				} catch (ServiciosException e1) {
 					// TODO Auto-generated catch block
