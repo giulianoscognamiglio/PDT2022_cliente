@@ -5,6 +5,7 @@ import javax.naming.InitialContext;
 import com.servicios.AnalistasBeanRemote;
 import com.servicios.AreasBeanRemote;
 import com.servicios.DepartamentosBeanRemote;
+import com.servicios.EstudiantesBeanRemote;
 import com.servicios.FuncionalidadBeanRemote;
 import com.servicios.GenerosBeanRemote;
 import com.servicios.ItrsBeanRemote;
@@ -26,6 +27,8 @@ public class DAOGeneral {
 		public static FuncionalidadBeanRemote funcionalidadBean;
 		public static AnalistasBeanRemote analistaBean;
 		public static ReclamosBeanRemote reclamoBean;
+		public static EstudiantesBeanRemote estudianteBean;
+
 		
 	public DAOGeneral(){
 		initConexion();
@@ -43,6 +46,8 @@ public class DAOGeneral {
 			funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
 			analistaBean=(AnalistasBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/AnalistasBean!com.servicios.AnalistasBeanRemote");
 			reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
+			estudianteBean=(EstudiantesBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/EstudiantesBean!com.servicios.EstudiantesBeanRemote");
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
