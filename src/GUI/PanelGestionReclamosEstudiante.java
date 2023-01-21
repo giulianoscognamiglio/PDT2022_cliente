@@ -87,7 +87,8 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 		});
 		btnBaja.setBounds(206, 500, 85, 21);
 		add(btnBaja);
-		
+		btnBaja.setVisible(false);
+
 		JButton btnDetalle = new JButton("Detalle");
 		btnDetalle.addMouseListener(new MouseAdapter() {
 			@Override
@@ -114,6 +115,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 		});
 		btnDetalle.setBounds(331, 500, 85, 21);
 		add(btnDetalle);
+		btnDetalle.setVisible(false);
 		
 		JButton btnActualizar = new JButton("Actualizar reclamos");
 		btnActualizar.addMouseListener(new MouseAdapter() {
@@ -179,6 +181,16 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			}
+		});
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+							
+				btnBaja.setVisible(true);
+				btnDetalle.setVisible(true);
+
 			}
 		});
 		

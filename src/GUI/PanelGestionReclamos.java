@@ -76,6 +76,7 @@ public class PanelGestionReclamos extends JPanel {
 		});
 		btnBaja.setBounds(148, 500, 85, 21);
 		add(btnBaja);
+		btnBaja.setVisible(false);
 
 		JButton btnDetalle = new JButton("Detalle");
 		btnDetalle.addMouseListener(new MouseAdapter() {
@@ -101,7 +102,7 @@ public class PanelGestionReclamos extends JPanel {
 		});
 		btnDetalle.setBounds(331, 500, 85, 21);
 		add(btnDetalle);
-
+		btnDetalle.setVisible(false);
 		// ------------------------------------------------------------------------------------
 		// Esto tiene que ser invisible hasta que se interactua con la tabla
 		JComboBox comboBoxEstado = new JComboBox();
@@ -109,11 +110,6 @@ public class PanelGestionReclamos extends JPanel {
 		comboBoxEstado.setBounds(496, 428, 128, 26);
 		add(comboBoxEstado);
 		comboBoxEstado.setVisible(false);
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Seleccionar", "En proceso", "Finalizado" }));
-		comboBox.setBounds(496, 428, 128, 26);
-		add(comboBox);
 
 		JLabel lblEstado = new JLabel("Modificar estado");
 		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,10 +162,6 @@ public class PanelGestionReclamos extends JPanel {
 						// Al combo de valores para filtrar se le cargan los valores
 						comboBoxFiltroValor
 								.setModel(cargarComboFiltroValor(comboBoxFiltro.getSelectedItem().toString()));
-						modeloCombo.addElement("Todos");
-						modeloCombo.addElement("En proceso");
-						modeloCombo.addElement("Finalizado");
-						modeloCombo.addElement("Ingresado");
 
 						// El combo de valores para filtrar se hace visible
 						comboBoxFiltroValor.setVisible(true);
@@ -208,7 +200,7 @@ public class PanelGestionReclamos extends JPanel {
 						List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerTodos();
 						List<Reclamo> reclamosFiltrados;
 
-						if (comboBoxFiltro.getSelectedItem().toString() == "En proceso") {
+						if (comboBoxFiltroValor.getSelectedItem().toString() == "En proceso") {
 
 							// aca utilizamos .stream().filter().collect para filtrar los elementos de la
 							// lista auxiliar y retornamos
@@ -216,18 +208,7 @@ public class PanelGestionReclamos extends JPanel {
 									.collect(Collectors.toList());
 							cargarTabla(reclamosFiltrados);
 
-						} else if (comboBoxEstado.getSelectedItem().toString() == "Ingresado") {
-
-							// aca utilizamos .stream().filter().collect para filtrar los elementos de la
-							// lista auxiliar y retornamos
-							reclamosFiltrados = reclamos.stream().filter(r -> r.getEstado().equals("INGRESADO"))
-									.collect(Collectors.toList());
-							cargarTabla(reclamosFiltrados);
-						} else if (comboBoxEstado.getSelectedItem().toString() == "Todos") {
-
-							// aca retornamos todos los elementos de la lista
-							cargarTabla(reclamos);
-						} else if (comboBoxFiltro.getSelectedItem().toString() == "Finalizado") {
+						} else if (comboBoxFiltroValor.getSelectedItem().toString() == "Finalizado") {
 
 							// aca utilizamos .stream().filter().collect para filtrar los elementos de la
 							// lista auxiliar y retornamos
@@ -235,24 +216,49 @@ public class PanelGestionReclamos extends JPanel {
 									.collect(Collectors.toList());
 							cargarTabla(reclamosFiltrados);
 
-						} else if (comboBoxFiltro.getSelectedItem().toString() == "Ingresado") {
+						} else if (comboBoxFiltroValor.getSelectedItem().toString() == "Ingresado") {
 
 							// aca utilizamos .stream().filter().collect para filtrar los elementos de la
 							// lista auxiliar y retornamos
 							reclamosFiltrados = reclamos.stream().filter(r -> r.getEstado().equals("INGRESADO"))
 									.collect(Collectors.toList());
 							cargarTabla(reclamosFiltrados);
-
+						} else {
+							cargarTabla(reclamos);
 						}
 
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-				} else {
+				} else if(comboBoxFiltro.getSelectedItem().toString() == "Estudiante") {
+
+					System.out.println(comboBoxFiltroValor.getSelectedItem().toString().charAt(0));
+					int idInt =  Integer.parseInt(String.valueOf(comboBoxFiltroValor.getSelectedItem().toString().charAt(0)));
+					//obtenemos el long del estudiante seleccionado
+					long idEstudiante = new Long(idInt);
+					System.out.println(idEstudiante);
+					
+					List<Reclamo> reclamosPorEstudiante = DAOGeneral.reclamoBean.obtenerPorEstudiante(idEstudiante);
+					
+					System.out.println(reclamosPorEstudiante);
+					//reclamos.stream().filter(r -> r.getEstudiante() ==4L).collect(Collectors.toList());
+					cargarTabla(reclamosPorEstudiante);
 				}
 			}
 		});
 
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnActualizar.setVisible(true);
+				comboBoxEstado.setVisible(true);
+				
+				btnBaja.setVisible(true);
+				btnDetalle.setVisible(true);
+
+			}
+		});
 		cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 
 	}
@@ -310,20 +316,20 @@ public class PanelGestionReclamos extends JPanel {
 		modeloCombo.addElement("Seleccione item");
 
 		if (criterio.equals("Estudiante")) {
-			List<Usuario> estudiantes = DAOGeneral.usuarioBean.obtenerEstudiantes();
+			List<Usuario> estudiantes = DAOGeneral.usuarioBean.obtenerPorRol(1L);
 //			List<Usuario> estudiantesFiltrados = estudiantes.stream().filter(u -> u.getRol().toString().equals("1"))
 //					.collect(Collectors.toList());
 
 			for (Usuario e : estudiantes) {
 				modeloCombo.addElement("" + e.getId_usuario() + " - " + e.getCedula());
 			}
-		}
-
-		if (criterio.equals("Estado")) {
+		} else if (criterio.equals("Estado")) {
 			modeloCombo.addElement("Ingresado");
 			modeloCombo.addElement("En proceso");
 			modeloCombo.addElement("Finalizado");
 		}
+
+		
 
 		return modeloCombo;
 
