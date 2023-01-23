@@ -14,14 +14,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.entities.Analista;
+import com.entities.Estudiante;
 import com.entities.Rol;
+import com.entities.Tutor;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
 
 import controlador.DAOGeneral;
+import java.awt.Color;
 
 public class PanelBajaUsuario extends JPanel {
 	private static PanelBajaUsuario instance=new PanelBajaUsuario();
@@ -37,7 +42,6 @@ public class PanelBajaUsuario extends JPanel {
 
 	private PanelBajaUsuario() {
 		initGUI();
-
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +52,23 @@ public class PanelBajaUsuario extends JPanel {
 			v.addElement(u.getNombre1());
 			v.addElement(u.getApellido1());
 			v.addElement(u.getCedula());
+			v.addElement(u.getFechaNac());
+			v.addElement(u.getMail());
+			v.addElement(u.getMailInstitucional());
+			v.addElement(u.getItr().getNombre());
+			v.addElement(u.getValidado());
+			v.addElement(u.getActivo());
+			if(u instanceof Analista)v.addElement("Analista");
+			if(u instanceof Estudiante)v.addElement("Estudiante");
+			if(u instanceof Tutor)v.addElement("Tutor");
+			if(u instanceof Estudiante){
+				v.addElement(((Estudiante)u).getGeneracion());
+			}else{
+				v.addElement("-");
+			}
+
+
+			
 			modeloTabla.addRow(v);
 		}
 	}
@@ -99,16 +120,26 @@ public class PanelBajaUsuario extends JPanel {
 		setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(63, 152, 561, 332);
+		scrollPane.setBounds(63, 101, 561, 388);
 		add(scrollPane);
 
 		panelDinamico = new JPanel();
 		panelDinamico.setBounds(0, 0, 684, 581);
 		add(panelDinamico);
 		panelDinamico.setLayout(null);
+		
+		JLabel lblUsuarios = new JLabel("Usuarios");
+		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsuarios.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblUsuarios.setBounds(235, 37, 198, 36);
+		panelDinamico.add(lblUsuarios);
+		
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-		modeloTabla = new DefaultTableModel(new Object[][] { { null, null, null }, },
-				new String[] { "Nombre", "Apellido", "Cédula" }){
+		modeloTabla = new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null, null, null, null }, },
+				new String[] {  "Nombre", "Apellido", "Cédula", "Fecha de Nacimiento", "Mail", 
+								"Mail Institucional", "ITR", "Validado", "Activo", "Usuario", "Generación"}){
 				
 				@Override
 			public boolean isCellEditable(int row, int column) {
@@ -119,6 +150,7 @@ public class PanelBajaUsuario extends JPanel {
 		table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -132,12 +164,6 @@ public class PanelBajaUsuario extends JPanel {
 				}
 			}
 		});
-
-		JLabel lblUsuarios = new JLabel("Usuarios");
-		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuarios.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblUsuarios.setBounds(235, 37, 198, 36);
-		add(lblUsuarios);
 
 		btnBaja = new JButton("Baja");
 		btnBaja.addMouseListener(new MouseAdapter() {
@@ -160,7 +186,7 @@ public class PanelBajaUsuario extends JPanel {
 			}
 		});
 		btnBaja.setBounds(206, 500, 85, 21);
-		add(btnBaja);
+		panelDinamico.add(btnBaja);
 		btnBaja.setVisible(true);
 
 		// modificacion
@@ -179,7 +205,7 @@ public class PanelBajaUsuario extends JPanel {
 			}
 		});
 		btnModificación.setBounds(322, 500, 95, 21);
-		add(btnModificación);
+		panelDinamico.add(btnModificación);
 		btnModificación.setVisible(true);
 
 		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
