@@ -224,21 +224,27 @@ public class PanelBajaUsuario extends JPanel {
 	}
 	
 	public void desactivarUsuario()throws Exception {
-		int column = 11;
-		int row = table.getSelectedRow();
-		Long idUsuario = Long.parseLong(table.getModel().getValueAt(row, column).toString());
-		try {
-			Usuario requerido = DAOGeneral.usuarioBean.obtenerPorId(idUsuario);
-			if (requerido.getActivo().equals("N")) throw new Exception("El usuario ya se encuentra desactivado");
-			requerido.setActivo("N");
-			requerido.setValidado("Y");
-			DAOGeneral.usuarioBean.actualizar(requerido);
-			JOptionPane.showMessageDialog(null, "Usuario desactivado con éxito", null, JOptionPane.PLAIN_MESSAGE);
-		} catch (ServiciosException e1) {
-			e1.printStackTrace();
-		}
 		
-		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
+			int column = 11;
+			int row = table.getSelectedRow();
+			Long idUsuario = Long.parseLong(table.getModel().getValueAt(row, column).toString());
+			try {
+				Usuario requerido = DAOGeneral.usuarioBean.obtenerPorId(idUsuario);
+				if (requerido.getActivo().equals("N")) throw new Exception("El usuario ya se encuentra desactivado");
+				requerido.setActivo("N");
+				requerido.setValidado("Y");
+				int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro de descativar al usuario seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					DAOGeneral.usuarioBean.actualizar(requerido);
+					JOptionPane.showMessageDialog(null, "Usuario desactivado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+				}else {
+				    JOptionPane.showMessageDialog(null, "Cambios cancelados");
+				}
+			} catch (ServiciosException e1) {
+					e1.printStackTrace();
+			cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
+			}
+		
 	}
 	
 	public void modificarUsuario() throws Exception {
