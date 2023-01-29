@@ -216,33 +216,68 @@ public class ActualizarUsuario extends JPanel {
 		btnActualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				getUsuarioIngresado().setNombre1(textFieldNombre1.getText());
-				getUsuarioIngresado().setNombre2(textFieldNombre2.getText());
-				getUsuarioIngresado().setApellido1(textFieldApellido1.getText());
-				getUsuarioIngresado().setApellido2(textFieldApellido2.getText());
-				getUsuarioIngresado().setCedula(textFieldDocumento.getText());
-				getUsuarioIngresado().setTelefono(textFieldCelular.getText());
-				getUsuarioIngresado().setFechaNac(dateChooser.getDatoFecha());
-				getUsuarioIngresado().setMail(textFieldEmailPersonal.getText());
-				getUsuarioIngresado().setMailInstitucional(textFieldEmailUTEC.getText());
-				getUsuarioIngresado().setContrasena(textFieldContraseña.getText());
-				String usuario = textFieldEmailUTEC.getText().split("@")[0];
-				getUsuarioIngresado().setUsuario(usuario);
 				
-				try {
-					getUsuarioIngresado().setDepartamento(DAOGeneral.departamentoBean.obtenerPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
-				} catch (ServiciosException e1) {
-					e1.printStackTrace();
+				int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro de los cambios?", "Confirmación", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+				    getUsuarioIngresado().setNombre1(textFieldNombre1.getText());
+					getUsuarioIngresado().setNombre2(textFieldNombre2.getText());
+					getUsuarioIngresado().setApellido1(textFieldApellido1.getText());
+					getUsuarioIngresado().setApellido2(textFieldApellido2.getText());
+					getUsuarioIngresado().setCedula(textFieldDocumento.getText());
+					getUsuarioIngresado().setTelefono(textFieldCelular.getText());
+					getUsuarioIngresado().setFechaNac(dateChooser.getDatoFecha());
+					getUsuarioIngresado().setMail(textFieldEmailPersonal.getText());
+					getUsuarioIngresado().setMailInstitucional(textFieldEmailUTEC.getText());
+					getUsuarioIngresado().setContrasena(textFieldContraseña.getText());
+					String usuario = textFieldEmailUTEC.getText().split("@")[0];
+					getUsuarioIngresado().setUsuario(usuario);
+					
+					try {
+						getUsuarioIngresado().setDepartamento(DAOGeneral.departamentoBean.obtenerPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
+					} catch (ServiciosException e1) {
+						e1.printStackTrace();
+					}
+					getUsuarioIngresado().setLocalidad(textFieldLocalidad.getText());
+//					getUsuarioIngresado().setValidado("0");
+//					getUsuarioIngresado().setActivo("0");
+					try {
+						DAOGeneral.usuarioBean.actualizar(getUsuarioIngresado());
+						JOptionPane.showMessageDialog(null, "Usuario actualizado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+					} catch (ServiciosException e1) {
+						e1.printStackTrace();
+					}
+				} else {
+				    JOptionPane.showMessageDialog(null, "Cambios cancelados");
+//				    System.exit(0);
 				}
-				getUsuarioIngresado().setLocalidad(textFieldLocalidad.getText());
-				getUsuarioIngresado().setValidado("0");
-				getUsuarioIngresado().setActivo("0");
-				try {
-					DAOGeneral.usuarioBean.actualizar(getUsuarioIngresado());
-					JOptionPane.showMessageDialog(null, "Usuario actualizado con éxito", null, JOptionPane.PLAIN_MESSAGE);
-				} catch (ServiciosException e1) {
-					e1.printStackTrace();
-				}
+				
+//				getUsuarioIngresado().setNombre1(textFieldNombre1.getText());
+//				getUsuarioIngresado().setNombre2(textFieldNombre2.getText());
+//				getUsuarioIngresado().setApellido1(textFieldApellido1.getText());
+//				getUsuarioIngresado().setApellido2(textFieldApellido2.getText());
+//				getUsuarioIngresado().setCedula(textFieldDocumento.getText());
+//				getUsuarioIngresado().setTelefono(textFieldCelular.getText());
+//				getUsuarioIngresado().setFechaNac(dateChooser.getDatoFecha());
+//				getUsuarioIngresado().setMail(textFieldEmailPersonal.getText());
+//				getUsuarioIngresado().setMailInstitucional(textFieldEmailUTEC.getText());
+//				getUsuarioIngresado().setContrasena(textFieldContraseña.getText());
+//				String usuario = textFieldEmailUTEC.getText().split("@")[0];
+//				getUsuarioIngresado().setUsuario(usuario);
+//				
+//				try {
+//					getUsuarioIngresado().setDepartamento(DAOGeneral.departamentoBean.obtenerPorNombre(comboBoxDepartamento.getSelectedItem().toString()));
+//				} catch (ServiciosException e1) {
+//					e1.printStackTrace();
+//				}
+//				getUsuarioIngresado().setLocalidad(textFieldLocalidad.getText());
+//				getUsuarioIngresado().setValidado("0");
+//				getUsuarioIngresado().setActivo("0");
+//				try {
+//					DAOGeneral.usuarioBean.actualizar(getUsuarioIngresado());
+//					JOptionPane.showMessageDialog(null, "Usuario actualizado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+//				} catch (ServiciosException e1) {
+//					e1.printStackTrace();
+//				}
 			}
 		});
 		btnActualizar.setBounds(280, 494, 121, 21);
