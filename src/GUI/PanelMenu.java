@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.entities.Usuario;
+import com.exceptions.ServiciosException;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -52,8 +54,15 @@ public class PanelMenu extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				AltaReclamo altaReclamo = new AltaReclamo();
-				altaReclamo.setVisible(true);
+				AltaReclamo altaReclamo;
+				try {
+					altaReclamo = new AltaReclamo();
+					altaReclamo.setVisible(true);
+
+				} catch (ServiciosException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -278,6 +287,23 @@ public class PanelMenu extends JPanel {
 		});
 		btnJustificados.setBounds(23, 412, 170, 21);
 		panelMenu.add(btnJustificados);
+		
+		JButton btnAnaliticaDeReportes = new JButton("Analitica de reportes");
+		btnAnaliticaDeReportes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				PanelAnaliticaReportes analiticaReportes = new PanelAnaliticaReportes();
+				panelDinamico.removeAll();
+				analiticaReportes.setSize(684, 581);
+				analiticaReportes.setLocation(0, 0);
+				panelDinamico.add(analiticaReportes);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnAnaliticaDeReportes.setBounds(23, 103, 170, 21);
+		panelMenu.add(btnAnaliticaDeReportes);
 
 	}
 

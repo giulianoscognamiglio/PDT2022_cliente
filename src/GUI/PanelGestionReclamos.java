@@ -232,11 +232,9 @@ public class PanelGestionReclamos extends JPanel {
 					}
 				} else if(comboBoxFiltro.getSelectedItem().toString() == "Estudiante") {
 
-					System.out.println(comboBoxFiltroValor.getSelectedItem().toString().charAt(0));
 					int idInt =  Integer.parseInt(String.valueOf(comboBoxFiltroValor.getSelectedItem().toString().charAt(0)));
 					//obtenemos el long del estudiante seleccionado
 					long idEstudiante = new Long(idInt);
-					System.out.println(idEstudiante);
 					
 					List<Reclamo> reclamosPorEstudiante = DAOGeneral.reclamoBean.obtenerPorEstudiante(idEstudiante);
 					
@@ -317,8 +315,6 @@ public class PanelGestionReclamos extends JPanel {
 
 		if (criterio.equals("Estudiante")) {
 			List<Usuario> estudiantes = DAOGeneral.usuarioBean.obtenerPorRol(1L);
-//			List<Usuario> estudiantesFiltrados = estudiantes.stream().filter(u -> u.getRol().toString().equals("1"))
-//					.collect(Collectors.toList());
 
 			for (Usuario e : estudiantes) {
 				modeloCombo.addElement("" + e.getId_usuario() + " - " + e.getCedula());
