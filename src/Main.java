@@ -120,7 +120,7 @@ public class Main {
 		itrBean.crear(itr2);
 		
 		Analista a=new Analista();
-		a.setActivo("X");
+		a.setActivo("Y");
 		a.setApellido1("Perez");
 		a.setApellido2("Gomez");
 		a.setCedula("12345678");
@@ -135,7 +135,7 @@ public class Main {
 		a.setNombre2("Andres");
 		a.setTelefono("556798");
 		a.setUsuario("admin");
-		a.setValidado("SI");
+		a.setValidado("Y");
 		a.setItr(itrBean.obtenerPorNombre("ITR Capital"));
 		usuarioBean.crear(a); //1
 		
@@ -149,13 +149,13 @@ public class Main {
 		
 		Tutor tutor=new Tutor();
 		
-		tutor.setActivo("X");
+		tutor.setActivo("Y");
 		tutor.setApellido1("Pirez");
 		tutor.setApellido2("Muñoz");
 		tutor.setCedula("12345679");
 		tutor.setContrasena("Contra");
 		tutor.setDepartamento(departamentoBean.obtenerPorNombre("Durazno"));
-		tutor.setFechaNac(new Date(1997,10,12));
+		tutor.setFechaNac(new Date(1997-1900,10,12));
 		tutor.setGenero(generoBean.obtenerPorNombre("Hombre"));
 		tutor.setLocalidad("El Pinar");
 		tutor.setMail("juan@capo.com.uy");
@@ -164,7 +164,7 @@ public class Main {
 		tutor.setNombre2("Andres");
 		tutor.setTelefono("556798");
 		tutor.setUsuario("juan.pirez");
-		tutor.setValidado("SI");
+		tutor.setValidado("Y");
 		tutor.setArea(areaBean.obtenerPorNombre("Matematicas"));
 		tutor.setTipo(tipoTutorBean.obtenerPorNombre("Encargado"));
 		tutor.setItr(itrBean.obtenerPorNombre("ITR CS"));
@@ -196,7 +196,7 @@ public class Main {
 		
 		Estudiante e=new Estudiante();
 		
-		e.setActivo("X");
+		e.setActivo("Y");
 		e.setApellido1("Raquel");
 		e.setApellido2("Muñoz");
 		e.setCedula("1234566679");
@@ -211,7 +211,7 @@ public class Main {
 		e.setNombre2("Nicolas");
 		e.setTelefono("52256798");
 		e.setUsuario("rodrigo.raquel");
-		e.setValidado("SI");
+		e.setValidado("Y");
 		e.setGeneracion("2022");
 		e.setRol(rolBean.buscarNombre("Estudiante"));
 		e.setItr(itrBean.obtenerPorNombre("ITR Capital"));
@@ -219,7 +219,7 @@ public class Main {
 		
 		Estudiante e2=new Estudiante();
 		
-		e2.setActivo("X");
+		e2.setActivo("Y");
 		e2.setApellido1("Mosca");
 		e2.setApellido2("Messi");
 		e2.setCedula("56766544");
@@ -234,7 +234,7 @@ public class Main {
 		e2.setNombre2("Nicolas");
 		e2.setTelefono("098575565");
 		e2.setUsuario("martin.mosca");
-		e2.setValidado("SI");
+		e2.setValidado("Y");
 		e2.setGeneracion("2020");
 		e2.setRol(rolBean.buscarNombre("Estudiante"));
 		e2.setItr(itrBean.obtenerPorNombre("ITR Capital"));

@@ -191,6 +191,7 @@ public class ModificarUsuario extends JPanel {
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(224, 74, 152, 21);
 		add(comboBoxITR);
+				
 //		JRadioButton rdbtnEstudiante = new JRadioButton("Estudiante");
 //		JRadioButton rdbtnTutor = new JRadioButton("Tutor");
 //		JRadioButton rdbtnAnalista = new JRadioButton("Analista");
