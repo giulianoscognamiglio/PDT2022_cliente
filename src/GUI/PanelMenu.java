@@ -242,7 +242,7 @@ public class PanelMenu extends JPanel {
 		panelMenu.add(btnBajaUsuario);
 
 		JLabel lblNombreUsuario = new JLabel("nombreUsuario");
-		lblNombreUsuario.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNombreUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreUsuario.setBounds(54, 57, 121, 13);
 
