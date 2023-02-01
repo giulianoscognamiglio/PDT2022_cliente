@@ -170,6 +170,30 @@ public class Main {
 		tutor.setItr(itrBean.obtenerPorNombre("ITR CS"));
 		usuarioBean.crear(tutor);
 		
+		Tutor t2 = new Tutor();
+		
+		t2.setActivo("X");
+		t2.setApellido1("Nahuelim");
+		t2.setApellido2("Martinez");
+		t2.setCedula("44433345");
+		t2.setContrasena("Contra");
+		t2.setDepartamento(departamentoBean.obtenerPorNombre("Maldonado"));
+		t2.setFechaNac(new Date(1990-1900,12,30));
+		t2.setGenero(generoBean.obtenerPorNombre("Hombre"));
+		t2.setLocalidad("Piriapolis");
+		t2.setMail("pepepepe@hotmail.com");
+		t2.setMailInstitucional("pepe.pepe@utec.edu.uy");
+		t2.setNombre1("Jose");
+		t2.setNombre2("Sabia");
+		t2.setTelefono("098373635");
+		t2.setUsuario("jose.nahuelim");
+		t2.setValidado("SI");
+		
+		t2.setArea(areaBean.obtenerPorNombre("Matematicas"));
+		t2.setTipo(tipoTutorBean.obtenerPorNombre("Encargado"));
+		t2.setItr(itrBean.obtenerPorNombre("ITR CS"));
+		usuarioBean.crear(t2);
+		
 		Estudiante e=new Estudiante();
 		
 		e.setActivo("Y");
@@ -204,7 +228,7 @@ public class Main {
 		e2.setFechaNac(new Date(1999-1900,11,28));
 		e2.setGenero(generoBean.obtenerPorNombre("Hombre"));
 		e2.setLocalidad("Sarandi Grande");
-		e2.setMail("martin@capo.com.uy");
+		e2.setMail("martin@jkk.com.uy");
 		e2.setMailInstitucional("martin.mosca@estudiantes.utec.edu.uy");
 		e2.setNombre1("Martin");
 		e2.setNombre2("Nicolas");
@@ -215,31 +239,49 @@ public class Main {
 		e2.setRol(rolBean.buscarNombre("Estudiante"));
 		e2.setItr(itrBean.obtenerPorNombre("ITR Capital"));
 		usuarioBean.crear(e2);
+		
+		
+		
 
 		//Registros de prueba en la tabla Reclamos
 		
 		Reclamo reclamo1 = new Reclamo();
 		
-		reclamo1.setDetalle("Los baños siempre están sucios");
-		reclamo1.setEstudiante(3);
+		reclamo1.setTipo("VME");
+		reclamo1.setDetalle("Me faltan los creditos de VME2");
+		reclamo1.setEstudiante(4L);
 		reclamo1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		reclamo1.setEstado("EN PROCESO");
+		reclamo1.setCreditosReclamados(2);
+		reclamo1.setDocente_id(3L);
+		reclamo1.setNombreEventoVME("Charlas con empresas");
+		reclamo1.setFechaInicioActividad(new Date(2021,8,8));
+		reclamo1.setSemestre(2);
+		
+		
 		reclamoBean.crear(reclamo1);
 		
 		Reclamo reclamo2 = new Reclamo();
 		
-		reclamo2.setDetalle("El salón A34 no tiene techo");
-		reclamo2.setEstudiante(3);
+		reclamo2.setTipo("Otros");
+		reclamo2.setDetalle("La cantina no es una cantina de verdad");
+		reclamo2.setEstudiante(3L);
 		reclamo2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		reclamo2.setEstado("FINALIZADO");
 		reclamoBean.crear(reclamo2);
 		
 		Reclamo reclamo3 = new Reclamo();
 		
-		reclamo3.setDetalle("La cantina no es una cantina de verdad");
-		reclamo3.setEstudiante(3);
+		reclamo3.setTipo("APE");
+		reclamo3.setDetalle("No tengo idea de lo que es APE");
+		reclamo3.setEstudiante(3L);
 		reclamo3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		reclamo3.setEstado("INGRESADO");
+		reclamo3.setCreditosReclamados(1);
+		reclamo3.setDocente_id(2L);
+		reclamo3.setNombreActividadAPE("Actividad APE");
+		reclamo3.setFechaInicioActividad(new Date(2021,4,8));
+		reclamo3.setSemestre(1);
 		reclamoBean.crear(reclamo3);
 		
 
