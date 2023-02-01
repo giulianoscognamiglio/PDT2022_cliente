@@ -210,18 +210,18 @@ public class PanelMenu extends JPanel {
 		btnLogOut.setBounds(23, 475, 170, 21);
 		panelMenu.add(btnLogOut);
 
-		JButton btnAltaUsuario = new JButton("Alta Usuario");
-		btnAltaUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				RegistroUsuario registro = new RegistroUsuario();
-				registro.setVisible(true);
-
-			}
-		});
-		btnAltaUsuario.setBounds(23, 280, 170, 21);
-		panelMenu.add(btnAltaUsuario);
+//		JButton btnAltaUsuario = new JButton("Alta Usuario");
+//		btnAltaUsuario.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//
+//				RegistroUsuario registro = new RegistroUsuario();
+//				registro.setVisible(true);
+//
+//			}
+//		});
+//		btnAltaUsuario.setBounds(23, 280, 170, 21);
+//		panelMenu.add(btnAltaUsuario);
 
 		JButton btnBajaUsuario = new JButton("Gestión de usuarios");
 		btnBajaUsuario.addMouseListener(new MouseAdapter() {
