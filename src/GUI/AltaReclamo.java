@@ -255,6 +255,7 @@ public class AltaReclamo extends JFrame {
 				// necesitamos parsear esto porque en la clase usuario tenemos long pero para la
 				// base precisamos Long
 				Long idUsuario = new Long(PanelMenu.usuarioIngresado.getId_usuario());
+				Estudiante estudiante = DAOGeneral.estudianteBean.obtenerPorUsuario(idUsuario);
 
 				// dependiendo del tipo de reclamo vamos a guardar determinados campos o
 				// nullearlos
@@ -264,7 +265,7 @@ public class AltaReclamo extends JFrame {
 					//Si es un reclamo VME
 
 					reclamo.setDetalle(textAreaReclamo.getText());
-					reclamo.setEstudiante(idUsuario);
+					reclamo.setEstudiante(estudiante.getId_estudiante());
 					reclamo.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 					reclamo.setEstado("INGRESADO");
 
@@ -285,7 +286,7 @@ public class AltaReclamo extends JFrame {
 					//Si es un reclamo que no sea VME, ni APE ni Optativas
 					
 					reclamo.setDetalle(textAreaReclamo.getText());
-					reclamo.setEstudiante(idUsuario);
+					reclamo.setEstudiante(estudiante.getId_estudiante());
 					reclamo.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 					reclamo.setEstado("INGRESADO");
 					
@@ -303,7 +304,9 @@ public class AltaReclamo extends JFrame {
 					//Si es APE u optativas
 
 					reclamo.setDetalle(textAreaReclamo.getText());
-					reclamo.setEstudiante(idUsuario);
+					reclamo.setEstudiante(estudiante.getId_estudiante());
+					//					reclamo.setEstudiante(idUsuario);
+
 					reclamo.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 					reclamo.setEstado("INGRESADO");
 

@@ -196,6 +196,7 @@ public class Main {
 		
 		Estudiante e=new Estudiante();
 		
+		e.setId_estudiante(1L);
 		e.setActivo("Y");
 		e.setApellido1("Raquel");
 		e.setApellido2("Muñoz");
@@ -219,6 +220,7 @@ public class Main {
 		
 		Estudiante e2=new Estudiante();
 		
+		e2.setId_estudiante(2L);
 		e2.setActivo("Y");
 		e2.setApellido1("Mosca");
 		e2.setApellido2("Messi");
@@ -249,13 +251,13 @@ public class Main {
 		
 		reclamo1.setTipo("VME");
 		reclamo1.setDetalle("Me faltan los creditos de VME2");
-		reclamo1.setEstudiante(4L);
-		reclamo1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		reclamo1.setEstudiante(1L);
+		reclamo1.setFecha(Date.from(LocalDate.of(2022, 7, 19).atStartOfDay(defaultZoneId).toInstant()));
 		reclamo1.setEstado("EN PROCESO");
 		reclamo1.setCreditosReclamados(2);
 		reclamo1.setDocente_id(3L);
 		reclamo1.setNombreEventoVME("Charlas con empresas");
-		reclamo1.setFechaInicioActividad(new Date(2021,8,8));
+		reclamo1.setFechaInicioActividad(new Date(2000-2021,8,8));
 		reclamo1.setSemestre(2);
 		
 		
@@ -265,8 +267,8 @@ public class Main {
 		
 		reclamo2.setTipo("Otros");
 		reclamo2.setDetalle("La cantina no es una cantina de verdad");
-		reclamo2.setEstudiante(3L);
-		reclamo2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+		reclamo2.setEstudiante(1L);
+		reclamo2.setFecha(Date.from(LocalDate.of(2016, 8, 19).atStartOfDay(defaultZoneId).toInstant()));
 		reclamo2.setEstado("FINALIZADO");
 		reclamoBean.crear(reclamo2);
 		
@@ -274,15 +276,29 @@ public class Main {
 		
 		reclamo3.setTipo("APE");
 		reclamo3.setDetalle("No tengo idea de lo que es APE");
-		reclamo3.setEstudiante(3L);
+		reclamo3.setEstudiante(2L);
 		reclamo3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		reclamo3.setEstado("INGRESADO");
 		reclamo3.setCreditosReclamados(1);
 		reclamo3.setDocente_id(2L);
 		reclamo3.setNombreActividadAPE("Actividad APE");
-		reclamo3.setFechaInicioActividad(new Date(2021,4,8));
+		reclamo3.setFechaInicioActividad(new Date(2000-2021,4,8));
 		reclamo3.setSemestre(1);
 		reclamoBean.crear(reclamo3);
+		
+		Reclamo reclamo4 = new Reclamo();
+		
+		reclamo4.setTipo("VME");
+		reclamo4.setDetalle("Me faltan los creditos de VME2");
+		reclamo4.setEstudiante(1L);
+		reclamo4.setFecha(Date.from(LocalDate.of(2019, 5, 19).atStartOfDay(defaultZoneId).toInstant()));
+		reclamo4.setEstado("EN PROCESO");
+		reclamo4.setCreditosReclamados(2);
+		reclamo4.setDocente_id(3L);
+		reclamo4.setNombreEventoVME("Charlas con empresas");
+		reclamo4.setFechaInicioActividad(new Date(2000-2021,8,8));
+		reclamo4.setSemestre(2);
+		
 		
 
 		//Registros de prueba en la tabla Justificados
