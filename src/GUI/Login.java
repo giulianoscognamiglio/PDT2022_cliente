@@ -34,7 +34,7 @@ public class Login extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,14 +51,13 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public Login() {
 		DAOGeneral dao = new DAOGeneral();
-		
-		ImageIcon 
-		img = new ImageIcon("uteclogo.png");
+
+		ImageIcon img = new ImageIcon("uteclogo.png");
 		setIconImage(img.getImage());
-		
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -90,57 +89,58 @@ public class Login extends JFrame {
 		});
 		btnIngresar.setBounds(161, 151, 96, 21);
 		contentPane.add(btnIngresar);
-		
+
 		JButton btnRegistrar = new JButton("registrarse");
 		btnRegistrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				RegistroUsuario registro = new RegistroUsuario();
 				registro.setVisible(true);
-				
+
 			}
 		});
 		btnRegistrar.setBounds(161, 216, 96, 21);
 		contentPane.add(btnRegistrar);
-		
+
 		textFieldContraseña = new JPasswordField();
 		textFieldContraseña.setBounds(161, 110, 96, 19);
 		contentPane.add(textFieldContraseña);
-		
+
 		textFieldContraseña.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                //10 es codigo para el enter
-                if(e.getKeyCode()==10) {
-                    try {
-                        ingresar();
-                    } catch (Exception e1) {
-                        JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...",JOptionPane.ERROR_MESSAGE);
-                        textFieldContraseña.setText("");
-                    }
-                }
-            }
-        });
-		
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// 10 es codigo para el enter
+				if (e.getKeyCode() == 10) {
+					try {
+						ingresar();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Error...", JOptionPane.ERROR_MESSAGE);
+						textFieldContraseña.setText("");
+					}
+				}
+			}
+		});
+
 	}
-	
+
 	public void ingresar() {
 		try {
-			Usuario usuarioIngresado = DAOGeneral.usuarioBean.verificarUsuario(textFieldUsuario.getText(),textFieldContraseña.getText());
-			
+			Usuario usuarioIngresado = DAOGeneral.usuarioBean.verificarUsuario(textFieldUsuario.getText(),
+					textFieldContraseña.getText());
+
 			PanelMenu.usuarioIngresado = usuarioIngresado;
-			
-			if(usuarioIngresado == null) {
-				JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",JOptionPane.ERROR_MESSAGE);
-			}
-			else if(usuarioIngresado.getValidado().equals("N")) {
-				JOptionPane.showMessageDialog(null, "el usuario aún no ha sido validado", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else if(usuarioIngresado.getActivo().equals("N")){
-				JOptionPane.showMessageDialog(null, "el usuario no se encuentra activo en el sistema", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else if (usuarioIngresado instanceof Estudiante) {
+
+			if (usuarioIngresado == null) {
+				JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrecto", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (usuarioIngresado.getValidado().equals("N")) {
+				JOptionPane.showMessageDialog(null, "el usuario aún no ha sido validado", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (usuarioIngresado.getActivo().equals("N")) {
+				JOptionPane.showMessageDialog(null, "el usuario no se encuentra activo en el sistema", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else if (usuarioIngresado instanceof Estudiante) {
 				MenuPrincipal menu = MenuPrincipal.getInstancia();
 				MenuPrincipal.usuarioIngresado = usuarioIngresado;
 				menu.panelMenu.estudianteGUI();

@@ -7,8 +7,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,13 +23,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.entities.Analista;
 import com.entities.Estudiante;
+import com.entities.Funcionalidad;
 import com.entities.Rol;
 import com.entities.Tutor;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
 
 import controlador.DAOGeneral;
-import java.awt.Color;
 
 public class PanelBajaUsuario extends JPanel {
 	private static PanelBajaUsuario instance=new PanelBajaUsuario();
@@ -37,8 +40,12 @@ public class PanelBajaUsuario extends JPanel {
 	JTable table;
 	public JPanel panelDinamico;
 	public JScrollPane scrollPane;
-	public JButton btnBaja;
+//	public JButton btnBaja;
 	public JButton btnModificación;
+	public JComboBox comboBoxEstado;
+	public JComboBox comboBoxUsuario;
+	public JComboBox comboBoxITR;
+	public JComboBox comboBoxGeneracion;
 
 	private PanelBajaUsuario() {
 		initGUI();
@@ -86,7 +93,7 @@ public class PanelBajaUsuario extends JPanel {
 		setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(63, 88, 561, 401);
+		scrollPane.setBounds(37, 128, 611, 361);
 		add(scrollPane);
 
 		panelDinamico = new JPanel();
@@ -97,7 +104,7 @@ public class PanelBajaUsuario extends JPanel {
 		JLabel lblUsuarios = new JLabel("Usuarios");
 		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuarios.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblUsuarios.setBounds(235, 37, 198, 36);
+		lblUsuarios.setBounds(235, 28, 198, 36);
 		panelDinamico.add(lblUsuarios);
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -209,6 +216,61 @@ public class PanelBajaUsuario extends JPanel {
 		btnAlta.setBounds(139, 500, 95, 23);
 		panelDinamico.add(btnAlta);
 		
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsuario.setBounds(225, 75, 118, 14);
+		panelDinamico.add(lblUsuario);
+		
+		comboBoxUsuario = new JComboBox();
+		comboBoxUsuario.setBounds(225, 96, 118, 22);
+		panelDinamico.add(comboBoxUsuario);
+		
+		JLabel lblITR = new JLabel("ITR");
+		lblITR.setHorizontalAlignment(SwingConstants.CENTER);
+		lblITR.setBounds(354, 75, 118, 14);
+		panelDinamico.add(lblITR);
+		
+		comboBoxITR = new JComboBox();
+		comboBoxITR.setBounds(354, 96, 118, 22);
+		panelDinamico.add(comboBoxITR);
+		
+		JLabel lblGeneracion = new JLabel("Generacion");
+		lblGeneracion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGeneracion.setBounds(482, 75, 118, 14);
+		panelDinamico.add(lblGeneracion);
+		
+		comboBoxGeneracion = new JComboBox();
+		comboBoxGeneracion.setBounds(482, 96, 118, 22);
+		panelDinamico.add(comboBoxGeneracion);
+		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEstado.setBounds(96, 75, 118, 14);
+		panelDinamico.add(lblEstado);
+		
+		comboBoxEstado = new JComboBox();
+		comboBoxEstado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Usuario> todos = DAOGeneral.usuarioBean.obtenerTodos();
+				if(comboBoxEstado.getSelectedItem().toString() == "Todos") {
+					cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
+				}else if (comboBoxEstado.getSelectedItem().toString() == "Sin Validar") {
+					List<Usuario> sinValidar = todos.stream().filter(u -> u.getValidado().equals("N")).collect(Collectors.toList());
+					cargarTabla(sinValidar);
+				}else if (comboBoxEstado.getSelectedItem().toString() == "Activo") {
+					List<Usuario> activos = todos.stream().filter(u -> u.getActivo().equals("Y")).collect(Collectors.toList());
+					cargarTabla(activos);
+				}
+				else if (comboBoxEstado.getSelectedItem().toString() == "Eliminado") {
+					List<Usuario> eliminados = todos.stream().filter(u -> u.getActivo().equals("N")).collect(Collectors.toList());
+					cargarTabla(eliminados);
+				}
+			}
+		});
+		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Sin Validar", "Activo", "Eliminado"}));
+		comboBoxEstado.setBounds(96, 96, 118, 22);
+		panelDinamico.add(comboBoxEstado);
+		
 		btnModificación.setVisible(true);
 		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 	}
@@ -227,10 +289,10 @@ public class PanelBajaUsuario extends JPanel {
 			requerido.setValidado("Y");
 			DAOGeneral.usuarioBean.actualizar(requerido);
 			JOptionPane.showMessageDialog(null, "Usuario activado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+			defaultValueComboBox();
 		} catch (ServiciosException e1) {
 			e1.printStackTrace();
 		}
-		
 		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 	}
 	
@@ -248,13 +310,14 @@ public class PanelBajaUsuario extends JPanel {
 				if (reply == JOptionPane.YES_OPTION) {
 					DAOGeneral.usuarioBean.actualizar(requerido);
 					JOptionPane.showMessageDialog(null, "Usuario desactivado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+					defaultValueComboBox();
 				}else {
 				    JOptionPane.showMessageDialog(null, "Cambios cancelados");
 				}
 			} catch (ServiciosException e1) {
 					e1.printStackTrace();
-			cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 			}
+			cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 		
 	}
 	
@@ -282,7 +345,7 @@ public class PanelBajaUsuario extends JPanel {
 
 		// invisibilizamos cosas innecesarias
 		scrollPane.setVisible(false);
-		btnBaja.setVisible(false);
+//		btnBaja.setVisible(false);
 		btnModificación.setVisible(false);
 
 		// campos no editables
@@ -290,4 +353,67 @@ public class PanelBajaUsuario extends JPanel {
 		modUsuario.textFieldEmailUTEC.setEditable(false);
 
 	}
+	
+	public void defaultValueComboBox() {
+		comboBoxEstado.setSelectedIndex(0);
+		comboBoxGeneracion.setSelectedIndex(0);
+		comboBoxITR.setSelectedIndex(0);
+		comboBoxUsuario.setSelectedIndex(0);
+	}
+	
+	
+	
+	
+//	DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+//	JComboBox comboBoxEstado = new JComboBox();
+//	comboBoxEstado.setModel(modeloCombo);
+//
+//	modeloCombo.addElement("Asignado");
+//	modeloCombo.addElement("No Asignado");
+//	comboBoxEstado.setBounds(235, 106, 198, 36);
+//	add(comboBoxEstado);
+//
+//	comboBoxEstado.addItemListener(new ItemListener() {
+//		@Override
+//		public void itemStateChanged(ItemEvent arg0) {
+//			try {
+//				
+//				if (comboBoxEstado.getSelectedItem().toString() == "Asignado") {
+//					cargarTabla(rolSeleccionado.getFuncionalidades());
+//					
+//				} else if (comboBoxEstado.getSelectedItem().toString() == "No Asignado") {
+//					
+//					List<Funcionalidad> funNo = new ArrayList<>();
+//					
+//					for (Funcionalidad f : DAOGeneral.funcionalidadBean.obtenerFuncionalidades()) {
+//						
+//						Boolean flag = false;
+//						for (Funcionalidad j : rolSeleccionado.getFuncionalidades()) {
+//							
+//							if (f.getId() == j.getId()) {
+//								flag = true;
+//								break;
+//							}
+//							if (!flag) {
+//								funNo.add(f);
+//							}
+//						}
+//					}
+//					cargarTabla(funNo);
+//				}
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//			}
+//		}
+//	});
+	
+//	public void cargarTablaFiltro(List<Funcionalidad> fun) {
+//		modeloTabla.setRowCount(0);
+//		for (Funcionalidad f : fun) {
+//			Vector v = new Vector();
+//			v.addElement(f.getNombre());
+//			v.addElement(f.getDescripcion());
+//			modeloTabla.addRow(v);
+//		}
+//	}
 }

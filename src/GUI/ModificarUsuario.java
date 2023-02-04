@@ -287,7 +287,7 @@ public class ModificarUsuario extends JPanel {
 				
 				PanelBajaUsuario.getInstance().cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 				
-				PanelBajaUsuario.getInstance().btnBaja.setVisible(true);
+//				PanelBajaUsuario.getInstance().btnBaja.setVisible(true);
 
 				PanelBajaUsuario.getInstance().btnModificación.setVisible(true);
 
