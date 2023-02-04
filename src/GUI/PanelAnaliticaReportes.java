@@ -321,15 +321,6 @@ public class PanelAnaliticaReportes extends JPanel {
 			v.addElement(value);
 
 			modeloTabla.addRow(v);
-//
-//				Vector v = new Vector();
-//				Usuario usuarioDB;
-//
-//				v.addElement(r.getId_reclamo());
-//				v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
-////				v.addElement(r.getEstado());
-//
-//				modeloTabla.addRow(v);
 
 		}
 	}

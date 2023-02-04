@@ -167,7 +167,7 @@ public class PanelBajaUsuario extends JPanel {
 				}
 			}
 		});
-		btnModificación.setBounds(188, 500, 95, 21);
+		btnModificación.setBounds(244, 501, 95, 21);
 		panelDinamico.add(btnModificación);
 		
 		JButton btnActivar = new JButton("Activar");
@@ -181,7 +181,7 @@ public class PanelBajaUsuario extends JPanel {
 				}
 			}
 		});
-		btnActivar.setBounds(293, 500, 95, 23);
+		btnActivar.setBounds(349, 501, 95, 23);
 		panelDinamico.add(btnActivar);
 		
 		JButton btnDesactivar = new JButton("Desactivar");
@@ -195,8 +195,19 @@ public class PanelBajaUsuario extends JPanel {
 				}
 			}
 		});
-		btnDesactivar.setBounds(398, 500, 95, 23);
+		btnDesactivar.setBounds(454, 501, 95, 23);
 		panelDinamico.add(btnDesactivar);
+		
+		JButton btnAlta = new JButton("Alta");
+		btnAlta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				RegistroUsuario registro = new RegistroUsuario();
+				registro.setVisible(true);
+			}
+		});
+		btnAlta.setBounds(139, 500, 95, 23);
+		panelDinamico.add(btnAlta);
 		
 		btnModificación.setVisible(true);
 		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
