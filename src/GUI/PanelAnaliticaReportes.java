@@ -22,21 +22,33 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.exceptions.ServiciosException;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.entities.*;
 
 import controlador.DAOGeneral;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
 public class PanelAnaliticaReportes extends JPanel {
 
+	private JButton btnDescargar;
 	private DefaultTableModel modeloTabla;
-	private JComboBox comboBoxFiltroValor;
-
+	private HashMap<String, Integer> hashMapPDF;
 	public PanelAnaliticaReportes() {
 
 		setBounds(0, 0, 625, 581);
@@ -47,6 +59,8 @@ public class PanelAnaliticaReportes extends JPanel {
 		add(scrollPane);
 
 		modeloTabla = new DefaultTableModel(new Object[][] { { null, null }, }, new String[] { "Nombre", "Cantidad" });
+		modeloTabla.setRowCount(0);
+
 		JTable table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
@@ -62,6 +76,8 @@ public class PanelAnaliticaReportes extends JPanel {
 		comboBoxFiltroCriterio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerTodos();
+				btnDescargar.setVisible(true);
+
 
 				if (comboBoxFiltroCriterio.getSelectedItem().equals("Generación")) {
 
@@ -84,6 +100,8 @@ public class PanelAnaliticaReportes extends JPanel {
 
 					}
 					cargarTablaHM(hmGeneraciones);
+					hashMapPDF = hmGeneraciones;
+
 
 				}
 
@@ -127,30 +145,32 @@ public class PanelAnaliticaReportes extends JPanel {
 
 					}
 					cargarTablaHM(hmMeses);
-
+					hashMapPDF = hmMeses;
 				}
 
 				if (comboBoxFiltroCriterio.getSelectedItem().equals("ITR")) {
 
-					HashMap<String, Integer> hmGeneraciones = new HashMap<>();
+					HashMap<String, Integer> hmITR = new HashMap<>();
 
 					for (Reclamo r : reclamos) {
 						String key = DAOGeneral.estudianteBean.obtenerPorId(r.getEstudiante()).getItr().getNombre();
 
 						// si un ITR no está en el HM la agregamos como key, con un value
 						// inicial de 1
-						if (!(hmGeneraciones.containsKey(key))) {
+						if (!(hmITR.containsKey(key))) {
 
-							hmGeneraciones.put(key, 1);
+							hmITR.put(key, 1);
 
 						} else {
 							// si está en el HM le sumamos uno al value
 //			map.put(key, map.get(key) + 1);
-							hmGeneraciones.put(key, hmGeneraciones.get(key) + 1);
+							hmITR.put(key, hmITR.get(key) + 1);
 						}
 
 					}
-					cargarTablaHM(hmGeneraciones);
+					cargarTablaHM(hmITR);
+					hashMapPDF = hmITR;
+
 				}
 
 				if (comboBoxFiltroCriterio.getSelectedItem().equals("Tipo")) {
@@ -174,6 +194,8 @@ public class PanelAnaliticaReportes extends JPanel {
 
 					}
 					cargarTablaHM(hmGeneraciones);
+					hashMapPDF = hmGeneraciones;
+
 				}
 
 			}
@@ -192,95 +214,24 @@ public class PanelAnaliticaReportes extends JPanel {
 
 		comboBoxFiltroCriterio.setModel(modeloCombo);
 
-		JButton btnDescargar = new JButton("Descargar reporte");
-		btnDescargar.setBounds(48, 499, 153, 36);
-		add(btnDescargar);
-
-		comboBoxFiltroValor = new JComboBox();
-		comboBoxFiltroValor.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			public void actionPerformed(ActionEvent e) {
-				List<Reclamo> reclamos = new ArrayList<Reclamo>();
-
-				if (comboBoxFiltroCriterio.getSelectedItem().equals("Mes")) {
-					reclamos = DAOGeneral.reclamoBean.obtenerTodos().stream()
-							.filter(r -> (r.getFecha().getMonth() + 1) == (comboBoxFiltroValor.getSelectedIndex()))
-							.collect(Collectors.toList());
-
+		btnDescargar = new JButton("Descargar reporte");
+		btnDescargar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+				
+					String criterio = comboBoxFiltroCriterio.getSelectedItem().toString();
+					descargarTabla(criterio);
+				} catch (FileNotFoundException | DocumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
 			}
 		});
-		comboBoxFiltroValor.setBounds(363, 109, 145, 36);
-		add(comboBoxFiltroValor);
-
-		comboBoxFiltroValor.setVisible(false);
-
-	}
-
-	private DefaultComboBoxModel cargarComboFiltroValor(String criterio) throws ServiciosException {
-		// método para hacer aparecer el comboBoxFiltroCriterio y darle los datos a
-		// mostrar
-		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-		modeloCombo.addElement("Seleccione item");
-
-		if (criterio.equals("Mes")) {
-
-			modeloCombo.addElement("Enero");
-			modeloCombo.addElement("Febrero");
-			modeloCombo.addElement("Marzo");
-			modeloCombo.addElement("Abril");
-			modeloCombo.addElement("Mayo");
-			modeloCombo.addElement("Junio");
-			modeloCombo.addElement("Julio");
-			modeloCombo.addElement("Agosto");
-			modeloCombo.addElement("Septiembre");
-			modeloCombo.addElement("Octubre");
-			modeloCombo.addElement("Noviembre");
-			modeloCombo.addElement("Diciembre");
-//			List<Usuario> estudiantes = DAOGeneral.usuarioBean.obtenerPorRol(1L);
-//
-//			for (Usuario e : estudiantes) {
-//				modeloCombo.addElement("" + e.getId_usuario() + " - " + e.getCedula());
-//			}
-		} else if (criterio.equals("Generación")) {
-
-			// agarramos todos los estudiantes y metemos todas las generaciones (no
-			// repetidas) dentro del modeloCombo
-			List<Estudiante> estudiantes = DAOGeneral.estudianteBean.obtenerTodos();
-
-			// lista auxiliar para evitar repetidos
-			List<String> generacionesAux = new ArrayList<String>();
-
-			for (Estudiante e : estudiantes) {
-				if (!generacionesAux.contains(e.getGeneracion())) {
-
-					generacionesAux.add(e.getGeneracion());
-
-					modeloCombo.addElement(e.getGeneracion());
-
-				}
-			}
-
-		} else if (criterio.equals("Tipo")) {
-
-			modeloCombo.addElement("VME");
-			modeloCombo.addElement("APE");
-			modeloCombo.addElement("Optativas");
-			modeloCombo.addElement("Otro");
-
-		} else if (criterio.equals("ITR")) {
-
-			List<ITR> itrs = DAOGeneral.itrBean.obtenerTodos();
-
-			for (ITR itr : itrs) {
-				modeloCombo.addElement(itr.getNombre());
-			}
-
-		}
-
-		return modeloCombo;
-
+		btnDescargar.setBounds(48, 499, 153, 36);
+		add(btnDescargar);
+		btnDescargar.setVisible(false);
 	}
 
 	public void cargarTabla(List<Reclamo> reclamos) {
@@ -323,5 +274,45 @@ public class PanelAnaliticaReportes extends JPanel {
 			modeloTabla.addRow(v);
 
 		}
+	}
+	public void descargarTabla(String criterio) throws FileNotFoundException, DocumentException {
+		
+		LocalDate localDate = LocalDate.now();
+		Paragraph titulo = new Paragraph("Analitica de reclamos por "+criterio);
+		Document documento = new Document();
+		FileOutputStream archivo = new FileOutputStream("Analitica de reclamos por "+criterio+localDate+".pdf");
+		PdfWriter.getInstance(documento, archivo);
+
+		documento.open();
+		titulo.setAlignment(1);
+
+		documento.add(titulo);
+
+		documento.add(Chunk.NEWLINE);
+
+		PdfPTable tabla = new PdfPTable(2);
+		tabla.setWidthPercentage(100);
+		
+		PdfPCell keys = new PdfPCell(new Phrase("Agrupacion"));
+		PdfPCell values = new PdfPCell(new Phrase("Cantidad de reportes"));
+		
+		tabla.addCell(keys);
+		tabla.addCell(values);
+		
+		
+		for (Map.Entry<String, Integer> r : hashMapPDF.entrySet()) {
+			
+			tabla.addCell(r.getKey());
+			tabla.addCell(r.getValue().toString());
+				
+		}
+
+		documento.add(tabla);
+		
+		documento.close();
+		
+		JOptionPane.showMessageDialog(null, "Archivo PDF descargado con éxito", null,
+				JOptionPane.PLAIN_MESSAGE);
+
 	}
 }

@@ -238,8 +238,6 @@ public class PanelGestionReclamos extends JPanel {
 					
 					List<Reclamo> reclamosPorEstudiante = DAOGeneral.reclamoBean.obtenerPorEstudiante(idEstudiante);
 					
-					System.out.println(reclamosPorEstudiante);
-					//reclamos.stream().filter(r -> r.getEstudiante() ==4L).collect(Collectors.toList());
 					cargarTabla(reclamosPorEstudiante);
 				}
 			}
@@ -314,11 +312,18 @@ public class PanelGestionReclamos extends JPanel {
 		modeloCombo.addElement("Seleccione item");
 
 		if (criterio.equals("Estudiante")) {
-			List<Usuario> estudiantes = DAOGeneral.usuarioBean.obtenerPorRol(1L);
+			List<Usuario> usuarios = DAOGeneral.usuarioBean.obtenerPorRol(1L);
+			List<Estudiante> estudiantes = new ArrayList<Estudiante>();
+			
 
-			for (Usuario e : estudiantes) {
-				modeloCombo.addElement("" + e.getId_usuario() + " - " + e.getCedula());
+			for (Usuario u : usuarios) {
+				estudiantes.add(DAOGeneral.estudianteBean.obtenerPorUsuario(u.getId_usuario()));
 			}
+			
+			for (Estudiante e : estudiantes) {
+				modeloCombo.addElement("" + e.getId_estudiante() + " - " + e.getCedula());
+			}
+			
 		} else if (criterio.equals("Estado")) {
 			modeloCombo.addElement("Ingresado");
 			modeloCombo.addElement("En proceso");

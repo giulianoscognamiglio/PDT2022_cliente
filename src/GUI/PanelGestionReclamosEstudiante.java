@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 public class PanelGestionReclamosEstudiante extends JPanel {
 
 	private DefaultTableModel modeloTabla;
-
+	private Estudiante estudiante = DAOGeneral.estudianteBean.obtenerPorUsuario(PanelMenu.usuarioIngresado.getId_usuario());
 	public PanelGestionReclamosEstudiante() {
 
 		setBounds(0, 0, 684, 581);
@@ -82,7 +82,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 					JOptionPane.showMessageDialog(null, "No se permite eliminar reclamos finalizados o en proceso.", null,
 							JOptionPane.ERROR_MESSAGE);
 				}
-				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 			}
 		});
 		btnBaja.setBounds(206, 500, 85, 21);
@@ -194,7 +194,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			}
 		});
 		
-		cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+		cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 
 	}
 	
