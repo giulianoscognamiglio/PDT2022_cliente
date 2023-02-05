@@ -287,16 +287,18 @@ public class ModificarUsuario extends JPanel {
 				
 				PanelBajaUsuario.getInstance().cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 				
-				PanelBajaUsuario.getInstance().btnBaja.setVisible(true);
+//				PanelBajaUsuario.getInstance().btnBaja.setVisible(true);
 
-				PanelBajaUsuario.getInstance().btnModificación.setVisible(true);
-
-				PanelBajaUsuario.getInstance().scrollPane.setVisible(true);
+//				PanelBajaUsuario.getInstance().btnModificación.setVisible(true);
+//
+//				PanelBajaUsuario.getInstance().scrollPane.setVisible(true);
+				
+				PanelBajaUsuario.getInstance().initGUI();
 
 				PanelBajaUsuario.getInstance().revalidate();
 				
 				PanelBajaUsuario.getInstance().repaint();
-				
+								
 			}
 		});
 		btnVolver.setBounds(260, 495, 121, 21);
