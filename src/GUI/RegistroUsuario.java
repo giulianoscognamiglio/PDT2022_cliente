@@ -518,8 +518,7 @@ public class RegistroUsuario extends JFrame {
 										JOptionPane.PLAIN_MESSAGE);
 							} else {
 								JOptionPane.showMessageDialog(null,
-										"Usuario Tutor creado con éxito. /n"
-										+ "Su solicitud será revisada antes de estar activa",
+										"Usuario Tutor creado con éxito. Su solicitud será revisada antes de estar activa",
 										null, JOptionPane.PLAIN_MESSAGE);
 							}
 							setVisible(false);

@@ -129,6 +129,7 @@ public class PanelGestionReclamos extends JPanel {
 				Reclamo reclamoDB = seleccionarReclamo(table);
 
 				String estado = comboBoxEstado.getSelectedItem().toString().toUpperCase();
+				
 				try {
 
 					modificarEstado(reclamoDB, estado);
