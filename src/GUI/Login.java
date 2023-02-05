@@ -24,6 +24,8 @@ import com.entities.Usuario;
 import com.exceptions.ServiciosException;
 
 import controlador.DAOGeneral;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -81,6 +83,10 @@ public class Login extends JFrame {
 		textFieldUsuario.setColumns(10);
 
 		JButton btnIngresar = new JButton("ingresar");
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

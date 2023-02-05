@@ -24,7 +24,7 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		analistaGUI();
+		estudianteGUI();
 	}
 
 	public void estudianteGUI() {
@@ -66,7 +66,7 @@ public class PanelMenu extends JPanel {
 
 			}
 		});
-		btnAltaReclamos.setBounds(48, 331, 127, 21);
+		btnAltaReclamos.setBounds(48, 300, 127, 21);
 		panelMenu.add(btnAltaReclamos);
 
 		JButton btnFuncionalidades = new JButton("Funcionalidades");
@@ -139,7 +139,40 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setBounds(54, 59, 121, 13);
 		lblNombreUsuario.setText(usuarioIngresado.getUsuario());
 		panelMenu.add(lblNombreUsuario);
+		
+		JButton btnJustificados = new JButton("Justificados");
+		btnJustificados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelGestionJustificadosEstudiante gestionJustificados = new PanelGestionJustificadosEstudiante();
+				panelDinamico.removeAll();
+				gestionJustificados.setSize(684, 581);
+				gestionJustificados.setLocation(0, 0);
+				panelDinamico.add(gestionJustificados);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnJustificados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnJustificados.setBounds(48, 332, 127, 21);
+		panelMenu.add(btnJustificados);
+		
+		JButton btnAltaJustificado = new JButton("Alta Justificado");
+		btnAltaJustificado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				AltaJustificado altaJustificado = new AltaJustificado();
+				altaJustificado.setVisible(true);
+			}
+		});
+		btnAltaJustificado.setBounds(48, 269, 127, 21);
+		panelMenu.add(btnAltaJustificado);
 
+		
 	}
 
 	public void analistaGUI() {
