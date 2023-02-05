@@ -29,11 +29,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PanelGestionJustificados extends JPanel {
+public class PanelGestionJustificadosEstudiante extends JPanel {
 
 	private DefaultTableModel modeloTabla;
 
-	public PanelGestionJustificados() {
+	public PanelGestionJustificadosEstudiante() {
 
 		setBounds(0, 0, 684, 581);
 		setLayout(null);
@@ -43,7 +43,7 @@ public class PanelGestionJustificados extends JPanel {
 		add(scrollPane);
 
 		modeloTabla = new DefaultTableModel(new Object[][] { { null, null}, },
-				new String[] { "ID", "Estudiante", "Estado"});
+				new String[] { "ID", "Estado"});
 		JTable table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
@@ -55,11 +55,35 @@ public class PanelGestionJustificados extends JPanel {
 		lblJustificados.setBounds(235, 37, 198, 36);
 		add(lblJustificados);
 		
-		cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
-	
-
 		
-//		DETALLE DE JUSTIFICADO
+		JButton btnBaja = new JButton("Baja");
+		btnBaja.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				
+				Justificado justificadoDB = seleccionarJustificado(table);
+
+				//con esta condicional nos aseguramos que solo se puedan eliminar los que aún
+				//no hayan sido tocados por un analista
+				if(justificadoDB.getEstado().equals("INGRESADO")) {
+					
+					//Se le adjudica el justificado obtenido desde la base a la variable static "justificado" y se lanza el pop up de confirmación
+					ConfirmacionPopUpJustificado.justificado = justificadoDB;
+					ConfirmacionPopUpJustificado confirmacionPopUpJustificado = new ConfirmacionPopUpJustificado();
+					
+					confirmacionPopUpJustificado.setVisible(true);
+					
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "No se permite eliminar justificados finalizados o en proceso.", null,
+							JOptionPane.ERROR_MESSAGE);
+				}
+				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+			}
+		});
+		btnBaja.setBounds(206, 500, 85, 21);
+		add(btnBaja);
 		
 		JButton btnDetalle = new JButton("Detalle");
 		btnDetalle.addMouseListener(new MouseAdapter() {
@@ -72,11 +96,11 @@ public class PanelGestionJustificados extends JPanel {
 					
 					Justificado justificadoDB = seleccionarJustificado(table);
 
-					DetalleJustificado.justificado = justificadoDB;
+					DetalleJustificado.justificado=justificadoDB;
 					
-					DetalleJustificado detJustif = new DetalleJustificado();
+					DetalleJustificado detJust = new DetalleJustificado();
 					
-					detJustif.setVisible(true);
+					detJust.setVisible(true);
 
 				} catch (ServiciosException e1) {
 					// TODO Auto-generated catch block
@@ -85,27 +109,27 @@ public class PanelGestionJustificados extends JPanel {
 				
 			}
 		});
+		
 		btnDetalle.setBounds(331, 500, 85, 21);
 		add(btnDetalle);
 		
-		
-//		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar", "En proceso", "Finalizado"}));
-		comboBox.setBounds(496, 428, 128, 26);
-		add(comboBox);
-		
-		JLabel lblEstado = new JLabel("Modificar estado");
-		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEstado.setBounds(496, 405, 128, 13);
-		add(lblEstado);
+		JButton btnActualizar = new JButton("Actualizar justificados");
+		btnActualizar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 
+			}
+		});
+		btnActualizar.setBounds(432, 421, 192, 21);
+		add(btnActualizar);
 		
 		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
 		JComboBox comboBoxEstado = new JComboBox();
 		comboBoxEstado.setModel(modeloCombo);
 
-		modeloCombo.addElement("Todos");		
+		modeloCombo.addElement("Todos");
 		modeloCombo.addElement("En proceso");
 		modeloCombo.addElement("Finalizado");
 		modeloCombo.addElement("Ingresado");
@@ -113,64 +137,6 @@ public class PanelGestionJustificados extends JPanel {
 		comboBoxEstado.setBounds(235, 106, 198, 36);
 		add(comboBoxEstado);
 
-		
-//		BAJA DE JUSTIFICADO	
-		
-		JButton btnBaja = new JButton("Baja");
-		btnBaja.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-
-			
-			try {
-				
-				Justificado justificadoDB = seleccionarJustificado(table);
-
-				System.out.println(justificadoDB);
-				DAOGeneral.justificadoBean.borrar(justificadoDB.getId_justificado());
-				
-					
-				JOptionPane.showMessageDialog(null, "Justificado dado de baja con éxito", null,
-						JOptionPane.PLAIN_MESSAGE);
-			} catch (ServiciosException e1) {
-				e1.printStackTrace();
-			}
-			cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
-		}
-	});
-	btnBaja.setBounds(206, 500, 85, 21);
-		add(btnBaja);
-		
-
-		
-		
-		JButton btnActualizar = new JButton("Actualizar");
-		btnActualizar.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			
-			Justificado justificadoDB = seleccionarJustificado(table);
-
-			String estado =  comboBox.getSelectedItem().toString().toUpperCase();
-			try {
-				
-				modificarEstado(justificadoDB,estado);
-				
-				cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
-
-				
-			} catch (ServiciosException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-		}
-	});
-	btnActualizar.setBounds(496, 479, 128, 21);
-		add(btnActualizar);
-
-		
-		
 		//Filtrar
 		comboBoxEstado.addItemListener(new ItemListener() {
 			@Override
@@ -184,28 +150,29 @@ public class PanelGestionJustificados extends JPanel {
 					if (comboBoxEstado.getSelectedItem().toString() == "En proceso") {
 						
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
-						justificadosFiltrados = justificados.stream().filter(j -> j.getEstado().equals("EN PROCESO")).collect(Collectors.toList());
+						justificadosFiltrados = justificados.stream().filter(r -> r.getEstado().equals("EN PROCESO")).collect(Collectors.toList());
 						cargarTabla(justificadosFiltrados);
 
 					} else if (comboBoxEstado.getSelectedItem().toString() == "Finalizado") {
 						
 						
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
-						justificadosFiltrados = justificados.stream().filter(j -> j.getEstado().equals("FINALIZADO")).collect(Collectors.toList());
+							justificadosFiltrados = (List<Justificado>) justificados.stream().filter(r -> r.getEstado().equals("FINALIZADO")).collect(Collectors.toList());
 							cargarTabla(justificadosFiltrados);
 							
 					} else if (comboBoxEstado.getSelectedItem().toString() == "Ingresado") {
-						
-						
+
+
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
-						justificadosFiltrados = justificados.stream().filter(j -> j.getEstado().equals("INGRESADO")).collect(Collectors.toList());
+						justificadosFiltrados = (List<Justificado>) justificados.stream().filter(r -> r.getEstado().equals("INGRESADO")).collect(Collectors.toList());
 						cargarTabla(justificadosFiltrados);
-					}  else if (comboBoxEstado.getSelectedItem().toString() == "Todos") {
-												
-						//aca retornamos todos los elementos de la lista
-							cargarTabla(justificados);
-					} 	
-					
+						
+				   } else if (comboBoxEstado.getSelectedItem().toString() == "Todos") {
+
+					  	//aca retornamos todos los elementos de la lista
+					   cargarTabla(justificados);
+				   } 	
+
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -213,7 +180,7 @@ public class PanelGestionJustificados extends JPanel {
 			}
 		});
 		
-
+		cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 
 	}
 	
@@ -222,7 +189,7 @@ public class PanelGestionJustificados extends JPanel {
 ////////////////////////////////////////////////////////////////////////////////////////
 	public void cargarTabla(List<Justificado> justificados) {
 		modeloTabla.setRowCount(0);
-		for (Justificado j : justificados) {
+		for (Justificado r : justificados) {
 			
 					
 
@@ -230,12 +197,11 @@ public class PanelGestionJustificados extends JPanel {
 				
 				Vector v = new Vector();
 				Usuario usuarioDB;
-				usuarioDB = DAOGeneral.usuarioBean.obtenerPorId(j.getEstudiante());
+				usuarioDB = DAOGeneral.usuarioBean.obtenerPorId(r.getEstudiante());
 				
-				v.addElement(j.getId_justificado());
-				v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
-				v.addElement(j.getEstado());
-				
+				v.addElement(r.getId_justificado());
+				v.addElement(r.getEstado());
+
 				modeloTabla.addRow(v);
 
 
@@ -247,14 +213,7 @@ public class PanelGestionJustificados extends JPanel {
 		}
 	}
 	
-	public void modificarEstado(Justificado justificadoDB, String nuevoEstado) throws ServiciosException {
-		//seteamos el estado nuevo
-		justificadoDB.setEstado(nuevoEstado);
-		
-		//mandamos el registro modificado a la base
-		DAOGeneral.justificadoBean.actualizar(justificadoDB);
-		
-	}
+
 	
 	public Justificado seleccionarJustificado(JTable table) {
 		//metodo para seleccionar un justificado de la tabla

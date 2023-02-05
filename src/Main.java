@@ -308,7 +308,7 @@ public class Main {
 		justif1.setDetalle("No falté, se olvidaron de mí");
 		justif1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		justif1.setEstudiante(3);
-		justif1.setEstado("EN PROCESO");
+		justif1.setEstado("INGRESADO");
 		justificadoBean.crear(justif1);
 		
 		Justificado justif2 = new Justificado();
@@ -316,7 +316,7 @@ public class Main {
 		justif2.setDetalle("Estaba enfermo y no pude ir");
 		justif2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		justif2.setEstudiante(3);
-		justif2.setEstado("FINALIZADO");
+		justif2.setEstado("EN PROCESO");
 		justificadoBean.crear(justif2);
 		
 		Justificado justif3 = new Justificado();
@@ -324,7 +324,7 @@ public class Main {
 		justif3.setDetalle("Se rompió el autobús y llegué mas tarde");
 		justif3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		justif3.setEstudiante(3);
-		justif3.setEstado("INGRESADO");
+		justif3.setEstado("FINALIZADO");
 		justificadoBean.crear(justif3);
 		
 	}
