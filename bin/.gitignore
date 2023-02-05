@@ -1,5 +1,6 @@
 /GUI/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /Main.class
 /MainApp$1.class
 /MainApp.class
@@ -12,3 +13,10 @@
 >>>>>>> cc4ef98 DetalleJustificado
 =======
 >>>>>>> ae3eefb (Cambios para que funque Justificados en el estudiante)
+=======
+/Main.class
+/MainApp$1.class
+/MainApp.class
+/controlador/
+/mainEventos.class
+>>>>>>> 9b6ed68 (cambios en el cliente)
