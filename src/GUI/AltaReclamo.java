@@ -44,6 +44,8 @@ import javax.swing.JProgressBar;
 
 public class AltaReclamo extends JFrame {
 
+	
+	public static Reclamo reclamoExistente;
 	private JPanel contentPane;
 	private JLabel lblNombre2;
 	DefaultComboBoxModel modeloITR;
@@ -298,8 +300,6 @@ public class AltaReclamo extends JFrame {
 					reclamo.setSemestre(null);
 					reclamo.setNombreActividadAPE(null);
 					
-				} else {
-					
 					System.out.println("entra al else");
 					//Si es APE u optativas
 
@@ -359,6 +359,45 @@ public class AltaReclamo extends JFrame {
 		textNombreActividadEvento.setVisible(false);
 
 		comboDocente.setModel(cargarComboDocentes());
+		
+		
+		if(reclamoExistente!=null) {
+			
+			textCreditos.setText(""+reclamoExistente.getCreditosReclamados());
+			
+			if(reclamoExistente.getTipo().equals("VME")) {
+				
+				textNombreActividadEvento.setText(reclamoExistente.getNombreEventoVME());
+
+			} else if(reclamoExistente.getTipo().equals("APE")) {
+				textNombreActividadEvento.setText(reclamoExistente.getNombreActividadAPE());
+
+			}
+
+			
+		}
+		
+		
+		/*	public static Reclamo reclamoExistente;
+	private JPanel contentPane;
+	private JLabel lblNombre2;
+	DefaultComboBoxModel modeloITR;
+	private JTextField textCreditos;
+	public RSDateChooser dateChooser;
+	private JTextField textSemestre;
+	private JTextField textNombreActividadEvento;
+	private JComboBox comboDocente;
+	private JButton btnRegistrar;
+	private JLabel lblDocente;
+	private JLabel lblNombreActividadEvento;
+	private JLabel lblCreditos;
+	private JLabel lblSemestre;
+	private JLabel lblFecha;
+	private JTextField textTitulo;
+		 * 
+		 * 
+		 * 
+		 */
 	}
 
 	private DefaultComboBoxModel cargarComboDocentes() throws ServiciosException {

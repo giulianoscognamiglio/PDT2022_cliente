@@ -8,5 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/lib/RojeruSan.full_9.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/lmd62/Desktop/repositorioPDT/itext-5.0.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
