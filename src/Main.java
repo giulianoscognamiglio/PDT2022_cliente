@@ -7,8 +7,10 @@ import javax.naming.NamingException;
 
 import com.entities.Analista;
 import com.entities.Area;
+import com.entities.ConvocatoriaAsistencia;
 import com.entities.Departamento;
 import com.entities.Estudiante;
+import com.entities.Evento;
 import com.entities.Funcionalidad;
 import com.entities.Genero;
 import com.entities.ITR;
@@ -28,7 +30,8 @@ import com.servicios.JustificadosBeanRemote;
 import com.servicios.RolBeanRemote;
 import com.servicios.TiposTutorBeanRemote;
 import com.servicios.UsuariosBeanRemote;
-
+import com.servicios.EventosBeanRemote;
+import com.servicios.ConvocatoriasAsistenciaBeanRemote;
 
 public class Main {
 
@@ -43,6 +46,11 @@ public class Main {
 		FuncionalidadBeanRemote funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
 		ReclamosBeanRemote reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
 		JustificadosBeanRemote justificadoBean=(JustificadosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/JustificadosBean!com.servicios.JustificadosBeanRemote");
+		EventosBeanRemote eventoBean=(EventosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/EventosBean!com.servicios.EventosBeanRemote");
+		ConvocatoriasAsistenciaBeanRemote convocatoriasAsistenciaBean=(ConvocatoriasAsistenciaBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ConvocatoriasAsistenciaBean!com.servicios.ConvocatoriasAsistenciaBeanRemote");
+		
+
+		
 		
 		//fecha actual (la usamos para hacer reclamos de prueba)
 		LocalDate localDate = LocalDate.now();
@@ -172,7 +180,7 @@ public class Main {
 		
 		Tutor t2 = new Tutor();
 		
-		t2.setActivo("X");
+		t2.setActivo("Y");
 		t2.setApellido1("Nahuelim");
 		t2.setApellido2("Martinez");
 		t2.setCedula("44433345");
@@ -187,7 +195,7 @@ public class Main {
 		t2.setNombre2("Sabia");
 		t2.setTelefono("098373635");
 		t2.setUsuario("jose.nahuelim");
-		t2.setValidado("SI");
+		t2.setValidado("Y");
 		
 		t2.setArea(areaBean.obtenerPorNombre("Matematicas"));
 		t2.setTipo(tipoTutorBean.obtenerPorNombre("Encargado"));
@@ -287,7 +295,31 @@ public class Main {
 		reclamo3.setFechaInicioActividad(new Date(2000-2021,4,8));
 		reclamo3.setSemestre(1);
 		reclamoBean.crear(reclamo3);
-		
+
+//		Reclamo reclamo1 = new Reclamo();
+//		
+//		reclamo1.setDetalle("Los baños siempre están sucios");
+//		reclamo1.setEstudiante_id_usuario(3L);
+//		reclamo1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+//		reclamo1.setEstado("EN PROCESO");
+//		reclamoBean.crear(reclamo1);
+//		
+//		Reclamo reclamo2 = new Reclamo();
+//		
+//		reclamo2.setDetalle("El salón A34 no tiene techo");
+//		reclamo2.setEstudiante_id_usuario(3L);
+//		reclamo2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+//		reclamo2.setEstado("FINALIZADO");
+//		reclamoBean.crear(reclamo2);
+//		
+//		Reclamo reclamo3 = new Reclamo();
+//		
+//		reclamo3.setDetalle("La cantina no es una cantina de verdad");
+//		reclamo3.setEstudiante_id_usuario(3L);
+//		reclamo3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
+//		reclamo3.setEstado("INGRESADO");
+//		reclamoBean.crear(reclamo3);
+
 		Reclamo reclamo4 = new Reclamo();
 		
 		reclamo4.setTitulo("Otra vez los creditos");
@@ -311,7 +343,7 @@ public class Main {
 		justif1.setDetalle("No falté, se olvidaron de mí");
 		justif1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		justif1.setEstudiante(3);
-		justif1.setEstado("EN PROCESO");
+		justif1.setEstado("INGRESADO");
 		justificadoBean.crear(justif1);
 		
 		Justificado justif2 = new Justificado();
@@ -319,7 +351,7 @@ public class Main {
 		justif2.setDetalle("Estaba enfermo y no pude ir");
 		justif2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		justif2.setEstudiante(3);
-		justif2.setEstado("FINALIZADO");
+		justif2.setEstado("EN PROCESO");
 		justificadoBean.crear(justif2);
 		
 		Justificado justif3 = new Justificado();
@@ -327,8 +359,36 @@ public class Main {
 		justif3.setDetalle("Se rompió el autobús y llegué mas tarde");
 		justif3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 		justif3.setEstudiante(3);
-		justif3.setEstado("INGRESADO");
+		justif3.setEstado("FINALIZADO");
 		justificadoBean.crear(justif3);
+		
+		//Registros de prueba en la tabla Eventos
+		System.out.println(tutor);
+		Evento eve1 = new Evento();
+		
+		eve1.setTitulo("Presencial 4 de octubre de 2022");
+		eve1.setTutor(tutor);
+		eve1.setFecha_inicio(new Date(2022,10,28));
+		eve1.setFecha_fin(new Date(2022,10,28));
+		eventoBean.crear(eve1);
+		
+		Evento eve2 = new Evento();
+		
+		eve2.setTitulo("VME2 jornada 10 de setiembre de 2022");
+		eve2.setTutor(tutor);
+		eve2.setFecha_inicio(new Date(2022,11,28));
+		eve2.setFecha_fin(new Date(2022,11,28));
+		eventoBean.crear(eve2);
+		
+		//Registros de prueba en la tabla Convocatoria_asistencias
+
+		ConvocatoriaAsistencia conv1 = new ConvocatoriaAsistencia();
+		conv1.setAsistencia(0);
+		conv1.setCalificacion(0);
+		conv1.setEstudiante(e);
+		conv1.setEvento(eve1);
+		convocatoriasAsistenciaBean.crear(conv1);
+		
 		
 	}
 

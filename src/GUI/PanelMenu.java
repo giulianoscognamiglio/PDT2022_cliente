@@ -24,7 +24,7 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		analistaGUI();
+		estudianteGUI();
 	}
 
 	public void estudianteGUI() {
@@ -49,25 +49,25 @@ public class PanelMenu extends JPanel {
 		lblTipoUsuario.setBounds(54, 80, 121, 13);
 		panelMenu.add(lblTipoUsuario);
 
-		JButton btnAltaReclamos = new JButton("Alta Reclamo");
-		btnAltaReclamos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				AltaReclamo altaReclamo;
-				try {
-					altaReclamo = new AltaReclamo();
-					altaReclamo.setVisible(true);
-
-				} catch (ServiciosException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-		});
-		btnAltaReclamos.setBounds(48, 331, 127, 21);
-		panelMenu.add(btnAltaReclamos);
+//		JButton btnAltaReclamos = new JButton("Alta Reclamo");
+//		btnAltaReclamos.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//
+//				AltaReclamo altaReclamo;
+//				try {
+//					altaReclamo = new AltaReclamo();
+//					altaReclamo.setVisible(true);
+//
+//				} catch (ServiciosException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//
+//			}
+//		});
+//		btnAltaReclamos.setBounds(48, 300, 127, 21);
+//		panelMenu.add(btnAltaReclamos);
 
 		JButton btnFuncionalidades = new JButton("Funcionalidades");
 		btnFuncionalidades.addMouseListener(new MouseAdapter() {
@@ -82,7 +82,7 @@ public class PanelMenu extends JPanel {
 				panelDinamico.repaint();
 			}
 		});
-		btnFuncionalidades.setBounds(48, 364, 127, 21);
+		btnFuncionalidades.setBounds(48, 396, 127, 21);
 		panelMenu.add(btnFuncionalidades);
 
 		JButton btnReclamos = new JButton("Reclamos");
@@ -99,7 +99,7 @@ public class PanelMenu extends JPanel {
 				panelDinamico.repaint();
 			}
 		});
-		btnReclamos.setBounds(48, 395, 127, 21);
+		btnReclamos.setBounds(48, 364, 127, 21);
 		panelMenu.add(btnReclamos);
 
 		JButton btnEditarPerfil = new JButton("Editar Perfil");
@@ -139,7 +139,40 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setBounds(54, 59, 121, 13);
 		lblNombreUsuario.setText(usuarioIngresado.getUsuario());
 		panelMenu.add(lblNombreUsuario);
+		
+		JButton btnJustificados = new JButton("Justificados");
+		btnJustificados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelGestionJustificadosEstudiante gestionJustificados = new PanelGestionJustificadosEstudiante();
+				panelDinamico.removeAll();
+				gestionJustificados.setSize(684, 581);
+				gestionJustificados.setLocation(0, 0);
+				panelDinamico.add(gestionJustificados);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnJustificados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnJustificados.setBounds(48, 332, 127, 21);
+		panelMenu.add(btnJustificados);
+		
+//		JButton btnAltaJustificado = new JButton("Alta Justificado");
+//		btnAltaJustificado.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				
+//				AltaJustificado altaJustificado = new AltaJustificado();
+//				altaJustificado.setVisible(true);
+//			}
+//		});
+//		btnAltaJustificado.setBounds(48, 269, 127, 21);
+//		panelMenu.add(btnAltaJustificado);
 
+		
 	}
 
 	public void analistaGUI() {

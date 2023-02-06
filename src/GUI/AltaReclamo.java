@@ -70,7 +70,6 @@ public class AltaReclamo extends JFrame {
 			public void run() {
 				try {
 					AltaReclamo frame = new AltaReclamo();
-
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

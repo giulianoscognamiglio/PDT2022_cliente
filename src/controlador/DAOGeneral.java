@@ -14,6 +14,7 @@ import com.servicios.RolBeanRemote;
 import com.servicios.TiposTutorBeanRemote;
 import com.servicios.TutoresBeanRemote;
 import com.servicios.UsuariosBeanRemote;
+import com.servicios.JustificadosBeanRemote;
 
 
 public class DAOGeneral {
@@ -31,6 +32,7 @@ public class DAOGeneral {
 		public static EstudiantesBeanRemote estudianteBean;
 		public static TutoresBeanRemote tutorBean;
 
+		public static JustificadosBeanRemote justificadoBean;
 		
 	public DAOGeneral(){
 		initConexion();
@@ -51,6 +53,7 @@ public class DAOGeneral {
 			estudianteBean=(EstudiantesBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/EstudiantesBean!com.servicios.EstudiantesBeanRemote");
 			tutorBean=(TutoresBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/TutoresBean!com.servicios.TutoresBeanRemote");
 			
+			justificadoBean=(JustificadosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/JustificadosBean!com.servicios.JustificadosBeanRemote");
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

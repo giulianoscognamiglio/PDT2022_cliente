@@ -20,18 +20,17 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import com.entities.Estudiante;
-import com.entities.Reclamo;
+import com.entities.Justificado;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
 
 import controlador.DAOGeneral;
 
-public class PanelGestionReclamosEstudiante extends JPanel {
+public class PanelGestionJustificadosEstudiante extends JPanel {
 
 	private DefaultTableModel modeloTabla;
-	private Estudiante estudiante = DAOGeneral.estudianteBean.obtenerPorUsuario(PanelMenu.usuarioIngresado.getId_usuario());
-	public PanelGestionReclamosEstudiante() {
+
+	public PanelGestionJustificadosEstudiante() {
 
 		setBounds(0, 0, 684, 581);
 		setLayout(null);
@@ -47,28 +46,12 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 		scrollPane.setViewportView(table);
 		
 
-		JLabel lblReclamos = new JLabel("Reclamos");
-		lblReclamos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReclamos.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblReclamos.setBounds(235, 37, 198, 36);
-		add(lblReclamos);
+		JLabel lblJustificados = new JLabel("Justificados");
+		lblJustificados.setHorizontalAlignment(SwingConstants.CENTER);
+		lblJustificados.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblJustificados.setBounds(235, 37, 198, 36);
+		add(lblJustificados);
 		
-		JButton btnAlta = new JButton("Alta");
-		btnAlta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				AltaReclamo altaReclamo = null;
-				try {
-					altaReclamo = new AltaReclamo();
-					altaReclamo.setVisible(true);
-				} catch (ServiciosException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnAlta.setBounds(197, 499, 86, 22);
-		add(btnAlta);
-		btnAlta.setVisible(false);
 		
 		JButton btnBaja = new JButton("Baja");
 		btnBaja.addMouseListener(new MouseAdapter() {
@@ -76,33 +59,31 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 
 				
-				Reclamo reclamoDB = seleccionarReclamo(table);
+				Justificado justificadoDB = seleccionarJustificado(table);
 
 				//con esta condicional nos aseguramos que solo se puedan eliminar los que aún
 				//no hayan sido tocados por un analista
-				if(reclamoDB.getEstado().equals("INGRESADO")) {
+				if(justificadoDB.getEstado().equals("INGRESADO")) {
 					
-					//Se le adjudica el reclamo obtenido desde la base a la variable static "reclamo" y se lanza el pop up de confirmacion
-					ConfirmacionPopUp.reclamo = reclamoDB;
-					ConfirmacionPopUp confirmacionPopUp = new ConfirmacionPopUp();
+					//Se le adjudica el justificado obtenido desde la base a la variable static "justificado" y se lanza el pop up de confirmación
+					ConfirmacionPopUpJustificado.justificado = justificadoDB;
+					ConfirmacionPopUpJustificado confirmacionPopUpJustificado = new ConfirmacionPopUpJustificado();
 					
-					confirmacionPopUp.setVisible(true);
+					confirmacionPopUpJustificado.setVisible(true);
 					
-					//DAOGeneral.reclamoBean.borrar(reclamoDB.getId_reclamo());
-					//JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
-						//	JOptionPane.PLAIN_MESSAGE);
-					
+					//DAOGeneral.justificadoBean.borrar(justificadoDB.getId_justificado());
+					//JOptionPane.showMessageDialog(null, "Justificado dado de baja con éxito", null,
+						//	JOptionPane.PLAIN_MESSAGE);					
 				}else {
-					JOptionPane.showMessageDialog(null, "No se permite eliminar reclamos finalizados o en proceso.", null,
+					JOptionPane.showMessageDialog(null, "No se permite eliminar justificados finalizados o en proceso.", null,
 							JOptionPane.ERROR_MESSAGE);
 				}
-				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
+				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 			}
 		});
-		btnBaja.setBounds(293, 499, 85, 21);
+		btnBaja.setBounds(284, 500, 85, 21);
 		add(btnBaja);
-		btnBaja.setVisible(false);
-
+		
 		JButton btnDetalle = new JButton("Detalle");
 		btnDetalle.addMouseListener(new MouseAdapter() {
 			@Override
@@ -112,14 +93,13 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				try {
 					
 					
-					Reclamo reclamoDB = seleccionarReclamo(table);
+					Justificado justificadoDB = seleccionarJustificado(table);
 
-					DetalleReclamo.reclamo=reclamoDB;
-					
-					DetalleReclamo detRecl = new DetalleReclamo();
-					
-					detRecl.setVisible(true);
+					DetalleJustificado.justificado=justificadoDB;
 
+					DetalleJustificado detJust = new DetalleJustificado();
+					detJust.setVisible(true);
+					
 				} catch (ServiciosException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -127,16 +107,16 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				
 			}
 		});
-		btnDetalle.setBounds(388, 499, 85, 21);
-		add(btnDetalle);
-		btnDetalle.setVisible(false);
 		
-		JButton btnActualizar = new JButton("Actualizar reclamos");
+		btnDetalle.setBounds(379, 500, 85, 21);
+		add(btnDetalle);
+		
+		JButton btnActualizar = new JButton("Actualizar justificados");
 		btnActualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
+				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 
 			}
 		});
@@ -154,41 +134,52 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 
 		comboBoxEstado.setBounds(235, 106, 198, 36);
 		add(comboBoxEstado);
+		
+		JButton btnAlta = new JButton("Alta");
+		btnAlta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AltaJustificado altaJustificado = new AltaJustificado();
+				altaJustificado.setVisible(true);
+			}
+		});
+		btnAlta.setBounds(189, 499, 85, 21);
+		add(btnAlta);
 
 		//Filtrar
 		comboBoxEstado.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				try {
-					//primero nos traemos todos los reclamos y luego creamos una lista auxiliar donde vamos a almacenar los
-					//reclamos filtrados
-					List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerTodos();
-					List<Reclamo> reclamosFiltrados;
+					//primero nos traemos todos los justificados y luego creamos una lista auxiliar donde vamos a almacenar los
+					//justificados filtrados
+					List<Justificado> justificados = DAOGeneral.justificadoBean.obtenerTodos();
+					List<Justificado> justificadosFiltrados;
 
 					if (comboBoxEstado.getSelectedItem().toString() == "En proceso") {
 						
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
-						reclamosFiltrados = reclamos.stream().filter(r -> r.getEstado().equals("EN PROCESO")).collect(Collectors.toList());
-						cargarTabla(reclamosFiltrados);
+						justificadosFiltrados = justificados.stream().filter(r -> r.getEstado().equals("EN PROCESO")).collect(Collectors.toList());
+						cargarTabla(justificadosFiltrados);
 
 					} else if (comboBoxEstado.getSelectedItem().toString() == "Finalizado") {
 						
 						
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
-							reclamosFiltrados = (List<Reclamo>) reclamos.stream().filter(r -> r.getEstado().equals("FINALIZADO")).collect(Collectors.toList());
-							cargarTabla(reclamosFiltrados);
+							justificadosFiltrados = (List<Justificado>) justificados.stream().filter(r -> r.getEstado().equals("FINALIZADO")).collect(Collectors.toList());
+							cargarTabla(justificadosFiltrados);
 							
 					} else if (comboBoxEstado.getSelectedItem().toString() == "Ingresado") {
 
 
 						//aca utilizamos .stream().filter().collect para filtrar los elementos de la lista auxiliar y retornamos
-						reclamosFiltrados = (List<Reclamo>) reclamos.stream().filter(r -> r.getEstado().equals("INGRESADO")).collect(Collectors.toList());
-						cargarTabla(reclamosFiltrados);
+						justificadosFiltrados = (List<Justificado>) justificados.stream().filter(r -> r.getEstado().equals("INGRESADO")).collect(Collectors.toList());
+						cargarTabla(justificadosFiltrados);
 						
 				   } else if (comboBoxEstado.getSelectedItem().toString() == "Todos") {
 
 					  	//aca retornamos todos los elementos de la lista
-					   cargarTabla(reclamos);
+					   cargarTabla(justificados);
 				   } 	
 
 
@@ -198,27 +189,16 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			}
 		});
 		
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-							
-				btnAlta.setVisible(true);
-				btnBaja.setVisible(true);
-				btnDetalle.setVisible(true);
-
-			}
-		});
-		
-		cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
+		cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 
 	}
 	
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-	public void cargarTabla(List<Reclamo> reclamos) {
+	public void cargarTabla(List<Justificado> justificados) {
 		modeloTabla.setRowCount(0);
-		for (Reclamo r : reclamos) {
+		for (Justificado r : justificados) {
 			
 					
 
@@ -228,7 +208,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				Usuario usuarioDB;
 				usuarioDB = DAOGeneral.usuarioBean.obtenerPorId(r.getEstudiante());
 				
-				v.addElement(r.getId_reclamo());
+				v.addElement(r.getId_justificado());
 				v.addElement(r.getEstado());
 
 				modeloTabla.addRow(v);
@@ -244,14 +224,14 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 	
 
 	
-	public Reclamo seleccionarReclamo(JTable table) {
-		//metodo para seleccionar un reclamo de la tabla
+	public Justificado seleccionarJustificado(JTable table) {
+		//metodo para seleccionar un justificado de la tabla
 		int column = 0;
 		int row = table.getSelectedRow();
 		Long id = Long.parseLong(table.getModel().getValueAt(row, column).toString());
 		
-		Reclamo reclamoDB = DAOGeneral.reclamoBean.obtenerReclamo(id);
+		Justificado justificadoDB = DAOGeneral.justificadoBean.obtenerJustificado(id);
 		
-		return reclamoDB;
+		return justificadoDB;
 	}
 }
