@@ -180,7 +180,7 @@ public class Main {
 		
 		Tutor t2 = new Tutor();
 		
-		t2.setActivo("X");
+		t2.setActivo("Y");
 		t2.setApellido1("Nahuelim");
 		t2.setApellido2("Martinez");
 		t2.setCedula("44433345");
@@ -195,7 +195,7 @@ public class Main {
 		t2.setNombre2("Sabia");
 		t2.setTelefono("098373635");
 		t2.setUsuario("jose.nahuelim");
-		t2.setValidado("SI");
+		t2.setValidado("Y");
 		
 		t2.setArea(areaBean.obtenerPorNombre("Matematicas"));
 		t2.setTipo(tipoTutorBean.obtenerPorNombre("Encargado"));
