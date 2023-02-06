@@ -188,7 +188,18 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 				}
 			}
 		});
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+							
+				btnBaja.setVisible(true);
+				btnDetalle.setVisible(true);
+
+			}
+		});
 		
+		btnBaja.setVisible(false);
+		btnDetalle.setVisible(false);
 		cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 
 	}

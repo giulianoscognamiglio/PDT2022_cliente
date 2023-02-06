@@ -63,11 +63,11 @@ public class PanelGestionReclamos extends JPanel {
 
 					Reclamo reclamoDB = seleccionarReclamo(table);
 
-					System.out.println(reclamoDB);
 					DAOGeneral.reclamoBean.borrar(reclamoDB.getId_reclamo());
 
 					JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
 							JOptionPane.PLAIN_MESSAGE);
+					
 				} catch (ServiciosException e1) {
 					e1.printStackTrace();
 				}

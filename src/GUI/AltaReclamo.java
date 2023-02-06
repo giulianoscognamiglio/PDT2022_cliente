@@ -324,12 +324,12 @@ public class AltaReclamo extends JFrame {
 						
 						reclamo.setId_reclamo(reclamoExistente.getId_reclamo());
 						
-						DAOGeneral.reclamoBean.actualizar(reclamo);
-						JOptionPane.showMessageDialog(null, "Reclamo actualizado con éxito", null,
-								JOptionPane.PLAIN_MESSAGE);
-
 						
-
+						ConfirmacionPopUpModificarReclamo.reclamo = reclamo;
+						ConfirmacionPopUpModificarReclamo confirmacionPopUp = new ConfirmacionPopUpModificarReclamo();
+						
+						confirmacionPopUp.setVisible(true);
+				
 						
 					}else {
 						DAOGeneral.reclamoBean.crear(reclamo);

@@ -234,6 +234,19 @@ public class PanelGestionJustificados extends JPanel {
 				}
 			}
 		});
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+							
+				btnBaja.setVisible(true);
+				btnDetalle.setVisible(true);
+
+			}
+		});
+		
+		btnBaja.setVisible(false);
+		btnDetalle.setVisible(false);
 
 	}
 
@@ -260,7 +273,11 @@ public class PanelGestionJustificados extends JPanel {
 			}
 
 		}
+		
+		
 	}
+	
+	
 
 	public void modificarEstado(Justificado justificadoDB, String nuevoEstado) throws ServiciosException {
 		// seteamos el estado nuevo

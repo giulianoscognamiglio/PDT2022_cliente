@@ -135,9 +135,10 @@ public class AltaJustificado extends JFrame {
 						
 						justificado.setId_justificado(justificadoExistente.getId_justificado());
 						
-						DAOGeneral.justificadoBean.actualizar(justificado);
-						JOptionPane.showMessageDialog(null, "Justificado actualizado con éxito", null,
-								JOptionPane.PLAIN_MESSAGE);
+						ConfirmacionPopUpModificarJustificado.justificado = justificado;
+						ConfirmacionPopUpModificarJustificado confirmacionPopUp = new ConfirmacionPopUpModificarJustificado();
+						
+						confirmacionPopUp.setVisible(true);
 					} else {
 						DAOGeneral.justificadoBean.crear(justificado);
 					JOptionPane.showMessageDialog(null, "Justificado registrado con éxito", null,

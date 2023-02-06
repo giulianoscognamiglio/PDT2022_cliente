@@ -300,10 +300,7 @@ public class PanelMenu extends JPanel {
 		});
 		btnReclamos.setBounds(23, 444, 170, 21);
 		panelMenu.add(btnReclamos);
-
-//
-//		---------------------EN OBRA!-----------------
-//		
+	
 		
 		JButton btnJustificados = new JButton("Gestionar justificados de inasistencias");
 		btnJustificados.addActionListener(new ActionListener() {
@@ -342,9 +339,6 @@ public class PanelMenu extends JPanel {
 	}
 
 	
-//	
-//	-----------------------------------------------------
-//	
 	
 	public void tutorGUI() {
 		removeAll();
@@ -419,5 +413,22 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setBounds(54, 57, 121, 13);
 		lblNombreUsuario.setText(usuarioIngresado.getUsuario());
 		panelMenu.add(lblNombreUsuario);
+		
+		JButton btnAnaliticaDeReportes = new JButton("Analitica de reportes");
+		btnAnaliticaDeReportes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				PanelAnaliticaReportes analiticaReportes = new PanelAnaliticaReportes();
+				panelDinamico.removeAll();
+				analiticaReportes.setSize(684, 581);
+				analiticaReportes.setLocation(0, 0);
+				panelDinamico.add(analiticaReportes);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnAnaliticaDeReportes.setBounds(23, 103, 170, 21);
+		panelMenu.add(btnAnaliticaDeReportes);
 	}
 }
