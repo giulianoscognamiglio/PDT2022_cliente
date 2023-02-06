@@ -342,54 +342,78 @@ public class Main {
 		
 		justif1.setDetalle("No falté, se olvidaron de mí");
 		justif1.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
-		justif1.setEstudiante(3);
+		justif1.setEstudiante(1L);
 		justif1.setEstado("INGRESADO");
-		justificadoBean.crear(justif1);
+		justif1.setId_evento(1L);
+		
 		
 		Justificado justif2 = new Justificado();
 		
 		justif2.setDetalle("Estaba enfermo y no pude ir");
 		justif2.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
-		justif2.setEstudiante(3);
+		justif2.setEstudiante(1L);
 		justif2.setEstado("EN PROCESO");
-		justificadoBean.crear(justif2);
+		justif2.setId_evento(2L);
+
 		
 		Justificado justif3 = new Justificado();
 		
-		justif3.setDetalle("Se rompió el autobús y llegué mas tarde");
+		justif3.setDetalle("Se rompió el bondi y llegué mas tarde");
 		justif3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
-		justif3.setEstudiante(3);
+		justif3.setEstudiante(2L);
 		justif3.setEstado("FINALIZADO");
-		justificadoBean.crear(justif3);
+		justif3.setId_evento(1L);
+		
 		
 		//Registros de prueba en la tabla Eventos
-		System.out.println(tutor);
 		Evento eve1 = new Evento();
 		
 		eve1.setTitulo("Presencial 4 de octubre de 2022");
-		eve1.setTutor(tutor);
+		//eve1.setTutor(tutor);
 		eve1.setFecha_inicio(new Date(2022,10,28));
 		eve1.setFecha_fin(new Date(2022,10,28));
-		eventoBean.crear(eve1);
 		
 		Evento eve2 = new Evento();
 		
 		eve2.setTitulo("VME2 jornada 10 de setiembre de 2022");
-		eve2.setTutor(tutor);
+	//	eve2.setTutor(tutor);
 		eve2.setFecha_inicio(new Date(2022,11,28));
 		eve2.setFecha_fin(new Date(2022,11,28));
-		eventoBean.crear(eve2);
 		
 		//Registros de prueba en la tabla Convocatoria_asistencias
 
 		ConvocatoriaAsistencia conv1 = new ConvocatoriaAsistencia();
 		conv1.setAsistencia(0);
 		conv1.setCalificacion(0);
-		conv1.setEstudiante(e);
-		conv1.setEvento(eve1);
+		conv1.setId_estudiante(2L);
+		conv1.setId_evento(1L);
 		convocatoriasAsistenciaBean.crear(conv1);
 		
+		ConvocatoriaAsistencia conv2 = new ConvocatoriaAsistencia();
+		conv2.setAsistencia(0);
+		conv2.setCalificacion(0);
+		conv2.setId_estudiante(2L);
+		conv2.setId_evento(2L);
+		convocatoriasAsistenciaBean.crear(conv2);
 		
+		ConvocatoriaAsistencia conv3 = new ConvocatoriaAsistencia();
+		conv3.setAsistencia(0);
+		conv3.setCalificacion(0);
+		conv3.setId_estudiante(1L);
+		conv3.setId_evento(1L);
+		
+		
+		
+		convocatoriasAsistenciaBean.crear(conv3);
+		eventoBean.crear(eve2);
+		eventoBean.crear(eve1);
+
+		
+		justificadoBean.crear(justif3);
+		justificadoBean.crear(justif2);
+		justificadoBean.crear(justif1);
+
+
 	}
 
 }

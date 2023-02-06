@@ -4,8 +4,10 @@ import javax.naming.InitialContext;
 
 import com.servicios.AnalistasBeanRemote;
 import com.servicios.AreasBeanRemote;
+import com.servicios.ConvocatoriasAsistenciaBeanRemote;
 import com.servicios.DepartamentosBeanRemote;
 import com.servicios.EstudiantesBeanRemote;
+import com.servicios.EventosBeanRemote;
 import com.servicios.FuncionalidadBeanRemote;
 import com.servicios.GenerosBeanRemote;
 import com.servicios.ItrsBeanRemote;
@@ -33,6 +35,8 @@ public class DAOGeneral {
 		public static TutoresBeanRemote tutorBean;
 
 		public static JustificadosBeanRemote justificadoBean;
+		public static ConvocatoriasAsistenciaBeanRemote convocatoriaBean;
+		public static EventosBeanRemote eventosBean;
 		
 	public DAOGeneral(){
 		initConexion();
@@ -54,6 +58,8 @@ public class DAOGeneral {
 			tutorBean=(TutoresBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/TutoresBean!com.servicios.TutoresBeanRemote");
 			
 			justificadoBean=(JustificadosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/JustificadosBean!com.servicios.JustificadosBeanRemote");
+			convocatoriaBean=(ConvocatoriasAsistenciaBeanRemote)  InitialContext.doLookup("ejb:/PDT2022_v3/ConvocatoriasAsistenciaBean!com.servicios.ConvocatoriasAsistenciaBeanRemote");
+			eventosBean=(EventosBeanRemote)  InitialContext.doLookup("ejb:/PDT2022_v3/EventosBean!com.servicios.EventosBeanRemote");
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

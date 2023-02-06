@@ -68,7 +68,6 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 		});
 		btnAlta.setBounds(197, 499, 86, 22);
 		add(btnAlta);
-		btnAlta.setVisible(false);
 		
 		JButton btnBaja = new JButton("Baja");
 		btnBaja.addMouseListener(new MouseAdapter() {
@@ -202,7 +201,6 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 							
-				btnAlta.setVisible(true);
 				btnBaja.setVisible(true);
 				btnDetalle.setVisible(true);
 

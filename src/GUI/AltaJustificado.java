@@ -6,7 +6,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -22,8 +24,10 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import com.entities.Analista;
+import com.entities.ConvocatoriaAsistencia;
 import com.entities.Departamento;
 import com.entities.Estudiante;
+import com.entities.Evento;
 import com.entities.ITR;
 import com.entities.Justificado;
 import com.entities.Tutor;
@@ -45,6 +49,7 @@ public class AltaJustificado extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblNombre3;
 	DefaultComboBoxModel modeloITR;
+	static Justificado justificadoExistente;
 
 	/**
 	 * Launch the application.
@@ -54,7 +59,7 @@ public class AltaJustificado extends JFrame {
 			public void run() {
 				try {
 					AltaJustificado frame = new AltaJustificado();
-					
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,65 +73,90 @@ public class AltaJustificado extends JFrame {
 	 */
 
 	public AltaJustificado() {
-		
+
+		Estudiante estudiante = DAOGeneral.estudianteBean.obtenerPorUsuario(PanelMenu.usuarioIngresado.getId_usuario());
 		ImageIcon img = new ImageIcon("uteclogo.png");
 		setIconImage(img.getImage());
-		
+
 		DAOGeneral.initConexion();
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 304, 306);
+		setBounds(100, 100, 582, 377);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
+		JComboBox comboBoxEvento = new JComboBox();
+		comboBoxEvento.setBounds(207, 20, 283, 21);
+		contentPane.add(comboBoxEvento);
+
 		Panel panel = new Panel();
 		panel.setColorBackground(UIManager.getColor("Button.background"));
 		panel.setBounds(588, 115, 315, 79);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblJustificado = new JLabel("Justificado:");
 		lblJustificado.setBounds(57, 20, 175, 13);
 		contentPane.add(lblJustificado);
-		
 
 		TextArea textAreaJustificado = new TextArea();
-		textAreaJustificado.setBounds(30, 62, 241, 150);
+		textAreaJustificado.setBounds(30, 116, 175, 106);
 		contentPane.add(textAreaJustificado);
-		
+
 		JButton btnRegistrarse = new JButton("Enviar");
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Justificado justificado = new Justificado();
-				
-				//Usamos esto para obtener la fecha de ahora y agregarle una hora neutra para parsearlo de LocalDate a Date
+
+				// Usamos esto para obtener la fecha de ahora y agregarle una hora neutra para
+				// parsearlo de LocalDate a Date
 				LocalDate localDate = LocalDate.now();
 				ZoneId defaultZoneId = ZoneId.systemDefault();
 				
+				int idEventoInt = Character.getNumericValue(comboBoxEvento.getSelectedItem().toString().charAt(0));
 				
-				//necesitamos parsear esto porque en la clase usuario tenemos long pero para la base precisamos Long
+				Long idEventoLong = new Long(idEventoInt);
+				
+				Evento evento = DAOGeneral.eventosBean.obtenerPorId(idEventoLong);
+
+				// necesitamos parsear esto porque en la clase usuario tenemos long pero para la
+				// base precisamos Long
 				Long idUsuario = new Long(PanelMenu.usuarioIngresado.getId_usuario());
 				justificado.setDetalle(textAreaJustificado.getText());
 				justificado.setEstudiante(idUsuario);
 				justificado.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 				justificado.setEstado("INGRESADO");
-				
+				justificado.setId_evento(evento.getId_evento());
+
 				try {
-					DAOGeneral.justificadoBean.crear(justificado);
-					JOptionPane.showMessageDialog(null, "Justificado registrado con éxito", null, JOptionPane.PLAIN_MESSAGE);
-				
+					
+					if(justificadoExistente!=null) {
+						
+						justificado.setId_justificado(justificadoExistente.getId_justificado());
+						
+						DAOGeneral.justificadoBean.actualizar(justificado);
+						JOptionPane.showMessageDialog(null, "Justificado actualizado con éxito", null,
+								JOptionPane.PLAIN_MESSAGE);
+					} else {
+						DAOGeneral.justificadoBean.crear(justificado);
+					JOptionPane.showMessageDialog(null, "Justificado registrado con éxito", null,
+							JOptionPane.PLAIN_MESSAGE);
+					}
+					
+					
+					justificadoExistente = null;
+
 					setVisible(false);
 
 				} catch (ServiciosException e1) {
 					e1.printStackTrace();
 				}
 			}
-			}
-		);
-		btnRegistrarse.setBounds(166, 235, 105, 21);
+		});
+		btnRegistrarse.setBounds(149, 288, 105, 21);
 		contentPane.add(btnRegistrarse);
-		
+
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addMouseListener(new MouseAdapter() {
 			@Override
@@ -134,12 +164,59 @@ public class AltaJustificado extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnVolver.setBounds(37, 235, 105, 21);
+		btnVolver.setBounds(30, 288, 105, 21);
 		contentPane.add(btnVolver);
+
 		
 		
+		try {
+			comboBoxEvento.setModel(cargarComboEventos(estudiante.getId_estudiante()));
+		} catch (ServiciosException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		
+		if(justificadoExistente != null) {
+			btnRegistrarse.setText("Actualizar");
+		}
+		
+		
+		if(justificadoExistente!=null) {
+			
+			Evento evento = DAOGeneral.eventosBean.obtenerPorId(justificadoExistente.getId_evento());
+			
+			textAreaJustificado.setText(justificadoExistente.getDetalle());
+			comboBoxEvento.setSelectedItem(""+justificadoExistente.getId_evento()+" "+ evento.getTitulo());	
+			
+		}
+		
+	}
+
+	private DefaultComboBoxModel cargarComboEventos(Long id_estudiante) throws ServiciosException {
+		
+		System.out.println(id_estudiante);
+		// método para hacer aparecer el comboBoxFiltroCriterio y darle los datos a
+		// mostrar
+		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+		modeloCombo.addElement("Seleccione evento");
+
+		List<ConvocatoriaAsistencia> convocatorias = DAOGeneral.convocatoriaBean
+				.obtenerPorEstudiante(id_estudiante);
+		
+		System.out.println("lista CA >>" + convocatorias.toString());
+		List<Evento> eventos = new ArrayList<Evento>();
+
+		for (ConvocatoriaAsistencia cA : convocatorias) {
+
+			eventos.add(DAOGeneral.eventosBean.obtenerPorId(cA.getId_evento()));
+		}
+		System.out.println("eventos post for>>>"+ eventos.toString());
+		for(Evento e : eventos) {
+			modeloCombo.addElement("" + e.getId_evento() + " " + e.getTitulo());
+		}
+
+		return modeloCombo;
 
 	}
-		}
+}

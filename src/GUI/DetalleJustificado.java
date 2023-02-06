@@ -35,12 +35,13 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DetalleJustificado extends JFrame{
+public class DetalleJustificado extends JFrame {
 
 	private JPanel contentPane;
 	public static Justificado justificado;
 	public LocalDate fechaJustificado;
 	public Usuario usuario;
+
 	/**
 	 * Launch the application.
 	 */
@@ -59,45 +60,46 @@ public class DetalleJustificado extends JFrame{
 
 	/**
 	 * Create the frame.
-	 * @throws ServiciosException 
+	 * 
+	 * @throws ServiciosException
 	 */
 	public DetalleJustificado() throws ServiciosException {
-		
+
 		ImageIcon img = new ImageIcon("uteclogo.png");
 		setIconImage(img.getImage());
-		
+
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 461, 573);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
-		JLabel lblFuncionalidadesRol = new JLabel("Justificado " + justificado.getId_justificado()+":");
+
+		JLabel lblFuncionalidadesRol = new JLabel("Justificado " + justificado.getId_justificado() + ":");
 		lblFuncionalidadesRol.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblFuncionalidadesRol.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFuncionalidadesRol.setBounds(10, 60, 427, 39);
 		contentPane.add(lblFuncionalidadesRol);
-		
-		//aca agarramos la fecha que nos trae de la base y parseamos a LocalDate
-		fechaJustificado = Instant.ofEpochMilli(justificado.getFecha().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-		
+
+		// aca agarramos la fecha que nos trae de la base y parseamos a LocalDate
+		fechaJustificado = Instant.ofEpochMilli(justificado.getFecha().getTime()).atZone(ZoneId.systemDefault())
+				.toLocalDate();
+
 		JLabel lblFecha = new JLabel("Fecha de registro: " + fechaJustificado);
 		lblFecha.setBounds(88, 109, 273, 13);
 		contentPane.add(lblFecha);
-		
+
 		usuario = DAOGeneral.usuarioBean.obtenerPorId(justificado.getEstudiante());
-		
-		JLabel lblAlumno = new JLabel("De alumno "+ usuario.getNombre1()+" "+usuario.getApellido1());
+
+		JLabel lblAlumno = new JLabel("De alumno " + usuario.getNombre1() + " " + usuario.getApellido1());
 		lblAlumno.setBounds(88, 135, 273, 13);
 		contentPane.add(lblAlumno);
 		setLocationRelativeTo(null);
-		
+
 		JLabel lblDocumento = new JLabel("Con documento " + usuario.getCedula());
 		lblDocumento.setBounds(88, 155, 273, 13);
 		contentPane.add(lblDocumento);
-		
+
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addMouseListener(new MouseAdapter() {
 			@Override
@@ -107,16 +109,29 @@ public class DetalleJustificado extends JFrame{
 		});
 		btnVolver.setBounds(88, 505, 85, 21);
 		contentPane.add(btnVolver);
-		
+
 		TextArea textDetalle = new TextArea();
 		textDetalle.setEditable(false);
 		textDetalle.setBounds(88, 203, 273, 246);
 		contentPane.add(textDetalle);
 		textDetalle.setText(justificado.getDetalle());
-		
-		
-		
-		
-	
+
+		JButton btnModificar = new JButton("Modificar justificado");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				AltaJustificado.justificadoExistente = justificado;
+				AltaJustificado altaJustificado;
+
+				altaJustificado = new AltaJustificado();
+				altaJustificado.setVisible(true);
+
+				setVisible(false);
+
+			}
+		});
+		btnModificar.setBounds(255, 505, 182, 21);
+		contentPane.add(btnModificar);
+
 	}
 }
