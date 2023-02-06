@@ -83,10 +83,10 @@ public class Login extends JFrame {
 		textFieldUsuario.setColumns(10);
 
 		JButton btnIngresar = new JButton("ingresar");
-		btnIngresar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+//		btnIngresar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			}
+//		});
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

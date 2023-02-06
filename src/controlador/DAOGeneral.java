@@ -29,13 +29,10 @@ public class DAOGeneral {
 		public static FuncionalidadBeanRemote funcionalidadBean;
 		public static AnalistasBeanRemote analistaBean;
 		public static ReclamosBeanRemote reclamoBean;
-<<<<<<< Upstream, based on origin/dev2
 		public static EstudiantesBeanRemote estudianteBean;
 		public static TutoresBeanRemote tutorBean;
 
-=======
 		public static JustificadosBeanRemote justificadoBean;
->>>>>>> cc4ef98 DetalleJustificado
 		
 	public DAOGeneral(){
 		initConexion();
@@ -53,13 +50,10 @@ public class DAOGeneral {
 			funcionalidadBean=(FuncionalidadBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/FuncionalidadBean!com.servicios.FuncionalidadBeanRemote");
 			analistaBean=(AnalistasBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/AnalistasBean!com.servicios.AnalistasBeanRemote");
 			reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
-<<<<<<< Upstream, based on origin/dev2
 			estudianteBean=(EstudiantesBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/EstudiantesBean!com.servicios.EstudiantesBeanRemote");
 			tutorBean=(TutoresBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/TutoresBean!com.servicios.TutoresBeanRemote");
 			
-=======
 			justificadoBean=(JustificadosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/JustificadosBean!com.servicios.JustificadosBeanRemote");
->>>>>>> cc4ef98 DetalleJustificado
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

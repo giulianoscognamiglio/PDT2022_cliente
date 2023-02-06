@@ -49,25 +49,25 @@ public class PanelMenu extends JPanel {
 		lblTipoUsuario.setBounds(54, 80, 121, 13);
 		panelMenu.add(lblTipoUsuario);
 
-		JButton btnAltaReclamos = new JButton("Alta Reclamo");
-		btnAltaReclamos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				AltaReclamo altaReclamo;
-				try {
-					altaReclamo = new AltaReclamo();
-					altaReclamo.setVisible(true);
-
-				} catch (ServiciosException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-		});
-		btnAltaReclamos.setBounds(48, 300, 127, 21);
-		panelMenu.add(btnAltaReclamos);
+//		JButton btnAltaReclamos = new JButton("Alta Reclamo");
+//		btnAltaReclamos.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//
+//				AltaReclamo altaReclamo;
+//				try {
+//					altaReclamo = new AltaReclamo();
+//					altaReclamo.setVisible(true);
+//
+//				} catch (ServiciosException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//
+//			}
+//		});
+//		btnAltaReclamos.setBounds(48, 300, 127, 21);
+//		panelMenu.add(btnAltaReclamos);
 
 		JButton btnFuncionalidades = new JButton("Funcionalidades");
 		btnFuncionalidades.addMouseListener(new MouseAdapter() {
@@ -82,7 +82,7 @@ public class PanelMenu extends JPanel {
 				panelDinamico.repaint();
 			}
 		});
-		btnFuncionalidades.setBounds(48, 364, 127, 21);
+		btnFuncionalidades.setBounds(48, 396, 127, 21);
 		panelMenu.add(btnFuncionalidades);
 
 		JButton btnReclamos = new JButton("Reclamos");
@@ -99,7 +99,7 @@ public class PanelMenu extends JPanel {
 				panelDinamico.repaint();
 			}
 		});
-		btnReclamos.setBounds(48, 395, 127, 21);
+		btnReclamos.setBounds(48, 364, 127, 21);
 		panelMenu.add(btnReclamos);
 
 		JButton btnEditarPerfil = new JButton("Editar Perfil");
@@ -160,17 +160,17 @@ public class PanelMenu extends JPanel {
 		btnJustificados.setBounds(48, 332, 127, 21);
 		panelMenu.add(btnJustificados);
 		
-		JButton btnAltaJustificado = new JButton("Alta Justificado");
-		btnAltaJustificado.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				AltaJustificado altaJustificado = new AltaJustificado();
-				altaJustificado.setVisible(true);
-			}
-		});
-		btnAltaJustificado.setBounds(48, 269, 127, 21);
-		panelMenu.add(btnAltaJustificado);
+//		JButton btnAltaJustificado = new JButton("Alta Justificado");
+//		btnAltaJustificado.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				
+//				AltaJustificado altaJustificado = new AltaJustificado();
+//				altaJustificado.setVisible(true);
+//			}
+//		});
+//		btnAltaJustificado.setBounds(48, 269, 127, 21);
+//		panelMenu.add(btnAltaJustificado);
 
 		
 	}

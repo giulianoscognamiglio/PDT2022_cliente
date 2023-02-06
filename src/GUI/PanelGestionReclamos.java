@@ -88,11 +88,6 @@ public class PanelGestionReclamos extends JPanel {
 					Reclamo reclamoDB = seleccionarReclamo(table);
 
 					DetalleReclamo.reclamo = reclamoDB;
-<<<<<<< Upstream, based on origin/dev2
-
-=======
-					
->>>>>>> cc4ef98 DetalleJustificado
 					DetalleReclamo detRecl = new DetalleReclamo();
 
 					detRecl.setVisible(true);

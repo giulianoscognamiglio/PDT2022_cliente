@@ -3,31 +3,28 @@ package GUI;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.entities.Justificado;
+import com.entities.Usuario;
 import com.exceptions.ServiciosException;
-import com.entities.*;
 
 import controlador.DAOGeneral;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PanelGestionJustificadosEstudiante extends JPanel {
 
@@ -74,16 +71,9 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 					
 					confirmacionPopUpJustificado.setVisible(true);
 					
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 					//DAOGeneral.justificadoBean.borrar(justificadoDB.getId_justificado());
 					//JOptionPane.showMessageDialog(null, "Justificado dado de baja con éxito", null,
-						//	JOptionPane.PLAIN_MESSAGE);
->>>>>>> cba656a (Nuevas features de justificados)
-=======
->>>>>>> 9b6ed68 (cambios en el cliente)
-					
+						//	JOptionPane.PLAIN_MESSAGE);					
 				}else {
 					JOptionPane.showMessageDialog(null, "No se permite eliminar justificados finalizados o en proceso.", null,
 							JOptionPane.ERROR_MESSAGE);
@@ -91,7 +81,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
 			}
 		});
-		btnBaja.setBounds(206, 500, 85, 21);
+		btnBaja.setBounds(284, 500, 85, 21);
 		add(btnBaja);
 		
 		JButton btnDetalle = new JButton("Detalle");
@@ -106,23 +96,10 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 					Justificado justificadoDB = seleccionarJustificado(table);
 
 					DetalleJustificado.justificado=justificadoDB;
-					
-<<<<<<< HEAD
-<<<<<<< HEAD
-					DetalleJustificado detJust = new DetalleJustificado();
-					
-					detJust.setVisible(true);
-=======
-					DetalleJustificado detRecl = new DetalleJustificado();
-					
-					detRecl.setVisible(true);
->>>>>>> cba656a (Nuevas features de justificados)
-=======
-					DetalleJustificado detJust = new DetalleJustificado();
-					
-					detJust.setVisible(true);
->>>>>>> 9b6ed68 (cambios en el cliente)
 
+					DetalleJustificado detJust = new DetalleJustificado();
+					detJust.setVisible(true);
+					
 				} catch (ServiciosException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -131,7 +108,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 			}
 		});
 		
-		btnDetalle.setBounds(331, 500, 85, 21);
+		btnDetalle.setBounds(379, 500, 85, 21);
 		add(btnDetalle);
 		
 		JButton btnActualizar = new JButton("Actualizar justificados");
@@ -157,6 +134,17 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 
 		comboBoxEstado.setBounds(235, 106, 198, 36);
 		add(comboBoxEstado);
+		
+		JButton btnAlta = new JButton("Alta");
+		btnAlta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AltaJustificado altaJustificado = new AltaJustificado();
+				altaJustificado.setVisible(true);
+			}
+		});
+		btnAlta.setBounds(189, 499, 85, 21);
+		add(btnAlta);
 
 		//Filtrar
 		comboBoxEstado.addItemListener(new ItemListener() {

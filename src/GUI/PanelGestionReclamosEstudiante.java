@@ -3,31 +3,29 @@ package GUI;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.entities.Estudiante;
+import com.entities.Reclamo;
+import com.entities.Usuario;
 import com.exceptions.ServiciosException;
-import com.entities.*;
 
 import controlador.DAOGeneral;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PanelGestionReclamosEstudiante extends JPanel {
 
@@ -55,6 +53,22 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 		lblReclamos.setBounds(235, 37, 198, 36);
 		add(lblReclamos);
 		
+		JButton btnAlta = new JButton("Alta");
+		btnAlta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AltaReclamo altaReclamo = null;
+				try {
+					altaReclamo = new AltaReclamo();
+					altaReclamo.setVisible(true);
+				} catch (ServiciosException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnAlta.setBounds(197, 499, 86, 22);
+		add(btnAlta);
+		btnAlta.setVisible(false);
 		
 		JButton btnBaja = new JButton("Baja");
 		btnBaja.addMouseListener(new MouseAdapter() {
@@ -85,7 +99,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 			}
 		});
-		btnBaja.setBounds(206, 500, 85, 21);
+		btnBaja.setBounds(293, 499, 85, 21);
 		add(btnBaja);
 		btnBaja.setVisible(false);
 
@@ -113,7 +127,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				
 			}
 		});
-		btnDetalle.setBounds(331, 500, 85, 21);
+		btnDetalle.setBounds(388, 499, 85, 21);
 		add(btnDetalle);
 		btnDetalle.setVisible(false);
 		
@@ -188,6 +202,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 							
+				btnAlta.setVisible(true);
 				btnBaja.setVisible(true);
 				btnDetalle.setVisible(true);
 

@@ -255,7 +255,6 @@ public class Main {
 
 		//Registros de prueba en la tabla Reclamos
 		
-<<<<<<< HEAD
 		Reclamo reclamo1 = new Reclamo();
 		
 		reclamo1.setTipo("VME");
@@ -294,7 +293,7 @@ public class Main {
 		reclamo3.setFechaInicioActividad(new Date(2000-2021,4,8));
 		reclamo3.setSemestre(1);
 		reclamoBean.crear(reclamo3);
-=======
+
 //		Reclamo reclamo1 = new Reclamo();
 //		
 //		reclamo1.setDetalle("Los baños siempre están sucios");
@@ -318,8 +317,7 @@ public class Main {
 //		reclamo3.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 //		reclamo3.setEstado("INGRESADO");
 //		reclamoBean.crear(reclamo3);
->>>>>>> 9b6ed68 (cambios en el cliente)
-		
+
 		Reclamo reclamo4 = new Reclamo();
 		
 		reclamo4.setTipo("VME");
@@ -362,7 +360,7 @@ public class Main {
 		justificadoBean.crear(justif3);
 		
 		//Registros de prueba en la tabla Eventos
-			System.out.println(tutor);
+		System.out.println(tutor);
 		Evento eve1 = new Evento();
 		
 		eve1.setTitulo("Presencial 4 de octubre de 2022");
