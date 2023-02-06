@@ -76,11 +76,11 @@ public class DetalleReclamo extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		JLabel lblFuncionalidadesRol = new JLabel("Reclamo " + reclamo.getId_reclamo()+":");
-		lblFuncionalidadesRol.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblFuncionalidadesRol.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFuncionalidadesRol.setBounds(10, 60, 427, 39);
-		contentPane.add(lblFuncionalidadesRol);
+		JLabel lblReclamoId = new JLabel("Reclamo " + reclamo.getId_reclamo()+":");
+		lblReclamoId.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblReclamoId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReclamoId.setBounds(10, 60, 427, 39);
+		contentPane.add(lblReclamoId);
 		
 		//aca agarramos la fecha que nos trae de la base y parseamos a LocalDate
 		fechaReclamo = Instant.ofEpochMilli(reclamo.getFecha().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
@@ -136,6 +136,8 @@ public class DetalleReclamo extends JFrame {
 						
 						altaReclamo = new AltaReclamo();
 						altaReclamo.setVisible(true);
+						
+						setVisible(false);
 
 					} catch (ServiciosException e1) {
 						// TODO Auto-generated catch block
@@ -150,7 +152,7 @@ public class DetalleReclamo extends JFrame {
 		
 		
 		
-		if(!(reclamo.getTipo().equals("Otros"))) {
+		if(!(reclamo.getTipo().equals("Otro"))) {
 			JLabel lblCreditos = new JLabel("Creditos a reclamar: " + reclamo.getCreditosReclamados());
 			lblCreditos.setBounds(37, 425, 154, 13);
 			contentPane.add(lblCreditos);

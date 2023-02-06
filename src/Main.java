@@ -248,7 +248,7 @@ public class Main {
 		//Registros de prueba en la tabla Reclamos
 		
 		Reclamo reclamo1 = new Reclamo();
-		
+		reclamo1.setTitulo("Creditos VME");
 		reclamo1.setTipo("VME");
 		reclamo1.setDetalle("Me faltan los creditos de VME2");
 		reclamo1.setEstudiante(1L);
@@ -265,6 +265,7 @@ public class Main {
 		
 		Reclamo reclamo2 = new Reclamo();
 		
+		reclamo2.setTitulo("Cantina");
 		reclamo2.setTipo("Otros");
 		reclamo2.setDetalle("La cantina no es una cantina de verdad");
 		reclamo2.setEstudiante(1L);
@@ -274,6 +275,7 @@ public class Main {
 		
 		Reclamo reclamo3 = new Reclamo();
 		
+		reclamo3.setTitulo("APE");
 		reclamo3.setTipo("APE");
 		reclamo3.setDetalle("No tengo idea de lo que es APE");
 		reclamo3.setEstudiante(2L);
@@ -288,6 +290,7 @@ public class Main {
 		
 		Reclamo reclamo4 = new Reclamo();
 		
+		reclamo4.setTitulo("Otra vez los creditos");
 		reclamo4.setTipo("VME");
 		reclamo4.setDetalle("Me faltan los creditos de VME2");
 		reclamo4.setEstudiante(1L);

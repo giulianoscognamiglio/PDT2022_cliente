@@ -246,7 +246,6 @@ public class AltaReclamo extends JFrame {
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("entra");
 				Reclamo reclamo = new Reclamo();
 
 				// Usamos esto para obtener la fecha de ahora y agregarle una hora neutra para
@@ -262,7 +261,7 @@ public class AltaReclamo extends JFrame {
 				// dependiendo del tipo de reclamo vamos a guardar determinados campos o
 				// nullearlos
 				reclamo.setTipo(comboTipoReclamo.getSelectedItem().toString());
-				System.out.println(reclamo.getTipo() + "esto es el tipo");
+				reclamo.setTitulo(textTitulo.getText());
 				if (reclamo.getTipo().equals("VME")) {
 					//Si es un reclamo VME
 
@@ -284,7 +283,6 @@ public class AltaReclamo extends JFrame {
 
 				} else if (reclamo.getTipo().equals("Otro")) {
 					
-					System.out.println("entra en el if de otros");
 					//Si es un reclamo que no sea VME, ni APE ni Optativas
 					
 					reclamo.setDetalle(textAreaReclamo.getText());
@@ -299,8 +297,7 @@ public class AltaReclamo extends JFrame {
 					reclamo.setFechaInicioActividad(null);
 					reclamo.setSemestre(null);
 					reclamo.setNombreActividadAPE(null);
-					
-					System.out.println("entra al else");
+				}else {
 					//Si es APE u optativas
 
 					reclamo.setDetalle(textAreaReclamo.getText());
@@ -323,10 +320,25 @@ public class AltaReclamo extends JFrame {
 					reclamo.setNombreActividadAPE(textNombreActividadEvento.getText());
 				}
 				try {
-					DAOGeneral.reclamoBean.crear(reclamo);
-					JOptionPane.showMessageDialog(null, "Reclamo registrado con éxito", null,
-							JOptionPane.PLAIN_MESSAGE);
+					
+					if(reclamoExistente != null) {
+						
+						reclamo.setId_reclamo(reclamoExistente.getId_reclamo());
+						
+						DAOGeneral.reclamoBean.actualizar(reclamo);
+						JOptionPane.showMessageDialog(null, "Reclamo actualizado con éxito", null,
+								JOptionPane.PLAIN_MESSAGE);
 
+						
+
+						
+					}else {
+						DAOGeneral.reclamoBean.crear(reclamo);
+						JOptionPane.showMessageDialog(null, "Reclamo registrado con éxito", null,
+								JOptionPane.PLAIN_MESSAGE);
+
+					}
+					reclamoExistente = null;
 					setVisible(false);
 
 				} catch (ServiciosException e1) {
@@ -360,44 +372,47 @@ public class AltaReclamo extends JFrame {
 
 		comboDocente.setModel(cargarComboDocentes());
 		
+		if(reclamoExistente != null) {
+			btnRegistrar.setText("Actualizar");
+		}
 		
 		if(reclamoExistente!=null) {
 			
-			textCreditos.setText(""+reclamoExistente.getCreditosReclamados());
-			
+			comboTipoReclamo.setSelectedItem(reclamoExistente.getTipo());
+			textAreaReclamo.setText(reclamoExistente.getDetalle());
+			textTitulo.setText(reclamoExistente.getTitulo());
 			if(reclamoExistente.getTipo().equals("VME")) {
 				
+				Tutor tutor = DAOGeneral.tutorBean.obtenerPorUsuario(reclamoExistente.getDocente_id());				
+				comboDocente.setSelectedItem("" + tutor.getId_usuario() + " - " + tutor.getNombre1() + " " + tutor.getApellido1());
+				textSemestre.setText(""+reclamoExistente.getSemestre());
 				textNombreActividadEvento.setText(reclamoExistente.getNombreEventoVME());
+				dateChooser.setDatoFecha(reclamoExistente.getFechaInicioActividad());
+				textCreditos.setText(""+reclamoExistente.getCreditosReclamados());
+
 
 			} else if(reclamoExistente.getTipo().equals("APE")) {
+				
+				
+				Tutor tutor = DAOGeneral.tutorBean.obtenerPorUsuario(reclamoExistente.getDocente_id());				
+				comboDocente.setSelectedItem("" + tutor.getId_usuario() + " - " + tutor.getNombre1() + " " + tutor.getApellido1());
+				textSemestre.setText(""+reclamoExistente.getSemestre());
 				textNombreActividadEvento.setText(reclamoExistente.getNombreActividadAPE());
+				dateChooser.setDatoFecha(reclamoExistente.getFechaInicioActividad());
+				textCreditos.setText(""+reclamoExistente.getCreditosReclamados());
 
+			} else if(reclamoExistente.getTipo().equals("Optativas")) {
+				Tutor tutor = DAOGeneral.tutorBean.obtenerPorUsuario(reclamoExistente.getDocente_id());				
+				comboDocente.setSelectedItem("" + tutor.getId_usuario() + " - " + tutor.getNombre1() + " " + tutor.getApellido1());
+				textSemestre.setText(""+reclamoExistente.getSemestre());
+				textNombreActividadEvento.setText(reclamoExistente.getNombreActividadAPE());
+				dateChooser.setDatoFecha(reclamoExistente.getFechaInicioActividad());
+				textCreditos.setText(""+reclamoExistente.getCreditosReclamados());
 			}
-
+			
 			
 		}
 		
-		
-		/*	public static Reclamo reclamoExistente;
-	private JPanel contentPane;
-	private JLabel lblNombre2;
-	DefaultComboBoxModel modeloITR;
-	private JTextField textCreditos;
-	public RSDateChooser dateChooser;
-	private JTextField textSemestre;
-	private JTextField textNombreActividadEvento;
-	private JComboBox comboDocente;
-	private JButton btnRegistrar;
-	private JLabel lblDocente;
-	private JLabel lblNombreActividadEvento;
-	private JLabel lblCreditos;
-	private JLabel lblSemestre;
-	private JLabel lblFecha;
-	private JTextField textTitulo;
-		 * 
-		 * 
-		 * 
-		 */
 	}
 
 	private DefaultComboBoxModel cargarComboDocentes() throws ServiciosException {
@@ -406,17 +421,11 @@ public class AltaReclamo extends JFrame {
 		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
 		modeloCombo.addElement("Seleccione item");
 
-		try {
-			List<Tutor> docentes = DAOGeneral.tutorBean.obtenerTodos();
+		List<Tutor> docentes = DAOGeneral.tutorBean.obtenerTodos();
 
-			for (Tutor t : docentes) {
+		for (Tutor t : docentes) {
 
-				Usuario u = DAOGeneral.usuarioBean.obtenerPorId(t.getId_usuario());
-				modeloCombo.addElement("" + t.getId_usuario() + " - " + u.getNombre1() + " " + u.getApellido1());
-			}
-
-		} catch (ServiciosException e) {
-			e.printStackTrace();
+			modeloCombo.addElement("" + t.getId_usuario() + " - " + t.getNombre1() + " " + t.getApellido1());
 		}
 
 		return modeloCombo;

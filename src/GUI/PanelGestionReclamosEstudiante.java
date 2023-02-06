@@ -122,7 +122,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+				cargarTabla(DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 
 			}
 		});
