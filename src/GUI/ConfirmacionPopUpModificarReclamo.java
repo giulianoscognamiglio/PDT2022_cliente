@@ -98,6 +98,8 @@ public class ConfirmacionPopUpModificarReclamo extends JFrame {
 					
 					JOptionPane.showMessageDialog(null, "Reclamo modificado con éxito", null, JOptionPane.PLAIN_MESSAGE);
 				
+					
+					AltaReclamo.reclamoExistente = null;
 					setVisible(false);
 
 				} catch (ServiciosException e1) {
