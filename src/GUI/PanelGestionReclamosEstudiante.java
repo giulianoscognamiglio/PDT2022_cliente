@@ -161,7 +161,7 @@ public class PanelGestionReclamosEstudiante extends JPanel {
 				try {
 					//primero nos traemos todos los reclamos y luego creamos una lista auxiliar donde vamos a almacenar los
 					//reclamos filtrados
-					List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerTodos();
+					List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerPorEstudiante(estudiante.getId_estudiante());
 					List<Reclamo> reclamosFiltrados;
 
 					if (comboBoxEstado.getSelectedItem().toString() == "En proceso") {

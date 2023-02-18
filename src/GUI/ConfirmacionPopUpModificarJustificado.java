@@ -98,6 +98,7 @@ public class ConfirmacionPopUpModificarJustificado extends JFrame {
 					
 					JOptionPane.showMessageDialog(null, "Justificado modificado con éxito", null, JOptionPane.PLAIN_MESSAGE);
 				
+					AltaJustificado.justificadoExistente = null;
 					setVisible(false);
 
 				} catch (ServiciosException e1) {

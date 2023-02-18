@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.entities.Estudiante;
 import com.entities.Justificado;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
@@ -29,7 +30,7 @@ import controlador.DAOGeneral;
 public class PanelGestionJustificadosEstudiante extends JPanel {
 
 	private DefaultTableModel modeloTabla;
-
+	private Estudiante estudiante = DAOGeneral.estudianteBean.obtenerPorUsuario(PanelMenu.usuarioIngresado.getId_usuario());
 	public PanelGestionJustificadosEstudiante() {
 
 		setBounds(0, 0, 684, 581);
@@ -78,7 +79,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 					JOptionPane.showMessageDialog(null, "No se permite eliminar justificados finalizados o en proceso.", null,
 							JOptionPane.ERROR_MESSAGE);
 				}
-				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 			}
 		});
 		btnBaja.setBounds(284, 500, 85, 21);
@@ -116,7 +117,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+				cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 
 			}
 		});
@@ -153,7 +154,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 				try {
 					//primero nos traemos todos los justificados y luego creamos una lista auxiliar donde vamos a almacenar los
 					//justificados filtrados
-					List<Justificado> justificados = DAOGeneral.justificadoBean.obtenerTodos();
+					List<Justificado> justificados = DAOGeneral.justificadoBean.obtenerPorEstudiante(estudiante.getId_estudiante());
 					List<Justificado> justificadosFiltrados;
 
 					if (comboBoxEstado.getSelectedItem().toString() == "En proceso") {
@@ -200,7 +201,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 		
 		btnBaja.setVisible(false);
 		btnDetalle.setVisible(false);
-		cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(PanelMenu.usuarioIngresado.getId_usuario()));
+		cargarTabla(DAOGeneral.justificadoBean.obtenerPorEstudiante(estudiante.getId_estudiante()));
 
 	}
 	
