@@ -557,8 +557,7 @@ public class RegistroUsuario extends JFrame {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("");
 		for (ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
-			if(itr.getActivo().equals("Y")) 
-				modeloITR.addElement(itr.getNombre());
+			modeloITR.addElement(itr.getNombre());
 		}
 
 		modeloDepartamento.removeAllElements();
@@ -576,7 +575,7 @@ public class RegistroUsuario extends JFrame {
 	}
 	
 	public String controlEmailInstitucional(String mailInstitucional)throws Exception{
-		if (!(mailInstitucional.endsWith("utec.edu.uy")&&mailInstitucional.contains("@"))) {
+		if (!(mailInstitucional.endsWith("@utec.edu.uy")||mailInstitucional.endsWith("@estudiantes.utec.edu.uy"))) {
 			throw new Exception("El mail institucional debe pertenecer al dominio utec.edu.uy");
 		}
 		return mailInstitucional;

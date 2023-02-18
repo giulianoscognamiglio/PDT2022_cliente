@@ -13,6 +13,8 @@ import javax.swing.SwingConstants;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
 
+import controlador.DAOGeneral;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -24,7 +26,7 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		estudianteGUI();
+		analistaGUI();
 	}
 
 	public void estudianteGUI() {
@@ -262,6 +264,9 @@ public class PanelMenu extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 
 				PanelBajaUsuario bajaUsuario = PanelBajaUsuario.getInstance();
+				bajaUsuario.cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
+//				bajaUsuario.cargarComboBoxITR();
+				bajaUsuario.defaultValueComboBox();
 				bajaUsuario.setVisible(true);
 				panelDinamico.removeAll();
 				bajaUsuario.setSize(684, 581);
@@ -335,6 +340,25 @@ public class PanelMenu extends JPanel {
 		});
 		btnAnaliticaDeReportes.setBounds(23, 103, 170, 21);
 		panelMenu.add(btnAnaliticaDeReportes);
+		
+		JButton btnListaDeItrs = new JButton("Lista de ITRs");
+		btnListaDeItrs.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PanelListaITRs panelListaITR = PanelListaITRs.getInstance();
+				panelListaITR.cargarTabla(DAOGeneral.itrBean.obtenerTodos());
+				panelListaITR.comboBoxEstado.setSelectedIndex(0);
+				panelListaITR.setVisible(true);
+				panelDinamico.removeAll();
+				panelListaITR.setSize(684, 581);
+				panelListaITR.setLocation(0, 0);
+				panelDinamico.add(panelListaITR);
+				panelDinamico.revalidate();
+				panelDinamico.repaint();
+			}
+		});
+		btnListaDeItrs.setBounds(23, 281, 170, 21);
+		panelMenu.add(btnListaDeItrs);
 
 	}
 
