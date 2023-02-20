@@ -49,9 +49,6 @@ public class Main {
 		EventosBeanRemote eventoBean=(EventosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/EventosBean!com.servicios.EventosBeanRemote");
 		ConvocatoriasAsistenciaBeanRemote convocatoriasAsistenciaBean=(ConvocatoriasAsistenciaBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ConvocatoriasAsistenciaBean!com.servicios.ConvocatoriasAsistenciaBeanRemote");
 		
-
-		
-		
 		//fecha actual (la usamos para hacer reclamos de prueba)
 		LocalDate localDate = LocalDate.now();
 		ZoneId defaultZoneId = ZoneId.systemDefault();
@@ -120,11 +117,13 @@ public class Main {
 		ITR itr1 = new ITR();
 		itr1.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
 		itr1.setNombre("ITR Capital");
+		itr1.setActivo("Y");
 		itrBean.crear(itr1);
 		
 		ITR itr2 = new ITR();
 		itr2.setDepartamento(departamentoBean.obtenerPorNombre("Durazno"));
 		itr2.setNombre("ITR CS");
+		itr2.setActivo("Y");
 		itrBean.crear(itr2);
 		
 		Analista a=new Analista();

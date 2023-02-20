@@ -98,7 +98,7 @@ public class PanelBajaUsuario extends JPanel {
 	}
 
 	public void initGUI() {
-		
+
 		removeAll();
 
 		setBounds(0, 0, 684, 581);
@@ -133,11 +133,13 @@ public class PanelBajaUsuario extends JPanel {
 			}
 
 		};
+
 		table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+		table.removeColumn(table.getColumnModel().getColumn(11));
+		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -151,32 +153,6 @@ public class PanelBajaUsuario extends JPanel {
 			}
 		});
 
-//		btnBaja = new JButton("Baja");
-//		btnBaja.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//
-//				int column = 2;
-//				int row = table.getSelectedRow();
-//				String documento = table.getModel().getValueAt(row, column).toString();
-//
-//				try {
-//					Usuario requerido = DAOGeneral.usuarioBean.obtenerPorDocumento(documento);
-//					DAOGeneral.usuarioBean.borrar(requerido.getId_usuario());
-//					JOptionPane.showMessageDialog(null, "Usuario dado de baja con éxito", null,
-//							JOptionPane.PLAIN_MESSAGE);
-//				} catch (ServiciosException e1) {
-//					e1.printStackTrace();
-//				}
-//				cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
-//			}
-//		});
-//		btnBaja.setBounds(132, 497, 95, 21);
-//		panelDinamico.add(btnBaja);
-//		btnBaja.setVisible(true);
-
-////////////////////////////////////////////////////////////////////////////////////////
-		// modificacion
 		btnModificación = new JButton("Modificar");
 		btnModificación.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -239,6 +215,7 @@ public class PanelBajaUsuario extends JPanel {
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(224, 96, 118, 22);
 		panelDinamico.add(comboBoxITR);
+		cargarComboBoxITR();
 
 		JLabel lblGeneracion = new JLabel("Generacion");
 		lblGeneracion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -261,7 +238,8 @@ public class PanelBajaUsuario extends JPanel {
 		comboBoxGeneracion.setVisible(false);
 
 		comboBoxEstado = new JComboBox();
-		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Sin Validar", "Activo", "Eliminado" }));
+		comboBoxEstado
+				.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Sin Validar", "Activo", "Eliminado" }));
 		comboBoxEstado.setBounds(96, 96, 118, 22);
 		panelDinamico.add(comboBoxEstado);
 
@@ -279,7 +257,7 @@ public class PanelBajaUsuario extends JPanel {
 		comboBoxUsuario.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Estudiante", "Tutor", "Analista" }));
 		comboBoxUsuario.setBounds(354, 96, 118, 22);
 		panelDinamico.add(comboBoxUsuario);
-		
+
 		JButton btnLimpiarFiltros = new JButton("X");
 		btnLimpiarFiltros.addMouseListener(new MouseAdapter() {
 			@Override
@@ -291,31 +269,27 @@ public class PanelBajaUsuario extends JPanel {
 		btnLimpiarFiltros.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnLimpiarFiltros.setBounds(36, 96, 50, 23);
 		panelDinamico.add(btnLimpiarFiltros);
-		
+
 		btnModificación.setVisible(true);
-		
-		cargarComboBoxITR();
-		
-		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
-		
+
 		comboBoxITR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filtrar();
 			}
 		});
-		
+
 		comboBoxGeneracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filtrar();
 			}
 		});
-		
+
 		comboBoxEstado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filtrar();
 			}
 		});
-		
+
 		comboBoxUsuario.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
@@ -417,7 +391,8 @@ public class PanelBajaUsuario extends JPanel {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("Todos");
 		for (ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
-			modeloITR.addElement(itr.getNombre());
+			if (itr.getActivo().equals("Y"))
+				modeloITR.addElement(itr.getNombre());
 		}
 	}
 
@@ -464,6 +439,7 @@ public class PanelBajaUsuario extends JPanel {
 			}
 
 			List<Usuario> listaFiltro3 = new ArrayList<>();
+			cargarComboBoxITR();
 			for (Iterator<Usuario> iter = listaFiltro2.iterator(); iter.hasNext();) {
 				Usuario u = iter.next();
 				if (u.getItr().getNombre().matches(comboBoxITR.getSelectedItem().toString())) {
