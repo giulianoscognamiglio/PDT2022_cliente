@@ -165,6 +165,7 @@ public class RegistroUsuario extends JFrame {
 		dateChooser.setColorForeground(Color.BLACK);
 		dateChooser.setColorBackground(Color.BLACK);
 		dateChooser.setBounds(280, 115, 211, 19);
+//		dateChooser.setMax(new Date());
 		contentPane.add(dateChooser);
 
 		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento");
@@ -347,17 +348,18 @@ public class RegistroUsuario extends JFrame {
 						usuarioIngresado.setActivo("N");
 					}
 
+//					System.out.println(usuarioIngresado.getCedula());
 //					Usuario checkeo = null;
-					Usuario mailInstitucional = null;
+					Usuario checkeo = null;
 
 					try {
-//						checkeo = DAOGeneral.usuarioBean.obtenerPorDocumento(usuarioIngresado.getCedula());
-						mailInstitucional = DAOGeneral.usuarioBean.obtenerPorMailInstitucional(usuarioIngresado.getMailInstitucional());
+						checkeo = DAOGeneral.usuarioBean.obtenerPorDocumento(usuarioIngresado.getCedula());
+//						mailInstitucional = DAOGeneral.usuarioBean.obtenerPorMailInstitucional(usuarioIngresado.getMailInstitucional());
 					} catch (ServiciosException e1) {
 						e1.printStackTrace();
 					}
 
-					if (mailInstitucional == null) {
+					if (checkeo == null) {
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
 							if (analistaLoggedIn()) {
@@ -374,7 +376,7 @@ public class RegistroUsuario extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Ya existe en el sistema un usuario registrado con este mail institucional", "Error",
+								"Ya existe en el sistema un usuario registrado con este documento", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 					
@@ -422,17 +424,17 @@ public class RegistroUsuario extends JFrame {
 
 					((Estudiante) usuarioIngresado).setGeneracion(PanelRegistroExtra.yearDate.getYear() + "");
 
-//					Usuario checkeo = null;
-					Usuario mailInstitucional = null;
+					Usuario checkeo = null;
+//					Usuario mailInstitucional = null;
 
 					try {
-//						checkeo = DAOGeneral.usuarioBean.obtenerPorDocumento(usuarioIngresado.getCedula());
-						mailInstitucional = DAOGeneral.usuarioBean.obtenerPorMailInstitucional(usuarioIngresado.getMailInstitucional());
+						checkeo = DAOGeneral.usuarioBean.obtenerPorDocumento(usuarioIngresado.getCedula());
+//						mailInstitucional = DAOGeneral.usuarioBean.obtenerPorMailInstitucional(usuarioIngresado.getMailInstitucional());
 					} catch (ServiciosException e1) {
 						e1.printStackTrace();
 					}
 
-					if (mailInstitucional == null) {
+					if (checkeo == null) {
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
 							if (analistaLoggedIn()) {
@@ -449,7 +451,7 @@ public class RegistroUsuario extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Ya existe en el sistema un usuario registrado con este mail institucional", "Error",
+								"Ya existe en el sistema un usuario registrado con este documento", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 					
@@ -500,17 +502,17 @@ public class RegistroUsuario extends JFrame {
 						e1.printStackTrace();
 					}
 
-//					Usuario checkeo = null;
-					Usuario mailInstitucional = null;
+					Usuario checkeo = null;
+//					Usuario mailInstitucional = null;
 
 					try {
-//						checkeo = DAOGeneral.usuarioBean.obtenerPorDocumento(usuarioIngresado.getCedula());
-						mailInstitucional = DAOGeneral.usuarioBean.obtenerPorMailInstitucional(usuarioIngresado.getMailInstitucional());
+						checkeo = DAOGeneral.usuarioBean.obtenerPorDocumento(usuarioIngresado.getCedula());
+//						mailInstitucional = DAOGeneral.usuarioBean.obtenerPorMailInstitucional(usuarioIngresado.getMailInstitucional());
 					} catch (ServiciosException e1) {
 						e1.printStackTrace();
 					}
 
-					if (mailInstitucional == null) {
+					if (checkeo == null) {
 						try {
 							DAOGeneral.usuarioBean.crear(usuarioIngresado);
 							if (analistaLoggedIn()) {
@@ -527,7 +529,7 @@ public class RegistroUsuario extends JFrame {
 						}
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Ya existe en el sistema un usuario registrado con este mail institucional", "Error",
+								"Ya existe en el sistema un usuario registrado con este documento", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 					
