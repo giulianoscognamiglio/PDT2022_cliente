@@ -96,7 +96,7 @@ public class ConfirmacionPopUpJustificado extends JFrame {
 					//Utilizamos un atributo static del tipo Justificado para eliminar si se oprime este boton
 					DAOGeneral.justificadoBean.borrar(justificado.getId_justificado());
 					
-					JOptionPane.showMessageDialog(null, "Justificado eliminado con éxito", null, JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Justificacion eliminado con ï¿½xito", null, JOptionPane.PLAIN_MESSAGE);
 				
 					setVisible(false);
 

@@ -47,7 +47,7 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 		scrollPane.setViewportView(table);
 		
 
-		JLabel lblJustificados = new JLabel("Justificados");
+		JLabel lblJustificados = new JLabel("Justificaciones");
 		lblJustificados.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJustificados.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblJustificados.setBounds(235, 37, 198, 36);
@@ -62,18 +62,18 @@ public class PanelGestionJustificadosEstudiante extends JPanel {
 				
 				Justificado justificadoDB = seleccionarJustificado(table);
 
-				//con esta condicional nos aseguramos que solo se puedan eliminar los que aún
+				//con esta condicional nos aseguramos que solo se puedan eliminar los que aï¿½n
 				//no hayan sido tocados por un analista
 				if(justificadoDB.getEstado().equals("INGRESADO")) {
 					
-					//Se le adjudica el justificado obtenido desde la base a la variable static "justificado" y se lanza el pop up de confirmación
+					//Se le adjudica el justificado obtenido desde la base a la variable static "justificado" y se lanza el pop up de confirmaciï¿½n
 					ConfirmacionPopUpJustificado.justificado = justificadoDB;
 					ConfirmacionPopUpJustificado confirmacionPopUpJustificado = new ConfirmacionPopUpJustificado();
 					
 					confirmacionPopUpJustificado.setVisible(true);
 					
 					//DAOGeneral.justificadoBean.borrar(justificadoDB.getId_justificado());
-					//JOptionPane.showMessageDialog(null, "Justificado dado de baja con éxito", null,
+					//JOptionPane.showMessageDialog(null, "Justificado dado de baja con ï¿½xito", null,
 						//	JOptionPane.PLAIN_MESSAGE);					
 				}else {
 					JOptionPane.showMessageDialog(null, "No se permite eliminar justificados finalizados o en proceso.", null,

@@ -1,9 +1,13 @@
 package GUI;
 
 import java.awt.Font;
+import java.awt.TextArea;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -32,6 +36,8 @@ import java.awt.event.ActionEvent;
 public class PanelGestionJustificados extends JPanel {
 
 	private DefaultTableModel modeloTabla;
+	public static PanelGestionJustificados instance = new PanelGestionJustificados();
+
 
 	public PanelGestionJustificados() {
 
@@ -39,7 +45,7 @@ public class PanelGestionJustificados extends JPanel {
 		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(63, 152, 561, 238);
+		scrollPane.setBounds(63, 131, 360, 259);
 		add(scrollPane);
 
 		modeloTabla = new DefaultTableModel(new Object[][] { { null, null }, },
@@ -48,7 +54,7 @@ public class PanelGestionJustificados extends JPanel {
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
 
-		JLabel lblJustificados = new JLabel("Justificados");
+		JLabel lblJustificados = new JLabel("Justificaciones");
 		lblJustificados.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJustificados.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblJustificados.setBounds(235, 37, 198, 36);
@@ -80,7 +86,7 @@ public class PanelGestionJustificados extends JPanel {
 
 			}
 		});
-		btnDetalle.setBounds(331, 500, 85, 21);
+		btnDetalle.setBounds(266, 494, 85, 21);
 		add(btnDetalle);
 
 //		
@@ -98,8 +104,9 @@ public class PanelGestionJustificados extends JPanel {
 		JComboBox comboFiltroValor = new JComboBox();
 
 
-		comboFiltroValor.setBounds(333, 106, 198, 36);
+		comboFiltroValor.setBounds(456, 201, 198, 36);
 		add(comboFiltroValor);
+		comboFiltroValor.setVisible(false);
 
 		JButton btnBaja = new JButton("Baja");
 		btnBaja.addMouseListener(new MouseAdapter() {
@@ -113,7 +120,7 @@ public class PanelGestionJustificados extends JPanel {
 					System.out.println(justificadoDB);
 					DAOGeneral.justificadoBean.borrar(justificadoDB.getId_justificado());
 
-					JOptionPane.showMessageDialog(null, "Justificado dado de baja con éxito", null,
+					JOptionPane.showMessageDialog(null, "Justificacion dado de baja con ï¿½xito", null,
 							JOptionPane.PLAIN_MESSAGE);
 				} catch (ServiciosException e1) {
 					e1.printStackTrace();
@@ -121,7 +128,7 @@ public class PanelGestionJustificados extends JPanel {
 				cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
 			}
 		});
-		btnBaja.setBounds(206, 500, 85, 21);
+		btnBaja.setBounds(141, 494, 85, 21);
 		add(btnBaja);
 
 		JButton btnActualizar = new JButton("Actualizar");
@@ -130,24 +137,44 @@ public class PanelGestionJustificados extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 
 				Justificado justificadoDB = seleccionarJustificado(table);
-
 				String estado = comboBox.getSelectedItem().toString().toUpperCase();
-				try {
 
-					modificarEstado(justificadoDB, estado);
+				justificadoDB.setEstado(estado);
 
-					cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
 
-				} catch (ServiciosException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					AccionJustificacion accionJustificacion = new AccionJustificacion();
+					Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
+					
+					String stringDetalle = "La justificaciï¿½n con ID " + justificadoDB.getId_justificado() + " pasï¿½ de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
+
+					
+					accionJustificacion.setFecha(new Date());
+					accionJustificacion.setAnalista(usuarioAnalista.getId_analista());
+					accionJustificacion.setDetalle(stringDetalle);
+					
+					
+					ConfirmacionAccionReclamo.justificado = justificadoDB;
+					ConfirmacionAccionReclamo.accionJustificacion = accionJustificacion;
+					
+					
+					ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
+					popUp.setVisible(true);
+
+
+
+				
 
 			}
 		});
 		btnActualizar.setBounds(496, 479, 128, 21);
 		add(btnActualizar);
 
+
+		TextArea textDetalle = new TextArea();
+
+		textDetalle.setBounds(496, 301, 145, 48);
+		add(textDetalle);
+		
 		JComboBox comboFiltroCriterio = new JComboBox();
 		comboFiltroCriterio.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -163,6 +190,9 @@ public class PanelGestionJustificados extends JPanel {
 					try {
 						comboFiltroValor
 								.setModel(cargarComboFiltroValor(comboFiltroCriterio.getSelectedItem().toString()));
+						
+						comboFiltroValor.setVisible(true);
+
 					} catch (ServiciosException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -171,10 +201,64 @@ public class PanelGestionJustificados extends JPanel {
 
 			}
 		});
-		comboFiltroCriterio.setBounds(69, 106, 198, 36);
+		comboFiltroCriterio.setBounds(456, 131, 198, 36);
 		add(comboFiltroCriterio);
 		comboFiltroCriterio.setModel(modeloCombo);
 
+		JButton btnAccion = new JButton("Registrar acci\u00F3n");
+		btnAccion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				AccionJustificacion accionJustificacion = new AccionJustificacion();
+				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());		
+
+				
+				accionJustificacion.setFecha(new Date());
+				accionJustificacion.setAnalista(usuarioAnalista.getId_analista());
+				accionJustificacion.setDetalle(textDetalle.getText());
+				
+				
+				Justificado justificadoDB = seleccionarJustificado(table);
+				ConfirmacionAccionReclamo.justificado = justificadoDB;
+				ConfirmacionAccionReclamo.accionJustificacion = accionJustificacion;
+				
+				
+				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
+				popUp.setVisible(true);
+				}
+			
+			
+			
+			
+			
+		});
+		btnAccion.setBounds(496, 365, 145, 21);
+		add(btnAccion);
+		
+		
+		textDetalle.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println(textDetalle.getText());
+				if(textDetalle.getText().length()<=0) {
+					btnAccion.setEnabled(false);
+				} else { 
+					btnAccion.setEnabled(true);
+
+				}
+			}
+		});
+		
+		btnAccion.setEnabled(false);
+		btnActualizar.setEnabled(false);
+		textDetalle.setEnabled(false);
+		
 		modeloCombo.addElement("Todos");
 		modeloCombo.addElement("Estado");
 		modeloCombo.addElement("Estudiante");
@@ -241,12 +325,18 @@ public class PanelGestionJustificados extends JPanel {
 							
 				btnBaja.setVisible(true);
 				btnDetalle.setVisible(true);
-
+				
+				comboBox.setEnabled(true);
+				btnBaja.setEnabled(true);
+				btnDetalle.setEnabled(true);
+				textDetalle.setEnabled(true);
+				btnActualizar.setEnabled(true);
 			}
 		});
 		
-		btnBaja.setVisible(false);
-		btnDetalle.setVisible(false);
+		btnBaja.setEnabled(false);
+		btnDetalle.setEnabled(false);
+		comboBox.setEnabled(false);
 
 	}
 
@@ -300,7 +390,7 @@ public class PanelGestionJustificados extends JPanel {
 	}
 
 	private DefaultComboBoxModel cargarComboFiltroValor(String criterio) throws ServiciosException {
-		// método para hacer aparecer el comboBoxFiltroCriterio y darle los datos a
+		// mï¿½todo para hacer aparecer el comboBoxFiltroCriterio y darle los datos a
 		// mostrar
 		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
 		modeloCombo.addElement("Seleccione item");
@@ -327,5 +417,8 @@ public class PanelGestionJustificados extends JPanel {
 
 		return modeloCombo;
 
+	}
+	public static PanelGestionJustificados getInstance() {
+		return instance;
 	}
 }

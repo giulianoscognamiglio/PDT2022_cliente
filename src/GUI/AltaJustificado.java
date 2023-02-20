@@ -96,7 +96,7 @@ public class AltaJustificado extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblJustificado = new JLabel("Justificado:");
+		JLabel lblJustificado = new JLabel("Justificacion:");
 		lblJustificado.setBounds(57, 20, 175, 13);
 		contentPane.add(lblJustificado);
 
@@ -141,7 +141,7 @@ public class AltaJustificado extends JFrame {
 						confirmacionPopUp.setVisible(true);
 					} else {
 						DAOGeneral.justificadoBean.crear(justificado);
-					JOptionPane.showMessageDialog(null, "Justificado registrado con éxito", null,
+					JOptionPane.showMessageDialog(null, "Justificacion registrado con ï¿½xito", null,
 							JOptionPane.PLAIN_MESSAGE);
 					}
 					
@@ -197,7 +197,7 @@ public class AltaJustificado extends JFrame {
 	private DefaultComboBoxModel cargarComboEventos(Long id_estudiante) throws ServiciosException {
 		
 		System.out.println(id_estudiante);
-		// método para hacer aparecer el comboBoxFiltroCriterio y darle los datos a
+		// mï¿½todo para hacer aparecer el comboBoxFiltroCriterio y darle los datos a
 		// mostrar
 		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
 		modeloCombo.addElement("Seleccione evento");

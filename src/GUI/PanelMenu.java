@@ -24,7 +24,7 @@ public class PanelMenu extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenu() {
-		estudianteGUI();
+		tutorGUI();
 	}
 
 	public void estudianteGUI() {
@@ -140,7 +140,7 @@ public class PanelMenu extends JPanel {
 		lblNombreUsuario.setText(usuarioIngresado.getUsuario());
 		panelMenu.add(lblNombreUsuario);
 		
-		JButton btnJustificados = new JButton("Justificados");
+		JButton btnJustificados = new JButton("Justificaciones");
 		btnJustificados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -256,7 +256,7 @@ public class PanelMenu extends JPanel {
 //		btnAltaUsuario.setBounds(23, 280, 170, 21);
 //		panelMenu.add(btnAltaUsuario);
 
-		JButton btnBajaUsuario = new JButton("Gestión de usuarios");
+		JButton btnBajaUsuario = new JButton("Gestiï¿½n de usuarios");
 		btnBajaUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

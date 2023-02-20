@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -28,10 +29,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.TextArea;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelGestionReclamos extends JPanel {
 
 	private DefaultTableModel modeloTabla;
+	public static PanelGestionReclamos instance = new PanelGestionReclamos();
 
 	public PanelGestionReclamos() {
 
@@ -39,7 +44,7 @@ public class PanelGestionReclamos extends JPanel {
 		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(63, 152, 409, 282);
+		scrollPane.setBounds(63, 152, 379, 266);
 		add(scrollPane);
 
 		modeloTabla = new DefaultTableModel(new Object[][] { { null, null }, },
@@ -68,15 +73,17 @@ public class PanelGestionReclamos extends JPanel {
 					JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
 							JOptionPane.PLAIN_MESSAGE);
 					
+					
 				} catch (ServiciosException e1) {
 					e1.printStackTrace();
 				}
+				
 				cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 			}
 		});
 		btnBaja.setBounds(148, 500, 85, 21);
 		add(btnBaja);
-		btnBaja.setVisible(false);
+		btnBaja.setEnabled(false);
 
 		JButton btnDetalle = new JButton("Detalle");
 		btnDetalle.addMouseListener(new MouseAdapter() {
@@ -101,26 +108,21 @@ public class PanelGestionReclamos extends JPanel {
 		});
 		btnDetalle.setBounds(331, 500, 85, 21);
 		add(btnDetalle);
-		btnDetalle.setVisible(false);
+		btnDetalle.setEnabled(false);
 		// ------------------------------------------------------------------------------------
 		// Esto tiene que ser invisible hasta que se interactua con la tabla
 		JComboBox comboBoxEstado = new JComboBox();
 		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] { "", "En proceso", "Finalizado" }));
-		comboBoxEstado.setBounds(496, 428, 128, 26);
+		comboBoxEstado.setBounds(496, 428, 145, 26);
 		add(comboBoxEstado);
-		comboBoxEstado.setVisible(false);
+		comboBoxEstado.setEnabled(false);
 
-		JLabel lblEstado = new JLabel("Modificar estado");
-		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEstado.setBounds(496, 405, 128, 13);
-		add(lblEstado);
-		lblEstado.setVisible(false);
+		TextArea textDetalle = new TextArea();
 
+		textDetalle.setBounds(496, 301, 145, 48);
+		add(textDetalle);
+		
 		JButton btnActualizar = new JButton("Actualizar");
-		btnActualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnActualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -128,23 +130,31 @@ public class PanelGestionReclamos extends JPanel {
 				Reclamo reclamoDB = seleccionarReclamo(table);
 
 				String estado = comboBoxEstado.getSelectedItem().toString().toUpperCase();
+								
+				reclamoDB.setEstado(estado);
+				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());		
 				
-				try {
+				String stringDetalle = "El reclamo con ID " + reclamoDB.getId_reclamo() + " pasó de estar " + reclamoDB.getEstado() + " a estar " + comboBoxEstado.getSelectedItem();
 
-					modificarEstado(reclamoDB, estado);
-
-					cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
-
-				} catch (ServiciosException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				AccionReclamo accionReclamo = new AccionReclamo();
+				
+				accionReclamo.setFecha(new Date());
+				accionReclamo.setAnalista(usuarioAnalista.getId_analista());
+				accionReclamo.setDetalle(stringDetalle);
+				
+				ConfirmacionAccionReclamo.accionReclamo = accionReclamo;
+				ConfirmacionAccionReclamo.reclamo = reclamoDB;
+				
+				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
+				popUp.setVisible(true);
+			
+				cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 
 			}
 		});
-		btnActualizar.setBounds(496, 479, 128, 21);
+		btnActualizar.setBounds(496, 479, 145, 21);
 		add(btnActualizar);
-		btnActualizar.setVisible(false);
+		btnActualizar.setEnabled(false);
 //------------------------------------------------------------------------------------
 		JComboBox comboBoxFiltroValor = new JComboBox();
 		comboBoxFiltroValor.setBounds(496, 228, 145, 36);
@@ -172,6 +182,8 @@ public class PanelGestionReclamos extends JPanel {
 
 				} else {
 					// invisibilizamos el combo si tenemos la opcion "Todos" seleccionada
+					
+					cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 					comboBoxFiltroValor.setVisible(false);
 
 				}
@@ -185,6 +197,72 @@ public class PanelGestionReclamos extends JPanel {
 
 		comboBoxFiltro.setBounds(496, 152, 145, 36);
 		add(comboBoxFiltro);
+		
+		JButton btnAccion = new JButton("Registrar acci\u00F3n");
+		btnAccion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				AccionReclamo accionReclamo = new AccionReclamo();
+				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());		
+
+				
+				accionReclamo.setFecha(new Date());
+				accionReclamo.setAnalista(usuarioAnalista.getId_analista());
+				accionReclamo.setDetalle(textDetalle.getText());
+				
+				
+				Reclamo reclamoDB = seleccionarReclamo(table);
+				ConfirmacionAccionReclamo.accionReclamo = accionReclamo;
+				ConfirmacionAccionReclamo.reclamo = reclamoDB;
+				
+				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
+				popUp.setVisible(true);
+				}
+			
+			
+			
+			
+			
+		});
+		btnAccion.setBounds(496, 365, 145, 21);
+		add(btnAccion);
+		
+		
+		textDetalle.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println(textDetalle.getText());
+				if(textDetalle.getText().length()<=0) {
+					btnAccion.setEnabled(false);
+				} else { 
+					btnAccion.setEnabled(true);
+
+				}
+			}
+		});
+		
+		btnAccion.setEnabled(false);
+		btnActualizar.setEnabled(false);
+		textDetalle.setEnabled(false);
+		
+		JLabel lblDetalleAccion = new JLabel("Detalle acci\u00F3n");
+		lblDetalleAccion.setBounds(496, 282, 90, 13);
+		add(lblDetalleAccion);
+		
+		JLabel lblFiltro = new JLabel("Filtrar por: ");
+		lblFiltro.setBounds(496, 129, 105, 13);
+		add(lblFiltro);
+		
+		JLabel lblValor = new JLabel("Valor: ");
+		lblValor.setBounds(496, 205, 105, 13);
+		add(lblValor);
+		lblValor.setVisible(false);
 
 		// Filtrar
 		comboBoxFiltroValor.addItemListener(new ItemListener() {
@@ -247,12 +325,15 @@ public class PanelGestionReclamos extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				btnActualizar.setVisible(true);
-				comboBoxEstado.setVisible(true);
 				
-				btnBaja.setVisible(true);
-				btnDetalle.setVisible(true);
+				
+				lblValor.setVisible(true);
 
+				btnActualizar.setEnabled(true);			
+				textDetalle.setEnabled(true);
+				comboBoxEstado.setEnabled(true);
+				btnBaja.setEnabled(true);
+				btnDetalle.setEnabled(true);
 			}
 		});
 		cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
@@ -302,6 +383,7 @@ public class PanelGestionReclamos extends JPanel {
 
 		Reclamo reclamoDB = DAOGeneral.reclamoBean.obtenerReclamo(id);
 
+		System.out.println(">>>>>" + id);
 		return reclamoDB;
 	}
 
@@ -334,5 +416,9 @@ public class PanelGestionReclamos extends JPanel {
 
 		return modeloCombo;
 
+	}
+	
+	public static PanelGestionReclamos getInstance() {
+		return instance;
 	}
 }

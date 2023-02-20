@@ -75,7 +75,7 @@ public class DetalleJustificado extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblFuncionalidadesRol = new JLabel("Justificado " + justificado.getId_justificado() + ":");
+		JLabel lblFuncionalidadesRol = new JLabel("Justificacion " + justificado.getId_justificado() + ":");
 		lblFuncionalidadesRol.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblFuncionalidadesRol.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFuncionalidadesRol.setBounds(10, 60, 427, 39);
