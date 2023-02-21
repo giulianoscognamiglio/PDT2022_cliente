@@ -2,10 +2,14 @@ package GUI;
 
 import java.awt.Font;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,25 +17,24 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.entities.AccionJustificacion;
+import com.entities.Analista;
+import com.entities.Estudiante;
+import com.entities.Justificado;
+import com.entities.Usuario;
 import com.exceptions.ServiciosException;
-import com.entities.*;
 
 import controlador.DAOGeneral;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class PanelGestionJustificados extends JPanel {
 
@@ -53,6 +56,7 @@ public class PanelGestionJustificados extends JPanel {
 		JTable table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
+		table.removeColumn(table.getColumnModel().getColumn(0));
 
 		JLabel lblJustificados = new JLabel("Justificaciones");
 		lblJustificados.setHorizontalAlignment(SwingConstants.CENTER);
@@ -145,7 +149,7 @@ public class PanelGestionJustificados extends JPanel {
 					AccionJustificacion accionJustificacion = new AccionJustificacion();
 					Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
 					
-					String stringDetalle = "La justificaciï¿½n con ID " + justificadoDB.getId_justificado() + " pasï¿½ de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
+					String stringDetalle = "La justificación con ID " + justificadoDB.getId_justificado() + " pasó de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
 
 					
 					accionJustificacion.setFecha(new Date());

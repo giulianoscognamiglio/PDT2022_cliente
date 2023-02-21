@@ -1,8 +1,15 @@
 package GUI;
 
 import java.awt.Font;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,28 +17,24 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.entities.AccionReclamo;
+import com.entities.Analista;
+import com.entities.Estudiante;
+import com.entities.Reclamo;
+import com.entities.Usuario;
 import com.exceptions.ServiciosException;
-import com.entities.*;
 
 import controlador.DAOGeneral;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.TextArea;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class PanelGestionReclamos extends JPanel {
 
@@ -52,6 +55,7 @@ public class PanelGestionReclamos extends JPanel {
 		JTable table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
+		table.removeColumn(table.getColumnModel().getColumn(0));
 
 		JLabel lblReclamos = new JLabel("Reclamos");
 		lblReclamos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -352,6 +356,7 @@ public class PanelGestionReclamos extends JPanel {
 				usuarioDB = DAOGeneral.usuarioBean.obtenerPorId(r.getEstudiante());
 
 				v.addElement(r.getId_reclamo());
+				
 				v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
 				v.addElement(r.getEstado());
 

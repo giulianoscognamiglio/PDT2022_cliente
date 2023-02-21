@@ -100,10 +100,8 @@ public class Login extends JFrame {
 		btnRegistrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				RegistroUsuario registro = new RegistroUsuario();
 				registro.setVisible(true);
-
 			}
 		});
 		btnRegistrar.setBounds(161, 216, 96, 21);

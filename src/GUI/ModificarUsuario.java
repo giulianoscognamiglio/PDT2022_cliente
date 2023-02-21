@@ -7,27 +7,23 @@ import java.awt.event.MouseEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
-import com.entities.Analista;
+import com.entities.Area;
 import com.entities.Departamento;
 import com.entities.Estudiante;
 import com.entities.ITR;
+import com.entities.TipoTutor;
 import com.entities.Tutor;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
-import com.sun.jdi.event.EventQueue;
 
 import controlador.DAOGeneral;
 import necesario.Panel;
 import rojeru_san.rsdate.RSDateChooser;
-import javax.swing.SwingConstants;
 
 public class ModificarUsuario extends JPanel {
 
@@ -39,6 +35,9 @@ public class ModificarUsuario extends JPanel {
 	public JLabel lblApellido2;
 	public JLabel lblDocumento;
 	public JLabel lblCelular;
+	public JLabel lblGeneracion;
+	public JLabel lblArea;
+	public JLabel lblRol;
 	public JTextField textFieldCelular;
 	public JTextField textFieldEmailPersonal;
 	public JTextField textFieldEmailUTEC;
@@ -48,9 +47,15 @@ public class ModificarUsuario extends JPanel {
 	public JTextField textFieldNombre1;
 	public JTextField textFieldApellido2;
 	public JTextField textFieldDocumento;
+	private JTextField textFieldGeneracion;
 
 	public DefaultComboBoxModel modeloITR;
 	public DefaultComboBoxModel modeloDepartamento;
+	
+	public DefaultComboBoxModel modeloRol;
+	public DefaultComboBoxModel modeloArea;
+	public JComboBox comboBoxRol;
+	public JComboBox comboBoxArea;
 
 	public JComboBox comboBoxDepartamento;
 	public RSDateChooser dateChooser;
@@ -177,7 +182,6 @@ public class ModificarUsuario extends JPanel {
 		comboBoxDepartamento.setBounds(224, 126, 152, 21);
 		add(comboBoxDepartamento);
 		
-		
 		JLabel lblDepartamento = new JLabel("Departamento");
 		lblDepartamento.setBounds(223, 108, 143, 13);
 		add(lblDepartamento);
@@ -191,14 +195,61 @@ public class ModificarUsuario extends JPanel {
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(224, 74, 152, 21);
 		add(comboBoxITR);
-				
+		
 //		JRadioButton rdbtnEstudiante = new JRadioButton("Estudiante");
 //		JRadioButton rdbtnTutor = new JRadioButton("Tutor");
 //		JRadioButton rdbtnAnalista = new JRadioButton("Analista");
 		
 		cargarComboBox();
 		comboBoxITR.setSelectedItem(getUsuarioIngresado().getItr().getNombre());
+		comboBoxITR.setEditable(false);
 		comboBoxDepartamento.setSelectedItem(getUsuarioIngresado().getDepartamento().getNombre());
+		
+		
+		if(usuarioIngresadoAct instanceof Estudiante) {
+			lblGeneracion = new JLabel("Generacion");
+			lblGeneracion.setBounds(224, 265, 150, 13);
+			add(lblGeneracion);
+			
+			textFieldGeneracion = new JTextField();
+			textFieldGeneracion.setText((String) null);
+			textFieldGeneracion.setColumns(10);
+			textFieldGeneracion.setBounds(224, 288, 150, 19);
+			add(textFieldGeneracion);
+			textFieldGeneracion.setText(((Estudiante)usuarioIngresadoAct).getGeneracion());
+		}
+		
+		if(usuarioIngresadoAct instanceof Tutor) {
+			lblRol = new JLabel("Rol");
+			lblRol.setBounds(224, 265, 150, 13);
+			add(lblRol);
+			
+			comboBoxRol = new JComboBox();
+			modeloRol = new DefaultComboBoxModel();
+			comboBoxRol.setBounds(224, 288, 150, 19);
+			comboBoxRol.setModel(modeloRol);
+			add(comboBoxRol);
+			
+			lblArea = new JLabel("Area");
+			lblArea.setBounds(224, 317, 150, 13);
+			add(lblArea);
+			
+			comboBoxArea = new JComboBox();
+			modeloArea = new DefaultComboBoxModel();
+			comboBoxArea.setBounds(224, 340, 150, 19);
+			comboBoxArea.setModel(modeloArea);
+			add(comboBoxArea);
+			
+			try {
+				cargarComboBoxTutor();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			comboBoxRol.setSelectedItem(((Tutor)usuarioIngresadoAct).getTipo().getNombre());
+			comboBoxArea.setSelectedItem(((Tutor)usuarioIngresadoAct).getArea().getNombre());
+			
+		}
 		
 		JButton btnActualizar = new JButton("Actualizar");
 		btnActualizar.addMouseListener(new MouseAdapter() {
@@ -228,6 +279,21 @@ public class ModificarUsuario extends JPanel {
 					
 //					getUsuarioIngresado().setValidado("0");
 //					getUsuarioIngresado().setActivo("0");
+					
+					
+					//se ingresan datos en los campos dependiendo que tipo de usuario sea
+					if(usuarioIngresadoAct instanceof Estudiante) {
+						((Estudiante)getUsuarioIngresado()).setGeneracion(textFieldGeneracion.getText());
+					}
+					
+					if(usuarioIngresadoAct instanceof Tutor) {
+						try {
+							((Tutor)getUsuarioIngresado()).setTipo(DAOGeneral.tipoTutorBean.obtenerPorNombre(comboBoxRol.getSelectedItem().toString()));
+							((Tutor)getUsuarioIngresado()).setArea(DAOGeneral.areaBean.obtenerPorNombre(comboBoxArea.getSelectedItem().toString()));
+						} catch (ServiciosException e1) {
+							e1.printStackTrace();
+						}
+					}
 					
 					try {
 						DAOGeneral.usuarioBean.actualizar(getUsuarioIngresado());
@@ -318,6 +384,20 @@ public class ModificarUsuario extends JPanel {
 		modeloDepartamento.addElement("");
 		for(Departamento departamento: DAOGeneral.departamentoBean.obtenerTodos()) {
 			modeloDepartamento.addElement(departamento.getNombre());
+		}
+	}
+	
+	public void cargarComboBoxTutor() throws Exception {
+		modeloRol.removeAllElements();
+		modeloRol.addElement("");
+		for(TipoTutor tipoTutor : DAOGeneral.tipoTutorBean.obtenerTodos()) {
+			modeloRol.addElement(tipoTutor.getNombre());
+		}
+		
+		modeloArea.removeAllElements();
+		modeloArea.addElement("");
+		for(Area area : DAOGeneral.areaBean.obtenerTodos()) {
+			modeloArea.addElement(area.getNombre());
 		}
 	}
 

@@ -238,8 +238,7 @@ public class PanelBajaUsuario extends JPanel {
 		comboBoxGeneracion.setVisible(false);
 
 		comboBoxEstado = new JComboBox();
-		comboBoxEstado
-				.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Sin Validar", "Activo", "Eliminado" }));
+		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] { "Todos", "Sin Validar", "Activo", "Eliminado" }));
 		comboBoxEstado.setBounds(96, 96, 118, 22);
 		panelDinamico.add(comboBoxEstado);
 

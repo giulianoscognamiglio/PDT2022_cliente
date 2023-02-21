@@ -29,8 +29,6 @@ import com.exceptions.ServiciosException;
 import controlador.DAOGeneral;
 import necesario.Panel;
 import rojeru_san.rsdate.RSDateChooser;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class RegistroUsuario extends JFrame {
 

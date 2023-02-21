@@ -13,12 +13,12 @@ import com.servicios.EventosBeanRemote;
 import com.servicios.FuncionalidadBeanRemote;
 import com.servicios.GenerosBeanRemote;
 import com.servicios.ItrsBeanRemote;
+import com.servicios.JustificadosBeanRemote;
 import com.servicios.ReclamosBeanRemote;
 import com.servicios.RolBeanRemote;
 import com.servicios.TiposTutorBeanRemote;
 import com.servicios.TutoresBeanRemote;
 import com.servicios.UsuariosBeanRemote;
-import com.servicios.JustificadosBeanRemote;
 
 
 public class DAOGeneral {
@@ -35,15 +35,12 @@ public class DAOGeneral {
 		public static ReclamosBeanRemote reclamoBean;
 		public static EstudiantesBeanRemote estudianteBean;
 		public static TutoresBeanRemote tutorBean;
-
 		public static JustificadosBeanRemote justificadoBean;
 		public static ConvocatoriasAsistenciaBeanRemote convocatoriaBean;
 		public static EventosBeanRemote eventosBean;
-		
 		public static AccionesReclamoBeanRemote accionesReclamoBean;
 		public static AccionesJustificadoBeanRemote accionesJustificadoBean;
 
-		
 	public DAOGeneral(){
 		initConexion();
 	}
@@ -62,14 +59,12 @@ public class DAOGeneral {
 			reclamoBean=(ReclamosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/ReclamosBean!com.servicios.ReclamosBeanRemote");
 			estudianteBean=(EstudiantesBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/EstudiantesBean!com.servicios.EstudiantesBeanRemote");
 			tutorBean=(TutoresBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/TutoresBean!com.servicios.TutoresBeanRemote");
-			
 			justificadoBean=(JustificadosBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/JustificadosBean!com.servicios.JustificadosBeanRemote");
 			convocatoriaBean=(ConvocatoriasAsistenciaBeanRemote)  InitialContext.doLookup("ejb:/PDT2022_v3/ConvocatoriasAsistenciaBean!com.servicios.ConvocatoriasAsistenciaBeanRemote");
 			eventosBean=(EventosBeanRemote)  InitialContext.doLookup("ejb:/PDT2022_v3/EventosBean!com.servicios.EventosBeanRemote");
 			
 			accionesReclamoBean=(AccionesReclamoBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/AccionesReclamoBean!com.servicios.AccionesReclamoBeanRemote");
 			accionesJustificadoBean=(AccionesJustificadoBeanRemote) InitialContext.doLookup("ejb:/PDT2022_v3/AccionesJustificadoBean!com.servicios.AccionesJustificadoBeanRemote");
-
 			
 		}catch(Exception e){
 			e.printStackTrace();

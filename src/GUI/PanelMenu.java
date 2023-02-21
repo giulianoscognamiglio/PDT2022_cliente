@@ -258,7 +258,7 @@ public class PanelMenu extends JPanel {
 //		btnAltaUsuario.setBounds(23, 280, 170, 21);
 //		panelMenu.add(btnAltaUsuario);
 
-		JButton btnBajaUsuario = new JButton("Gestiï¿½n de usuarios");
+		JButton btnBajaUsuario = new JButton("Gestión de usuarios");
 		btnBajaUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
