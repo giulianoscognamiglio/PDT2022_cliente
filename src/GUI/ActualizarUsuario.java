@@ -115,7 +115,6 @@ public class ActualizarUsuario extends JPanel {
 		add(lblDocumento);
 		
 		textFieldDocumento = new JTextField();
-		textFieldDocumento.setEditable(false);
 		textFieldDocumento.setColumns(10);
 		textFieldDocumento.setBounds(35, 495, 150, 19);
 		add(textFieldDocumento);
@@ -169,7 +168,6 @@ public class ActualizarUsuario extends JPanel {
 		add(lblEmailUTEC);
 		
 		textFieldEmailUTEC = new JTextField();
-		textFieldEmailUTEC.setEditable(false);
 		textFieldEmailUTEC.setColumns(10);
 		textFieldEmailUTEC.setBounds(34, 391, 151, 19);
 		add(textFieldEmailUTEC);
@@ -333,12 +331,20 @@ public class ActualizarUsuario extends JPanel {
 	}
 	
 	public void cargarComboBox() {
+<<<<<<< HEAD
 //		modeloITR.removeAllElements();
 //		modeloITR.addElement("");
 //		for(ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
 //			if(itr.getActivo().equals("Y")) 
 //				modeloITR.addElement(itr.getNombre());
 //		}
+=======
+		modeloITR.removeAllElements();
+		modeloITR.addElement("");
+		for(ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
+			modeloITR.addElement(itr.getNombre());
+		}
+>>>>>>> 1b44277084aea376f7a33301a6fda361aa80f780
 		
 		modeloDepartamento.removeAllElements();
 		modeloDepartamento.addElement("");
