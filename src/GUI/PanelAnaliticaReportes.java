@@ -77,12 +77,8 @@ public class PanelAnaliticaReportes extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				List<Reclamo> reclamos = DAOGeneral.reclamoBean.obtenerTodos();
 				btnDescargar.setVisible(true);
-				
-				if (comboBoxFiltroCriterio.getSelectedItem().equals("- Seleccione criterio -")) {
-					modeloTabla.setRowCount(0);
-				}
 
-				
+
 				if (comboBoxFiltroCriterio.getSelectedItem().equals("Generación")) {
 
 					HashMap<String, Integer> hmGeneraciones = new HashMap<>();
@@ -204,7 +200,7 @@ public class PanelAnaliticaReportes extends JPanel {
 
 			}
 		});
-		comboBoxFiltroCriterio.setBounds(107, 109, 145, 36);
+		comboBoxFiltroCriterio.setBounds(124, 109, 145, 36);
 		add(comboBoxFiltroCriterio);
 
 		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
@@ -233,7 +229,7 @@ public class PanelAnaliticaReportes extends JPanel {
 
 			}
 		});
-		btnDescargar.setBounds(107, 469, 153, 36);
+		btnDescargar.setBounds(48, 499, 153, 36);
 		add(btnDescargar);
 		btnDescargar.setVisible(false);
 	}

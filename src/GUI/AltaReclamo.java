@@ -102,6 +102,7 @@ public class AltaReclamo extends JFrame {
 		contentPane.add(lblReclamo);
 
 		dateChooser = new RSDateChooser();
+		dateChooser.setPlaceholder("Seleccionar una fecha");
 		dateChooser.setColorButtonHover(Color.BLACK);
 		dateChooser.setColorDiaActual(Color.BLACK);
 		dateChooser.setColorForeground(Color.BLACK);
@@ -229,8 +230,8 @@ public class AltaReclamo extends JFrame {
 		textNombreActividadEvento.setBounds(231, 165, 96, 19);
 		contentPane.add(textNombreActividadEvento);
 
-		lblNombreActividadEvento = new JLabel("Nombre actividad");
-		lblNombreActividadEvento.setBounds(231, 142, 105, 13);
+		lblNombreActividadEvento = new JLabel("Nombre actividad/evento");
+		lblNombreActividadEvento.setBounds(231, 142, 187, 13);
 		contentPane.add(lblNombreActividadEvento);
 
 		JLabel lblDetalle = new JLabel("Detalle");
