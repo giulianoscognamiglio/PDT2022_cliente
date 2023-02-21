@@ -110,8 +110,9 @@ public class ConfirmacionAccionReclamo extends JFrame {
 
 						PanelGestionReclamos pgr = PanelGestionReclamos.getInstance();
 						
-						pgr.cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
+						pgr.reiniciar();
 						
+						accionReclamo = null;
 						reclamo = null;
 						setVisible(false);
 					}
@@ -128,6 +129,7 @@ public class ConfirmacionAccionReclamo extends JFrame {
 						
 						pgr.getInstance().cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
 						
+						accionJustificacion = null;
 						justificado = null;
 						setVisible(false);
 					}
@@ -152,7 +154,14 @@ public class ConfirmacionAccionReclamo extends JFrame {
 		btnVolver.setBounds(22, 74, 105, 21);
 		contentPane.add(btnVolver);
 
+		
 		JLabel lblReclamo = new JLabel("Seguro de que desea modificar el estado de este reclamo?");
+		
+		if(accionReclamo == null && accionJustificacion == null) {
+			lblReclamo.setText("Seguro de que desea modificar el estado?");
+		} else {
+			lblReclamo.setText("Seguro de que desea registrar esta accion?");
+		}
 		lblReclamo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReclamo.setBounds(10, 10, 278, 43);
 		contentPane.add(lblReclamo);

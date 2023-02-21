@@ -37,6 +37,13 @@ public class PanelGestionReclamos extends JPanel {
 
 	private DefaultTableModel modeloTabla;
 	public static PanelGestionReclamos instance = new PanelGestionReclamos();
+	private JButton btnBaja;
+	private JButton btnActualizar;
+	private JButton btnDetalle;
+	private TextArea textDetalle;
+	private JComboBox comboBoxEstado;
+	private JButton btnAccion;
+	private JLabel lblValor;
 
 	public PanelGestionReclamos() {
 
@@ -59,7 +66,7 @@ public class PanelGestionReclamos extends JPanel {
 		lblReclamos.setBounds(235, 37, 198, 36);
 		add(lblReclamos);
 
-		JButton btnBaja = new JButton("Baja");
+		btnBaja = new JButton("Baja");
 		btnBaja.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -72,12 +79,11 @@ public class PanelGestionReclamos extends JPanel {
 
 					JOptionPane.showMessageDialog(null, "Reclamo dado de baja con éxito", null,
 							JOptionPane.PLAIN_MESSAGE);
-					
-					
+
 				} catch (ServiciosException e1) {
 					e1.printStackTrace();
 				}
-				
+
 				cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 			}
 		});
@@ -85,7 +91,7 @@ public class PanelGestionReclamos extends JPanel {
 		add(btnBaja);
 		btnBaja.setEnabled(false);
 
-		JButton btnDetalle = new JButton("Detalle");
+		btnDetalle = new JButton("Detalle");
 		btnDetalle.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -111,18 +117,18 @@ public class PanelGestionReclamos extends JPanel {
 		btnDetalle.setEnabled(false);
 		// ------------------------------------------------------------------------------------
 		// Esto tiene que ser invisible hasta que se interactua con la tabla
-		JComboBox comboBoxEstado = new JComboBox();
+		comboBoxEstado = new JComboBox();
 		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] { "", "En proceso", "Finalizado" }));
 		comboBoxEstado.setBounds(496, 428, 145, 26);
 		add(comboBoxEstado);
 		comboBoxEstado.setEnabled(false);
 
-		TextArea textDetalle = new TextArea();
+		textDetalle = new TextArea();
 
 		textDetalle.setBounds(496, 301, 145, 48);
 		add(textDetalle);
-		
-		JButton btnActualizar = new JButton("Actualizar");
+
+		btnActualizar = new JButton("Actualizar");
 		btnActualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -130,25 +136,28 @@ public class PanelGestionReclamos extends JPanel {
 				Reclamo reclamoDB = seleccionarReclamo(table);
 
 				String estado = comboBoxEstado.getSelectedItem().toString().toUpperCase();
-								
+
 				reclamoDB.setEstado(estado);
-				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());		
-				
-				String stringDetalle = "El reclamo con ID " + reclamoDB.getId_reclamo() + " pasó de estar " + reclamoDB.getEstado() + " a estar " + comboBoxEstado.getSelectedItem();
+				Analista usuarioAnalista = DAOGeneral.analistaBean
+						.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
+
+				String stringDetalle = "El reclamo con ID " + reclamoDB.getId_reclamo() + " pasó de estar "
+						+ reclamoDB.getEstado() + " a estar " + comboBoxEstado.getSelectedItem();
 
 				AccionReclamo accionReclamo = new AccionReclamo();
-				
+
 				accionReclamo.setFecha(new Date());
 				accionReclamo.setAnalista(usuarioAnalista.getId_analista());
 				accionReclamo.setDetalle(stringDetalle);
-				
+
 				ConfirmacionAccionReclamo.accionReclamo = accionReclamo;
 				ConfirmacionAccionReclamo.reclamo = reclamoDB;
-				
+
 				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
 				popUp.setVisible(true);
-			
+
 				cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
+				reiniciar();
 
 			}
 		});
@@ -182,7 +191,7 @@ public class PanelGestionReclamos extends JPanel {
 
 				} else {
 					// invisibilizamos el combo si tenemos la opcion "Todos" seleccionada
-					
+
 					cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 					comboBoxFiltroValor.setVisible(false);
 
@@ -197,71 +206,85 @@ public class PanelGestionReclamos extends JPanel {
 
 		comboBoxFiltro.setBounds(496, 152, 145, 36);
 		add(comboBoxFiltro);
-		
-		JButton btnAccion = new JButton("Registrar acci\u00F3n");
+
+		btnAccion = new JButton("Registrar acci\u00F3n");
 		btnAccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				AccionReclamo accionReclamo = new AccionReclamo();
-				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());		
 
-				
+				AccionReclamo accionReclamo = new AccionReclamo();
+				Analista usuarioAnalista = DAOGeneral.analistaBean
+						.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
+
 				accionReclamo.setFecha(new Date());
 				accionReclamo.setAnalista(usuarioAnalista.getId_analista());
 				accionReclamo.setDetalle(textDetalle.getText());
-				
-				
+
 				Reclamo reclamoDB = seleccionarReclamo(table);
 				ConfirmacionAccionReclamo.accionReclamo = accionReclamo;
 				ConfirmacionAccionReclamo.reclamo = reclamoDB;
-				
+
 				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
 				popUp.setVisible(true);
-				}
-			
-			
-			
-			
-			
+
+				reiniciar();
+
+			}
+
 		});
 		btnAccion.setBounds(496, 365, 145, 21);
 		add(btnAccion);
-		
-		
+
 		textDetalle.addKeyListener(new KeyAdapter() {
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
-				
+
 			}
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				System.out.println(textDetalle.getText());
-				if(textDetalle.getText().length()<=0) {
+				if (textDetalle.getText().length() <= 0) {
 					btnAccion.setEnabled(false);
-				} else { 
+				} else {
 					btnAccion.setEnabled(true);
 
 				}
 			}
 		});
-		
+
 		btnAccion.setEnabled(false);
 		btnActualizar.setEnabled(false);
 		textDetalle.setEnabled(false);
-		
+
 		JLabel lblDetalleAccion = new JLabel("Detalle acci\u00F3n");
 		lblDetalleAccion.setBounds(496, 282, 90, 13);
 		add(lblDetalleAccion);
-		
+
 		JLabel lblFiltro = new JLabel("Filtrar por: ");
 		lblFiltro.setBounds(496, 129, 105, 13);
 		add(lblFiltro);
+
+		JLabel lblEstado = new JLabel("Modificar estado");
+		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEstado.setBounds(496, 405, 128, 13);
+		add(lblEstado);
 		
-		JLabel lblValor = new JLabel("Valor: ");
+		lblValor = new JLabel("Valor: ");
 		lblValor.setBounds(496, 205, 105, 13);
 		add(lblValor);
+		lblValor.setVisible(false);
+
+		JButton btnActualizarLista = new JButton("Refrescar");
+		btnActualizarLista.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
+			}
+		});
+		btnActualizarLista.setBounds(331, 121, 102, 21);
+		add(btnActualizarLista);
 		lblValor.setVisible(false);
 
 		// Filtrar
@@ -308,28 +331,27 @@ public class PanelGestionReclamos extends JPanel {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-				} else if(comboBoxFiltro.getSelectedItem().toString() == "Estudiante") {
+				} else if (comboBoxFiltro.getSelectedItem().toString() == "Estudiante") {
 
-					int idInt =  Integer.parseInt(String.valueOf(comboBoxFiltroValor.getSelectedItem().toString().charAt(0)));
-					//obtenemos el long del estudiante seleccionado
+					int idInt = Integer
+							.parseInt(String.valueOf(comboBoxFiltroValor.getSelectedItem().toString().charAt(0)));
+					// obtenemos el long del estudiante seleccionado
 					long idEstudiante = new Long(idInt);
-					
+
 					List<Reclamo> reclamosPorEstudiante = DAOGeneral.reclamoBean.obtenerPorEstudiante(idEstudiante);
-					
+
 					cargarTabla(reclamosPorEstudiante);
 				}
 			}
 		});
 
-		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
+
 				lblValor.setVisible(true);
 
-				btnActualizar.setEnabled(true);			
+				btnActualizar.setEnabled(true);
 				textDetalle.setEnabled(true);
 				comboBoxEstado.setEnabled(true);
 				btnBaja.setEnabled(true);
@@ -345,22 +367,15 @@ public class PanelGestionReclamos extends JPanel {
 		modeloTabla.setRowCount(0);
 		for (Reclamo r : reclamos) {
 
-			try {
+			Vector v = new Vector();
+			Usuario usuarioDB;
+			usuarioDB = DAOGeneral.estudianteBean.obtenerPorId(r.getEstudiante());
 
-				Vector v = new Vector();
-				Usuario usuarioDB;
-				usuarioDB = DAOGeneral.usuarioBean.obtenerPorId(r.getEstudiante());
+			v.addElement(r.getId_reclamo());
+			v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
+			v.addElement(r.getEstado());
 
-				v.addElement(r.getId_reclamo());
-				v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
-				v.addElement(r.getEstado());
-
-				modeloTabla.addRow(v);
-
-			} catch (ServiciosException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			modeloTabla.addRow(v);
 
 		}
 	}
@@ -396,29 +411,40 @@ public class PanelGestionReclamos extends JPanel {
 		if (criterio.equals("Estudiante")) {
 			List<Usuario> usuarios = DAOGeneral.usuarioBean.obtenerPorRol(1L);
 			List<Estudiante> estudiantes = new ArrayList<Estudiante>();
-			
 
 			for (Usuario u : usuarios) {
 				estudiantes.add(DAOGeneral.estudianteBean.obtenerPorUsuario(u.getId_usuario()));
 			}
-			
+
 			for (Estudiante e : estudiantes) {
 				modeloCombo.addElement("" + e.getId_estudiante() + " - " + e.getCedula());
 			}
-			
+
 		} else if (criterio.equals("Estado")) {
 			modeloCombo.addElement("Ingresado");
 			modeloCombo.addElement("En proceso");
 			modeloCombo.addElement("Finalizado");
 		}
 
-		
-
 		return modeloCombo;
 
 	}
-	
+
 	public static PanelGestionReclamos getInstance() {
 		return instance;
+	}
+
+	public void reiniciar() {
+		btnBaja.setEnabled(false);
+		btnActualizar.setEnabled(false);
+		textDetalle.setEnabled(false);
+		comboBoxEstado.setEnabled(false);
+		btnBaja.setEnabled(false);
+		btnDetalle.setEnabled(false);
+		btnAccion.setEnabled(false);
+		
+		lblValor.setVisible(false);
+
+		cargarTabla(DAOGeneral.reclamoBean.obtenerTodos());
 	}
 }
