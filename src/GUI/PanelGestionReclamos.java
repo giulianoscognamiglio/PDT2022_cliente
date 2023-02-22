@@ -62,7 +62,7 @@ public class PanelGestionReclamos extends JPanel {
 		JTable table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
-		table.removeColumn(table.getColumnModel().getColumn(0));
+//		table.removeColumn(table.getColumnModel().getColumn(0));
 
 		JLabel lblReclamos = new JLabel("Reclamos");
 		lblReclamos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -379,22 +379,12 @@ public class PanelGestionReclamos extends JPanel {
 			v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
 			v.addElement(r.getEstado());
 
-<<<<<<< HEAD
 				v.addElement(r.getId_reclamo());
 				
 				v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
 				v.addElement(r.getEstado());
 
 				modeloTabla.addRow(v);
-
-			} catch (ServiciosException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-=======
-			modeloTabla.addRow(v);
->>>>>>> 1b44277084aea376f7a33301a6fda361aa80f780
-
 		}
 	}
 

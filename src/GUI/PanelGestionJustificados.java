@@ -63,7 +63,7 @@ public class PanelGestionJustificados extends JPanel {
 		JTable table = new JTable();
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
-		table.removeColumn(table.getColumnModel().getColumn(0));
+//		table.removeColumn(table.getColumnModel().getColumn(0));
 
 		JLabel lblJustificados = new JLabel("Justificaciones de inasistencias");
 		lblJustificados.setHorizontalAlignment(SwingConstants.CENTER);
@@ -165,18 +165,9 @@ public class PanelGestionJustificados extends JPanel {
 				justificadoDB.setEstado(estado);
 
 				AccionJustificacion accionJustificacion = new AccionJustificacion();
-				Analista usuarioAnalista = DAOGeneral.analistaBean
-						.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
-
-<<<<<<< HEAD
-					AccionJustificacion accionJustificacion = new AccionJustificacion();
-					Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
+				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
 					
-					String stringDetalle = "La justificación con ID " + justificadoDB.getId_justificado() + " pasó de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
-=======
-				String stringDetalle = "La justificaciï¿½n con ID " + justificadoDB.getId_justificado()
-						+ " pasï¿½ de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
->>>>>>> 1b44277084aea376f7a33301a6fda361aa80f780
+				String stringDetalle = "La justificación con ID " + justificadoDB.getId_justificado() + " pasó de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
 
 				accionJustificacion.setFecha(new Date());
 				accionJustificacion.setAnalista(usuarioAnalista.getId_analista());

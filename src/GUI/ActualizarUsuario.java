@@ -331,20 +331,17 @@ public class ActualizarUsuario extends JPanel {
 	}
 	
 	public void cargarComboBox() {
-<<<<<<< HEAD
 //		modeloITR.removeAllElements();
 //		modeloITR.addElement("");
 //		for(ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
 //			if(itr.getActivo().equals("Y")) 
 //				modeloITR.addElement(itr.getNombre());
 //		}
-=======
-		modeloITR.removeAllElements();
-		modeloITR.addElement("");
-		for(ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
-			modeloITR.addElement(itr.getNombre());
-		}
->>>>>>> 1b44277084aea376f7a33301a6fda361aa80f780
+//		modeloITR.removeAllElements();
+//		modeloITR.addElement("");
+//		for(ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
+//			modeloITR.addElement(itr.getNombre());
+//		}
 		
 		modeloDepartamento.removeAllElements();
 		modeloDepartamento.addElement("");
