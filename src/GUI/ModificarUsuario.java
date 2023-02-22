@@ -376,7 +376,9 @@ public class ModificarUsuario extends JPanel {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("");
 		for(ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
-			modeloITR.addElement(itr.getNombre());
+			if(itr.getActivo().equals("Y")) {
+				modeloITR.addElement(itr.getNombre());
+			}
 		}
 		
 		modeloDepartamento.removeAllElements();

@@ -122,9 +122,13 @@ public class AltaJustificado extends JFrame {
 
 				// necesitamos parsear esto porque en la clase usuario tenemos long pero para la
 				// base precisamos Long
+				
 				Long idUsuario = new Long(PanelMenu.usuarioIngresado.getId_usuario());
+				
+				Estudiante estudiante = DAOGeneral.estudianteBean.obtenerPorUsuario(idUsuario);
+				
 				justificado.setDetalle(textAreaJustificado.getText());
-				justificado.setEstudiante(idUsuario);
+				justificado.setEstudiante(estudiante.getId_estudiante());
 				justificado.setFecha(Date.from(localDate.atStartOfDay(defaultZoneId).toInstant()));
 				justificado.setEstado("INGRESADO");
 				justificado.setId_evento(evento.getId_evento());
@@ -141,7 +145,7 @@ public class AltaJustificado extends JFrame {
 						confirmacionPopUp.setVisible(true);
 					} else {
 						DAOGeneral.justificadoBean.crear(justificado);
-					JOptionPane.showMessageDialog(null, "Justificacion registrado con ï¿½xito", null,
+					JOptionPane.showMessageDialog(null, "Justificación registrada con éxito", null,
 							JOptionPane.PLAIN_MESSAGE);
 					}
 					

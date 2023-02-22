@@ -65,10 +65,10 @@ public class PanelAnaliticaReportes extends JPanel {
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
 
-		JLabel lblReclamos = new JLabel("Analítica de reportes");
+		JLabel lblReclamos = new JLabel("Analítica de Reportes de Reclamos");
 		lblReclamos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReclamos.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblReclamos.setBounds(235, 37, 198, 36);
+		lblReclamos.setBounds(107, 37, 409, 36);
 		add(lblReclamos);
 
 //------------------------------------------------------------------------------------

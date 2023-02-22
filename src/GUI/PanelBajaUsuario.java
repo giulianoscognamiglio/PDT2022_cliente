@@ -150,6 +150,7 @@ public class PanelBajaUsuario extends JPanel {
 				}
 			}
 		});
+		
 
 //		btnBaja = new JButton("Baja");
 //		btnBaja.addMouseListener(new MouseAdapter() {
@@ -239,6 +240,8 @@ public class PanelBajaUsuario extends JPanel {
 		comboBoxITR.setModel(modeloITR);
 		comboBoxITR.setBounds(224, 96, 118, 22);
 		panelDinamico.add(comboBoxITR);
+		
+		cargarComboBoxITR();
 
 		JLabel lblGeneracion = new JLabel("Generacion");
 		lblGeneracion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -294,12 +297,11 @@ public class PanelBajaUsuario extends JPanel {
 		
 		btnModificación.setVisible(true);
 		
-		cargarComboBoxITR();
-		
 		cargarTabla(DAOGeneral.usuarioBean.obtenerTodos());
 		
 		comboBoxITR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cargarComboBoxITR();
 				filtrar();
 			}
 		});
@@ -417,7 +419,9 @@ public class PanelBajaUsuario extends JPanel {
 		modeloITR.removeAllElements();
 		modeloITR.addElement("Todos");
 		for (ITR itr : DAOGeneral.itrBean.obtenerTodos()) {
-			modeloITR.addElement(itr.getNombre());
+			if(itr.getActivo().equals("Y")) {
+				modeloITR.addElement(itr.getNombre());
+			}
 		}
 	}
 

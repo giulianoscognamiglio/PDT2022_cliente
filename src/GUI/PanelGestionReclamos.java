@@ -378,13 +378,8 @@ public class PanelGestionReclamos extends JPanel {
 			v.addElement(r.getId_reclamo());
 			v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
 			v.addElement(r.getEstado());
-
-				v.addElement(r.getId_reclamo());
 				
-				v.addElement(usuarioDB.getNombre1() + " " + usuarioDB.getApellido1());
-				v.addElement(r.getEstado());
-
-				modeloTabla.addRow(v);
+			modeloTabla.addRow(v);
 		}
 	}
 
