@@ -167,17 +167,24 @@ public class PanelGestionJustificados extends JPanel {
 				AccionJustificacion accionJustificacion = new AccionJustificacion();
 				Analista usuarioAnalista = DAOGeneral.analistaBean.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
 					
-				String stringDetalle = "La justificación con ID " + justificadoDB.getId_justificado() + " pasó de estar " + justificadoDB.getEstado() + " a estar " + comboBox.getSelectedItem();
+				String stringDetalle = "La justificación pasó a estar "+ comboBox.getSelectedItem();
 
 				accionJustificacion.setFecha(new Date());
 				accionJustificacion.setAnalista(usuarioAnalista.getId_analista());
 				accionJustificacion.setDetalle(stringDetalle);
-
+				accionJustificacion.setJustificado_id(justificadoDB.getId_justificado());
+				
 				ConfirmacionAccionReclamo.justificado = justificadoDB;
 				ConfirmacionAccionReclamo.accionJustificacion = accionJustificacion;
 
 				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
+				
+				textDetalle.setText("");
+
 				popUp.setVisible(true);
+				
+				reiniciar();
+
 
 			}
 		});

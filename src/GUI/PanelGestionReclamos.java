@@ -145,8 +145,7 @@ public class PanelGestionReclamos extends JPanel {
 				Analista usuarioAnalista = DAOGeneral.analistaBean
 						.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
 
-				String stringDetalle = "El reclamo con ID " + reclamoDB.getId_reclamo() + " pasó de estar "
-						+ reclamoDB.getEstado() + " a estar " + comboBoxEstado.getSelectedItem();
+				String stringDetalle ="El reclamo pasó a estar "+ comboBoxEstado.getSelectedItem();
 
 				AccionReclamo accionReclamo = new AccionReclamo();
 
@@ -218,17 +217,20 @@ public class PanelGestionReclamos extends JPanel {
 				AccionReclamo accionReclamo = new AccionReclamo();
 				Analista usuarioAnalista = DAOGeneral.analistaBean
 						.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
+				Reclamo reclamoDB = seleccionarReclamo(table);
 
 				accionReclamo.setFecha(new Date());
 				accionReclamo.setAnalista(usuarioAnalista.getId_analista());
 				accionReclamo.setDetalle(textDetalle.getText());
+				accionReclamo.setReclamo_id(reclamoDB.getId_reclamo());
 
-				Reclamo reclamoDB = seleccionarReclamo(table);
 				ConfirmacionAccionReclamo.accionReclamo = accionReclamo;
 				ConfirmacionAccionReclamo.reclamo = reclamoDB;
 
 				ConfirmacionAccionReclamo popUp = new ConfirmacionAccionReclamo();
 				popUp.setVisible(true);
+
+				textDetalle.setText("");
 
 				reiniciar();
 
@@ -441,6 +443,7 @@ public class PanelGestionReclamos extends JPanel {
 		btnBaja.setEnabled(false);
 		btnActualizar.setEnabled(false);
 		textDetalle.setEnabled(false);
+		textDetalle.setText("");
 		comboBoxEstado.setEnabled(false);
 		btnBaja.setEnabled(false);
 		btnDetalle.setEnabled(false);
