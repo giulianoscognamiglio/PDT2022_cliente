@@ -126,9 +126,7 @@ public class ConfirmacionAccionReclamo extends JFrame {
 								JOptionPane.PLAIN_MESSAGE);
 
 						PanelGestionJustificados pgr = PanelGestionJustificados.getInstance();
-						
-						pgr.getInstance().cargarTabla(DAOGeneral.justificadoBean.obtenerTodos());
-						
+												
 						accionJustificacion = null;
 						justificado = null;
 						setVisible(false);

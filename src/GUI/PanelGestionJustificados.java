@@ -235,11 +235,13 @@ public class PanelGestionJustificados extends JPanel {
 				Analista usuarioAnalista = DAOGeneral.analistaBean
 						.obtenerAnalistaDocumento(MenuPrincipal.usuarioIngresado.getCedula());
 
+				Justificado justificadoDB = seleccionarJustificado(table);
+
 				accionJustificacion.setFecha(new Date());
 				accionJustificacion.setAnalista(usuarioAnalista.getId_analista());
 				accionJustificacion.setDetalle(textDetalle.getText());
+				accionJustificacion.setJustificado_id(justificadoDB.getId_justificado());
 
-				Justificado justificadoDB = seleccionarJustificado(table);
 				ConfirmacionAccionReclamo.justificado = justificadoDB;
 				ConfirmacionAccionReclamo.accionJustificacion = accionJustificacion;
 

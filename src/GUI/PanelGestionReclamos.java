@@ -152,6 +152,7 @@ public class PanelGestionReclamos extends JPanel {
 				accionReclamo.setFecha(new Date());
 				accionReclamo.setAnalista(usuarioAnalista.getId_analista());
 				accionReclamo.setDetalle(stringDetalle);
+				accionReclamo.setReclamo_id(reclamoDB.getId_reclamo());
 
 				ConfirmacionAccionReclamo.accionReclamo = accionReclamo;
 				ConfirmacionAccionReclamo.reclamo = reclamoDB;
