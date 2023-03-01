@@ -53,17 +53,93 @@ public class Main {
 		LocalDate localDate = LocalDate.now();
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		
+//		Departamento d1 = new Departamento();
+//		d1.setNombre("Durazno");
+//		departamentoBean.crear(d1);
+//		
+//		Departamento d2 = new Departamento();
+//		d2.setNombre("Montevideo");
+//		departamentoBean.crear(d2);
+//		
+//		Departamento d3 = new Departamento();
+//		d3.setNombre("Maldonado");
+//		departamentoBean.crear(d3);
+		
 		Departamento d1 = new Departamento();
-		d1.setNombre("Durazno");
+		d1.setNombre("Artigas");
 		departamentoBean.crear(d1);
 		
 		Departamento d2 = new Departamento();
-		d2.setNombre("Montevideo");
+		d2.setNombre("Canelones");
 		departamentoBean.crear(d2);
 		
 		Departamento d3 = new Departamento();
-		d3.setNombre("Maldonado");
+		d3.setNombre("Cerro Largo");
 		departamentoBean.crear(d3);
+		
+		Departamento d4 = new Departamento();
+		d4.setNombre("Colonia");
+		departamentoBean.crear(d4);
+		
+		Departamento d5 = new Departamento();
+		d5.setNombre("Durazno");
+		departamentoBean.crear(d5);
+		
+		Departamento d6 = new Departamento();
+		d6.setNombre("Flores");
+		departamentoBean.crear(d6);
+		
+		Departamento d7 = new Departamento();
+		d7.setNombre("Florida");
+		departamentoBean.crear(d7);
+		
+		Departamento d8 = new Departamento();
+		d8.setNombre("Lavalleja");
+		departamentoBean.crear(d8);
+		
+		Departamento d9 = new Departamento();
+		d9.setNombre("Maldonado");
+		departamentoBean.crear(d9);
+		
+		Departamento d10 = new Departamento();
+		d10.setNombre("Montevideo");
+		departamentoBean.crear(d10);
+		
+		Departamento d11 = new Departamento();
+		d11.setNombre("Paysandú");
+		departamentoBean.crear(d11);
+		
+		Departamento d12 = new Departamento();
+		d12.setNombre("Río Negro");
+		departamentoBean.crear(d12);
+		
+		Departamento d13 = new Departamento();
+		d13.setNombre("Rivera");
+		departamentoBean.crear(d13);
+		
+		Departamento d14 = new Departamento();
+		d14.setNombre("Rocha");
+		departamentoBean.crear(d14);
+		
+		Departamento d15 = new Departamento();
+		d15.setNombre("Salto");
+		departamentoBean.crear(d15);
+		
+		Departamento d16 = new Departamento();
+		d16.setNombre("San José");
+		departamentoBean.crear(d16);
+		
+		Departamento d17 = new Departamento();
+		d17.setNombre("Soriano");
+		departamentoBean.crear(d17);
+		
+		Departamento d18 = new Departamento();
+		d18.setNombre("Tacuarembó");
+		departamentoBean.crear(d18);
+		
+		Departamento d19 = new Departamento();
+		d19.setNombre("Treinta y Tres");
+		departamentoBean.crear(d19);
 		
 		Funcionalidad f1=new Funcionalidad();
 		f1.setNombre("Solicitar constancia");
@@ -114,9 +190,22 @@ public class Main {
 		genero.setNombre("Hombre");
 		generoBean.crear(genero);
 		
+		
+//		ITR itr1 = new ITR();
+//		itr1.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
+//		itr1.setNombre("ITR Capital");
+//		itr1.setActivo("Y");
+//		itrBean.crear(itr1);
+//		
+//		ITR itr2 = new ITR();
+//		itr2.setDepartamento(departamentoBean.obtenerPorNombre("Durazno"));
+//		itr2.setNombre("ITR CS");
+//		itr2.setActivo("Y");
+//		itrBean.crear(itr2);
+		
 		ITR itr1 = new ITR();
-		itr1.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
-		itr1.setNombre("ITR Capital");
+		itr1.setDepartamento(departamentoBean.obtenerPorNombre("Río Negro"));
+		itr1.setNombre("ITR SO");
 		itr1.setActivo("Y");
 		itrBean.crear(itr1);
 		
@@ -125,6 +214,30 @@ public class Main {
 		itr2.setNombre("ITR CS");
 		itr2.setActivo("Y");
 		itrBean.crear(itr2);
+		
+		ITR itr3 = new ITR();
+		itr3.setDepartamento(departamentoBean.obtenerPorNombre("Rivera"));
+		itr3.setNombre("ITR NO");
+		itr3.setActivo("Y");
+		itrBean.crear(itr3);
+		
+		ITR itr4 = new ITR();
+		itr4.setDepartamento(departamentoBean.obtenerPorNombre("Cerro Largo"));
+		itr4.setNombre("ITR CE");
+		itr4.setActivo("Y");
+		itrBean.crear(itr4);
+		
+		ITR itr5 = new ITR();
+		itr5.setDepartamento(departamentoBean.obtenerPorNombre("Lavalleja"));
+		itr5.setNombre("ITR SE");
+		itr5.setActivo("Y");
+		itrBean.crear(itr5);
+		
+		ITR itr6 = new ITR();
+		itr6.setDepartamento(departamentoBean.obtenerPorNombre("Montevideo"));
+		itr6.setNombre("ITR CAPITAL");
+		itr6.setActivo("Y");
+		itrBean.crear(itr6);
 		
 		Analista a=new Analista();
 		a.setActivo("Y");
@@ -249,11 +362,9 @@ public class Main {
 		e2.setItr(itrBean.obtenerPorNombre("ITR Capital"));
 		usuarioBean.crear(e2);
 		
-		
-		
 
-		//Registros de prueba en la tabla Reclamos
 		
+		//Registros de prueba en la tabla Reclamos
 		Reclamo reclamo1 = new Reclamo();
 		reclamo1.setTitulo("Creditos VME");
 		reclamo1.setTipo("VME");

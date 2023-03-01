@@ -137,6 +137,7 @@ public class PanelBajaUsuario extends JPanel {
 		table.setModel(modeloTabla);
 		scrollPane.setViewportView(table);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.removeColumn(table.getColumnModel().getColumn(11));
 
 		table.addMouseListener(new MouseAdapter() {
 			@Override
