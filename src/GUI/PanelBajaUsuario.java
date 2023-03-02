@@ -302,7 +302,6 @@ public class PanelBajaUsuario extends JPanel {
 		
 		comboBoxITR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cargarComboBoxITR();
 				filtrar();
 			}
 		});
@@ -442,7 +441,7 @@ public class PanelBajaUsuario extends JPanel {
 			} else if (comboBoxEstado.getSelectedItem().toString().equals("Eliminado")) {
 				listaFiltro = (ArrayList<Usuario>) filtrarInactivo(
 						(ArrayList<Usuario>) DAOGeneral.usuarioBean.obtenerTodos());
-			} else if (comboBoxEstado.getSelectedItem().toString().equals("Sin validar")) {
+			} else if (comboBoxEstado.getSelectedItem().toString().equals("Sin Validar")) {
 				listaFiltro = (ArrayList<Usuario>) filtrarSinValidar(
 						(ArrayList<Usuario>) DAOGeneral.usuarioBean.obtenerTodos());
 			} else if (comboBoxEstado.getSelectedItem().toString().equals("Todos")) {
@@ -513,7 +512,7 @@ public class PanelBajaUsuario extends JPanel {
 		ArrayList<Usuario> listaFiltro = new ArrayList<>();
 		for (Iterator<Usuario> iter = usuarios.iterator(); iter.hasNext();) {
 			Usuario u = iter.next();
-			if (u.getActivo().equals("N")) {
+			if (u.getActivo().equals("N") && u.getValidado().equals("Y")) {
 				listaFiltro.add(u);
 			}
 		}
@@ -524,7 +523,7 @@ public class PanelBajaUsuario extends JPanel {
 		ArrayList<Usuario> listaFiltro = new ArrayList<>();
 		for (Iterator<Usuario> iter = usuarios.iterator(); iter.hasNext();) {
 			Usuario u = iter.next();
-			if ((u.getActivo().equals("Y") && u.getValidado().equals("N"))) {
+			if (u.getActivo().equals("N") && u.getValidado().equals("N")) {
 				listaFiltro.add(u);
 			}
 		}
